@@ -1,5 +1,5 @@
 # 💫 About Me:
-🔭 I’m currently working at Osaka Sangyo University as Masters Student<br>👯 I’m looking to collaborate on evaluation of body movement using AI<br>🤝 I’m looking for help with Data Analysis<br>🌱 I’m currently learning AI, Data Science<br>💬 Ask me about AI<br>⚡ Fun fact, I can speak 5 different laguages(excluding programming laguages)
+🔭 I’m currently rolling at Osaka Sangyo University as Masters Student<br>👯 I’m looking to collaborate on evaluation of body movement using AI<br>🤝 I’m looking for help with Data Analysis<br>🌱 I’m currently learning AI, Data Science<br>💬 Ask me about AI<br>⚡ Fun fact, I can speak 5 different laguages(excluding programming laguages)
 
 
 ## 🌐 Socials:
