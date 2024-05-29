@@ -1,5 +1,5 @@
 # 💫 About Me:
-🔭 I’m currently rolling at Osaka Sangyo University as PhD Student as well as researcher at Institute of Hyogo Assistive Technology.<br>👯 I’m looking to collaborate on evaluation of body movement using AI<br>🤝 Colaboration on kaggle competition is warmly welcomed.<br>🌱 I’m learned and learning AI, Data Science<br>💬 Ask me about AI<br>⚡ Fun fact, I can speak 5 different laguages(excluding programming laguages)
+🔭 I’m currently rolling at Osaka Sangyo University as PhD Student as well as researcher at Institute of Hyogo Assistive Technology.<br>👯 I’m looking to collaborate on evaluation of body movement using AI<br>🤝 Colaboration on kaggle competition is warmly welcomed.<br>🌱 I’ve learned and still learning AI, Data Science<br>💬 Ask me about AI<br>⚡ Fun fact, I can speak 5 different laguages(excluding programming laguages)
 
 
 ## 🌐 Socials:
