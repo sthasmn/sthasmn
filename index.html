@@ -1,1572 +1,602 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Sentence Recorder</title>
+  <title>JGRIDコーパス構築計画 SPA</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: 'Inter', sans-serif; overscroll-behavior: none; }
-    .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
-    .modal-content { background-color: #fefefe; color: #333; margin: auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 8px; text-align: center; }
-    .modal-buttons button { margin: 0 10px; }
-    *:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
-    #videoPreview, #videoPreviewTest, #deviceSelectionPreview { transform: scaleX(-1); background-color: #000; }
-    .timer-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(0,0,0,0.7); padding: 20px; border-radius: 10px; z-index: 50; }
-    #statusMessages { min-height: 4rem; }
+    body { font-family: 'Inter', sans-serif; }
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .tab-content.active {
+      display: block;
+      opacity: 1;
+    }
+    .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+    @media (min-width: 768px) { .chart-container { height: 350px; } }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007AFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+      background-repeat: no-repeat;
+      background-position: right .7em top 50%;
+      background-size: .65em auto;
+      padding-right: 2.5em;
+    }
+    /* For aspect ratio video iframe */
+    .aspect-w-16 { position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ }
+    .aspect-h-9 { /* Helper class, not strictly needed if padding-bottom is set on parent */ }
+    .aspect-w-16 > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 flex flex-col items-center justify-center min-h-screen p-4 selection:bg-sky-500 selection:text-white">
+<body class="bg-stone-100 text-stone-800 antialiased">
 
-<div id="appContainer" class="w-full max-w-2xl bg-slate-800 p-6 md:p-8 rounded-xl shadow-2xl space-y-6">
-
-  <div id="nameSection" class="space-y-4">
-    <h1 class="text-3xl font-bold text-sky-400 text-center">Video Sentence Recorder</h1>
-    <p class="text-slate-300 text-center">Step 1: Enter your name and select a sentence batch.</p>
-    <div>
-      <label for="userName" class="block text-sm font-medium text-sky-300 mb-1">Your Name:</label>
-      <input type="text" id="userName" name="userName" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="E.g., Alex">
-    </div>
-    <div>
-      <label for="sentenceBatch" class="block text-sm font-medium text-sky-300 mb-1">Select Sentence Batch:</label>
-      <select id="sentenceBatch" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-        <option value="">-- Select a Batch --</option>
-        <option value="1">Sentences 1-100</option><option value="2">Sentences 101-200</option><option value="3">Sentences 201-300</option><option value="4">Sentences 301-400</option><option value="5">Sentences 401-500</option><option value="6">Sentences 501-600</option><option value="7">Sentences 601-700</option><option value="8">Sentences 701-800</option><option value="9">Sentences 801-900</option><option value="10">Sentences 901-1000</option>
-      </select>
-    </div>
-    <button id="proceedToDeviceSetupButton" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 transition duration-150 ease-in-out" disabled>
-      Proceed to Device Setup
-    </button>
+<header class="bg-blue-600 text-white shadow-lg">
+  <div class="container mx-auto px-6 py-4">
+    <h1 class="text-3xl font-bold">JGRIDコーパス構築計画</h1>
+    <p class="text-sm">日本語リップリーディング研究のための映像・音声コーパス</p>
   </div>
+</header>
 
-  <div id="deviceSelectionSection" class="hidden space-y-4">
-    <h2 class="text-2xl font-semibold text-sky-400 text-center">Step 2: Select Devices</h2>
-    <p class="text-slate-300 text-center">Choose your camera and microphone. A brief permission request may appear to list devices.</p>
-    <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg">
-      <video id="deviceSelectionPreview" playsinline autoplay muted class="w-full h-full object-cover"></video>
-    </div>
-    <div>
-      <label for="cameraSelect" class="block text-sm font-medium text-sky-300 mb-1">Camera:</label>
-      <select id="cameraSelect" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></select>
-    </div>
-    <div>
-      <label for="micSelect" class="block text-sm font-medium text-sky-300 mb-1">Microphone:</label>
-      <select id="micSelect" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></select>
-    </div>
-    <button id="confirmDevicesAndTestButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-150 ease-in-out" disabled>
-      Confirm Devices & Do Test Recording
-    </button>
-    <button id="backToNameSetupButton" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 transition duration-150 ease-in-out mt-2">
-      Back
-    </button>
+<nav class="bg-white shadow-md sticky top-0 z-50">
+  <div class="container mx-auto px-6">
+    <ul class="flex space-x-4 sm:space-x-8 py-3 overflow-x-auto">
+      <li><button data-tab="intro" class="nav-button text-blue-600 font-semibold pb-2 border-b-2 border-blue-600">はじめに</button></li>
+      <li><button data-tab="overview" class="nav-button text-stone-600 hover:text-blue-600 font-semibold pb-2 border-b-2 border-transparent hover:border-blue-500">JGRID概要</button></li>
+      <li><button data-tab="structure" class="nav-button text-stone-600 hover:text-blue-600 font-semibold pb-2 border-b-2 border-transparent hover:border-blue-500">文構造</button></li>
+      <li><button data-tab="collection" class="nav-button text-stone-600 hover:text-blue-600 font-semibold pb-2 border-b-2 border-transparent hover:border-blue-500">収集・アノテーション</button></li>
+      <li><button data-tab="significance" class="nav-button text-stone-600 hover:text-blue-600 font-semibold pb-2 border-b-2 border-transparent hover:border-blue-500">意義・応用</button></li>
+    </ul>
   </div>
+</nav>
 
-  <div id="testRecordingSection" class="hidden space-y-4">
-    <h2 class="text-2xl font-semibold text-sky-400 text-center">Step 3: Test Your Setup</h2>
-    <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg">
-      <video id="videoPreviewTest" playsinline autoplay muted class="w-full h-full object-cover"></video>
+<main class="container mx-auto p-4 sm:p-6">
+  <section id="intro" class="tab-content active space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">JGRIDコーパスプロジェクトへようこそ！</h2>
+      <p class="mb-3 text-stone-700">
+        この度は、JGRIDコーパス構築プロジェクトにご関心をお寄せいただき、ありがとうございます。
+        このページでは、本プロジェクトの簡単な概要と、皆様にお願いしたい動画撮影の内容についてご説明します。
+      </p>
+
+      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. JGRIDコーパスとは？ 何を目指しているの？</h3>
+      <p class="text-stone-700 mb-2">
+        JGRIDコーパスは、<strong>日本語の「リップリーディング（読唇術）」研究</strong>のための新しい映像・音声データベースです。
+        リップリーディングとは、騒がしい場所や声が聞こえにくい状況など、音声情報が不明瞭な場合に、話者の唇の動きから発話内容を読み取る技術のことです。
+      </p>
+      <p class="text-stone-700 mb-2">
+        現在、英語圏では「GRID Corpus」のような大規模なデータセットが存在し、リップリーディング技術の研究開発が活発に進められています。しかし、日本語には同様の標準的なデータセットがまだ整備されていません。
+      </p>
+      <p class="text-stone-700">
+        そこで私たちは、日本語におけるリップリーディング技術の基盤を構築し、将来的には聴覚に障害を持つ方々のコミュニケーション支援や、様々な応用技術の開発に貢献することを目指して、このJGRIDコーパスを作成しています。
+      </p>
+
+      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">2. どんな動画を撮影するの？</h3>
+      <p class="text-stone-700 mb-2">
+        皆様には、特定の構造で作られた<strong>短い日本語の文章</strong>を、一つずつ読み上げていただく様子を動画で撮影させていただきます。
+      </p>
+      <p class="text-stone-700 mb-2">
+        文章の構造は、例えば「<span class="font-semibold text-emerald-700 font-mono text-base sm:text-lg">副詞 色 物体 を 場所 数字 助詞 動詞。</span>」という形になっており、各要素に具体的な単語が入ります。
+        実際の例文としては、「<span class="font-semibold text-emerald-700 font-mono text-base sm:text-lg">今すぐ 赤い ボールを ア １ に 置く。</span>」のような文になります。
+      </p>
+      <p class="text-stone-700 mb-2">
+        撮影時には、PCやタブレットの画面に表示されるこれらの文章を、できるだけはっきりと、自然な速さで読み上げてください。
+        重要なのは、カメラに対して顔全体、特に<strong>口元の動きがはっきりと映るようにする</strong>ことです。
+      </p>
+
+      <h4 class="text-lg font-semibold text-blue-700 mb-2 mt-6">ご参考：英語のGRIDコーパスの収録動画例</h4>
+      <p class="text-stone-700 mb-2">
+        どのような雰囲気の動画になるか、参考として英語のGRIDコーパスから同様の形式で収録された動画（音声はありません）をご覧ください。
+        JGRIDでは、これと似た形で、日本語の文を読み上げていただきます。
+      </p>
+      <div class="my-4 rounded-md overflow-hidden shadow">
+        <div class="aspect-w-16 aspect-h-9 bg-black">
+          <iframe
+                  src="https://drive.google.com/file/d/1LEguiRfB1lRsExlyKcElK4_ofk09KtSt/view?usp=share_link"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  title="GRID Corpus Example Video">
+          </iframe>
+        </div>
+      </div>
+      <p class="text-sm text-stone-600 mb-4 text-center">（この参考動画は英語のものです。JGRIDでは同様の形式で日本語の文を読み上げます。）</p>
+
+      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">3. ご協力のお願い</h3>
+      <p class="text-stone-700 mb-2">
+        皆様にご提供いただく貴重な映像・音声データは、日本語リップリーディング研究の発展にとって非常に重要なものとなります。
+        このデータセットが、将来の技術革新や社会貢献に繋がることを願っています。
+      </p>
+      <p class="text-stone-700">
+        ご多忙中恐縮ですが、本プロジェクトの趣旨にご理解ご賛同いただき、ご協力賜りますよう心よりお願い申し上げます。
+        撮影の準備ができましたら、次のステップへお進みください。
+      </p>
+      <div class="mt-8 text-center">
+        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+          動画撮影の説明・準備ページへ進む (準備中)
+        </button>
+      </div>
     </div>
-    <div class="bg-slate-700 p-4 rounded-lg shadow text-center">
-      <p class="text-lg font-medium text-slate-100">Please read: <span id="testSentenceDisplay" class="text-yellow-400">天気がいいから散歩しましょう。</span></p>
+  </section>
+
+  <section id="overview" class="tab-content space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">3. JGRIDコーパスの概要</h2>
+      <p class="mb-3">ここでは、構築を目指すJGRIDコーパスの具体的な規模や、収録内容、環境について説明します。高品質なデータ収集のための計画を概観できます。</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-xl font-semibold mb-2">データセットの基本情報</h3>
+          <ul class="list-disc list-inside space-y-2 text-stone-700">
+            <li><strong>話者数:</strong> <span class="font-bold text-emerald-600">15名</span>（男性10名、女性5名）（予定）</li>
+            <li><strong>各話者の発話数:</strong> <span class="font-bold text-emerald-600">1000文</span>（予定）</li>
+            <li><strong>総文数:</strong> <span class="font-bold text-emerald-600">15,000文</span></li>
+            <li><strong>収録内容:</strong> 話者正面の高精細動画と高音質音声を同時記録</li>
+          </ul>
+          <div class="mt-6 chart-container">
+            <canvas id="totalSentencesChart"></canvas>
+          </div>
+          <p class="text-sm text-center text-stone-600 mt-2">図1: JGRIDとGRID CORPUSの総文数比較</p>
+          <div class="mt-6 chart-container">
+            <canvas id="speakerDistributionChart"></canvas>
+          </div>
+          <p class="text-sm text-center text-stone-600 mt-2">図2: JGRID話者数の男女別内訳</p>
+        </div>
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold mb-2">撮影・録音環境</h3>
+            <ul class="list-disc list-inside space-y-1 text-stone-700">
+              <li><strong>カメラ設定:</strong> 顔全体と口元を明瞭に確認可能な、固定された高精細カメラを使用。適切な画角と解像度で、唇の動きの微細な変化を捉えます。</li>
+              <li><strong>音声記録:</strong> マイク付き音声記録デバイスによる高品位録音。ノイズの少ないクリアな音声を確保します。</li>
+              <li><strong>収録環境:</strong> 照明および音響が安定した室内環境で実施。外部からのノイズや光の変化を最小限に抑えます。</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">ラベリング (アノテーション)</h3>
+            <p class="text-stone-700">収録された音声・映像データに対し、発話内容を音素レベルで正確にアノテーション（ラベル付け）します。これにより、リップリーディングモデルの学習において、唇の動きと対応する音素の正確な対応付けを可能にします。</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <button id="startStopTestButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md">Start Test Recording</button>
-    <button id="proceedToMainRecordingButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hidden mt-2">Proceed to Main Recording</button>
-    <button id="backToDeviceSelectionButton" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md mt-2">
-      Back to Device Selection
-    </button>
-  </div>
+  </section>
 
-  <div id="recordingSection" class="hidden space-y-4 relative">
-    <h2 class="text-2xl font-semibold text-sky-400 text-center">Main Recording Session</h2>
-    <div class="bg-slate-700 p-4 rounded-lg shadow">
-      <p class="text-sm text-slate-300">User: <span id="displayName" class="font-medium text-sky-300"></span></p>
-      <p class="text-sm text-slate-300">Batch: <span id="displayBatchInfo" class="font-medium text-sky-300"></span></p>
-      <p class="text-sm text-slate-300">Sentences in Batch: <span id="totalSentencesDisplay" class="font-medium text-sky-300">0</span></p>
+  <section id="structure" class="tab-content space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">4. 文構造の設計（JGRID文）</h2>
+      <p class="mb-3">JGRIDコーパスで用いられる文の構造設計について詳述します。限定された語彙と文法規則に基づき、どのように多様な文が生成されるのか、また、インタラクティブな例文ビルダーで実際に文を作成して体験できます。</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold mb-2">定型文の採用</h3>
+            <p class="text-stone-700">英語GRID CORPUS [1] を参考に、限定された語彙と文法構造に基づく定型文を採用します。目的は以下の通りです：</p>
+            <ul class="list-disc list-inside ml-4 space-y-1 text-stone-700">
+              <li>多様な唇の動きを網羅しつつ、データ収集とアノテーションの効率化を図る。</li>
+              <li>特定の音素や音節の組み合わせを体系的にカバーする。</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">使用語彙カテゴリ（予定）</h3>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-stone-700">
+              <p><strong>副詞:</strong> 今すぐ, ゆっくり, 早く, 丁寧に</p>
+              <p><strong>色:</strong> 赤い, 青い, 緑の, 白い</p>
+              <p><strong>物体:</strong> ボール, 本, ペン, 箱</p>
+              <p><strong>場所:</strong> ア, イ, ウ, エ, オ, カ, キ, ク, ケ, コ, サ, シ, ス, セ, ソ, タ, チ, ツ, テ, ト, ナ, ニ, ヌ, ネ, ノ, ハ, ヒ, フ, ヘ, ホ, マ, ミ, ム, メ, モ, ヤ, ユ, ヨ, ラ, リ, ル, レ, ロ, ワ</p>
+              <p><strong>数詞:</strong> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9</p>
+              <p><strong>動詞:</strong> 置く, 取る, 動かす, 投げる</p>
+            </div>
+            <div class="mt-6 chart-container" style="height: 250px; max-height: 300px;">
+              <canvas id="vocabDistributionChart"></canvas>
+            </div>
+            <p class="text-sm text-center text-stone-600 mt-2">図3: 語彙カテゴリの単語数分布</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">助詞の設定</h3>
+            <p class="text-stone-700">動詞に応じて助詞を以下のように設定します：</p>
+            <ul class="list-disc list-inside ml-4 space-y-1 text-stone-700">
+              <li><strong>置く</strong> → 「に」</li>
+              <li><strong>取る</strong> → 「から」</li>
+              <li><strong>動かす</strong> → 「から」</li>
+              <li><strong>投げる</strong> → 「に」</li>
+            </ul>
+          </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg shadow-inner">
+          <h3 class="text-xl font-semibold text-blue-700 mb-3">JGRID文 インタラクティブビルダー</h3>
+          <p class="text-sm text-stone-600 mb-4">以下のプルダウンメニューから各カテゴリの単語を選択し、「文を生成」ボタンを押してJGRID文を組み立ててみましょう。</p>
+          <div class="space-y-3">
+            <div>
+              <label for="adverb" class="block text-sm font-medium text-stone-700">副詞:</label>
+              <select id="adverb" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+            <div>
+              <label for="color" class="block text-sm font-medium text-stone-700">色:</label>
+              <select id="color" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+            <div>
+              <label for="object" class="block text-sm font-medium text-stone-700">物体:</label>
+              <select id="object" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+            <div>
+              <label for="location" class="block text-sm font-medium text-stone-700">場所:</label>
+              <select id="location" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+            <div>
+              <label for="number" class="block text-sm font-medium text-stone-700">数詞:</label>
+              <select id="number" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+            <div>
+              <label for="verb" class="block text-sm font-medium text-stone-700">動詞:</label>
+              <select id="verb" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-stone-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm bg-white"></select>
+            </div>
+          </div>
+          <button id="generateSentenceBtn" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105">文を生成</button>
+          <div class="mt-6 bg-white p-4 rounded-md shadow">
+            <h4 class="text-md font-semibold text-stone-800 mb-2">生成されたJGRID文:</h4>
+            <p id="generatedSentence" class="text-lg text-emerald-700 font-mono p-3 bg-emerald-50 rounded-md min-h-[3em] flex items-center justify-center text-center"></p>
+            <p class="text-xs text-stone-500 mt-2 text-center">これらの語彙の組み合わせによって、1,000通りの意味を持つ日本語文が生成可能です。</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg relative">
-      <video id="videoPreview" playsinline autoplay muted class="w-full h-full object-cover"></video>
-      <div id="timerDisplayContainer" class="hidden timer-display"><p id="timerText" class="text-6xl font-bold text-yellow-400"></p></div>
+  </section>
+
+  <section id="collection" class="tab-content space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">5. データ収集・収録プロセス</h2>
+      <p class="mb-3">高品質なデータを収集するための具体的な手順や、参加者への配慮、品質管理体制について説明します。一貫性のあるデータ収集が、コーパスの信頼性を高めます。</p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-xl font-semibold mb-2">参加者募集と倫理的配慮</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>募集:</strong> 卒研生を中心に、多様な話者（年齢、性別など）を募集します。</li>
+            <li><strong>同意:</strong> 参加者には研究目的、データ利用範囲、プライバシー保護について十分に説明し、書面による同意を得ます。</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">標準化された収録プロトコル</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>話者の姿勢と距離:</strong> カメラからの距離、顔の向き、頭部の固定（例：顎台の使用）など、収録時の話者の姿勢を標準化し、一貫した映像品質を確保します。</li>
+            <li><strong>発話速度と音量:</strong> 自然な発話速度と音量を維持するよう指示し、過度な発話の抑揚や速度変化を避けます。</li>
+            <li><strong>収録スクリプト:</strong> 生成された1,000文をランダムに提示し、話者が読み上げる形式とします。</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">品質管理</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>映像品質:</strong> 高解像度（例：1080p以上）、高フレームレート（例：30fps以上）での撮影。顔全体と口元の明瞭度をリアルタイムで確認。</li>
+            <li><strong>音声品質:</strong> サンプリングレートとビット深度を高く設定（例：48kHz/24bit）。収録中にノイズレベルをモニタリングし、環境ノイズを最小限に抑えます。</li>
+            <li><strong>同期:</strong> 映像と音声の同期が正確であることを確認します。</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">データ管理</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>ファイル形式:</strong> 映像はMP4、音声はWAVなど、標準的な形式で保存します。</li>
+            <li><strong>命名規則:</strong> 各ファイルに、話者ID、文ID、試行回数などを含む明確な命名規則を適用し、データの整理と検索を容易にします。</li>
+            <li><strong>バックアップ:</strong> データの損失を防ぐため、定期的なバックアップを行います。</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div id="sentenceDisplayContainer" class="bg-slate-700 p-6 rounded-lg shadow text-center min-h-[100px] flex items-center justify-center">
-      <p id="sentenceToRead" class="text-xl md:text-2xl font-medium text-slate-100"></p>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">6. アノテーションプロセス</h2>
+      <p class="mb-3">収集されたデータに音素レベルのラベルを付与するアノテーションプロセスについて解説します。正確なアノテーションは、リップリーディングモデルの学習精度を左右する重要な工程です。</p>
+      <div class="space-y-4">
+        <div>
+          <h3 class="text-xl font-semibold mb-2">アノテーションの重要性</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>モデル学習の基盤:</strong> 正確なアノテーションは、リップリーディングモデルが唇の動きと音素の対応関係を学習するための不可欠な基盤となります。</li>
+            <li><strong>評価指標:</strong> 構築されたモデルの性能評価にも利用されます。</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">アノテーションツールと手法</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>ツール:</strong> 音声分析ソフトウェア（例：Praat）や、映像アノテーションツールを用いて、音素境界を特定し、ラベル付けを行います。</li>
+            <li><strong>音素体系:</strong> 日本語の標準的な音素体系（例：国際音声記号IPAに基づく）に従ってアノテーションを実施します。</li>
+            <li><strong>手動レビュー:</strong> 自動アノテーションと手動レビューを組み合わせることで、アノテーションの精度を向上させます。</li>
+            <li><strong>Forced Alignment Tools (日本語):</strong>
+              <ul class="list-disc list-inside ml-4 space-y-1 text-stone-700">
+                <li><strong> Julius/OpenJTalk:</strong> 日本語の音声認識エンジンであり、Forced Alignmentにも応用可能です。</li>
+                <li><strong> AVIC (Automatic Voice-text Aligner for Japanese):</strong> 東京大学が開発した、日本語の音声とテキストを自動的にアラインするツールです。</li>
+                <li><strong> Phonemizer:</strong> 多言語対応のツールで、日本語の音素アラインメントにも利用できます。</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold mb-2">品質保証</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>アノテーターの訓練:</strong> 複数のアノテーターが関わる場合は、一貫したアノテーション基準を確立し、訓練を行います。</li>
+            <li><strong>相互評価:</strong> 複数のアノテーターによる相互評価や、専門家による最終確認を通じて、アノテーションの信頼性を確保します。</li>
+            <li><strong>エラー修正:</strong> アノテーションエラーを特定し、修正するプロセスを確立します。</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-      <button id="pauseResumeButton" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>Pause</button>
-      <button id="redoButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>Redo</button>
-      <button id="nextSentenceButton" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md">Start First</button>
+  </section>
+
+  <section id="significance" class="tab-content space-y-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">7. 意義・応用可能性</h2>
+      <p class="mb-3">JGRIDコーパスが完成した際の学術的意義や、社会への応用可能性について展望します。このコーパスが、日本語リップリーディング研究の発展にどのように貢献できるかを示します。</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <h3 class="text-xl font-semibold mb-2">日本語リップリーディング研究の標準コーパス</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>研究基盤の確立:</strong> 日本語リップリーディング研究における、初の標準的なマルチモーダルコーパスとして活用されます。</li>
+            <li><strong>比較研究の促進:</strong> 異なる研究機関や研究者間でのモデル性能の比較や、新しいアルゴリズムの評価が容易になります。</li>
+            <li><strong>技術開発の加速:</strong> 高品質なデータセットの提供により、日本語リップリーディング技術のR&Dが加速されます。</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h3 class="text-xl font-semibold mb-2">具体的な応用分野</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>音声機能障害を有する人のコミュニケーション支援のためのAI開発:</strong> 音声機能障害を有する方々が、唇の動きを通じて意思を伝えるためのAIシステム開発に直接活用します。</li>
+            <li><strong>騒音環境下での音声認識:</strong> 工場、建設現場、災害現場など、音声情報が不明瞭な環境での音声認識精度向上。</li>
+            <li><strong>マルチモーダル音声処理研究:</strong> 音声と映像情報を統合した、より高度な音声処理技術の研究開発。話者識別、感情認識など。</li>
+            <li><strong>クロスリンガル研究:</strong> 英語のGRID CORPUSとの比較を通じ、言語間のリップリーディング特性の違いを分析。</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <p class="text-xs text-slate-400 text-center">Press <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> or <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Space</kbd> to advance.</p>
-  </div>
-
-  <div id="completionMessage" class="hidden text-center space-y-3 p-6 bg-slate-700 rounded-lg shadow">
-    <h2 class="text-2xl font-bold text-green-400">All Sentences Recorded!</h2>
-    <p class="text-slate-200">Files saved locally. Cloud backup (if enabled) attempted.</p>
-    <button id="restartButton" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md">Start Over</button>
-  </div>
-
-  <div id="statusMessages" class="mt-4 text-sm text-slate-300 space-y-1 h-20 overflow-y-auto"></div>
-</div>
-
-<div id="customModal" class="modal">
-  <div class="modal-content bg-slate-800 text-slate-100 shadow-xl">
-    <p id="modalMessage" class="mb-4 text-lg"></p>
-    <div class="modal-buttons">
-      <button id="modalOkButton" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500">OK</button>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h2 class="text-2xl font-bold text-blue-600 mb-4">8. 今後の展望</h2>
+      <p class="mb-3">JGRIDコーパス完成後の展開や、コミュニティへの貢献、さらなる技術発展への期待について述べます。</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <h3 class="text-xl font-semibold mb-2">データセットの拡張</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>話者数の増加:</strong> より多様な話者（年齢層、方言、発話スタイルなど）を対象に拡張。</li>
+            <li><strong>語彙・文構造の多様化:</strong> より自由な発話や特定分野の語彙を含むデータセットの追加も検討。</li>
+            <li><strong>収録環境の多様化:</strong> 異なる照明条件や背景ノイズ下での収録も検討。</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h3 class="text-xl font-semibold mb-2">公開とコミュニティへの貢献</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>データセットの公開:</strong> 倫理的配慮とプライバシー保護を遵守した上で、研究コミュニティへの公開を検討。</li>
+            <li><strong>共同研究の促進:</strong> JGRIDコーパスを基盤とした共同研究を積極的に推進。</li>
+            <li><strong>学会発表:</strong> JGRID構築の報告をLIFE2025学会にて行います。</li>
+            <li><strong>AIモデル報告:</strong> このデータセットを用いて作成したLip-Reading AIモデルをiCreateにて報告します。</li>
+          </ul>
+        </div>
+        <div class="space-y-4 md:col-span-2">
+          <h3 class="text-xl font-semibold mb-2">技術開発への継続的貢献</h3>
+          <ul class="list-disc list-inside space-y-1 text-stone-700">
+            <li><strong>ベンチマークとしての活用:</strong> 日本語リップリーディング技術のベンチマークとして広く利用されることを目指す。</li>
+            <li><strong>新たな応用分野の探索:</strong> 医療、教育、エンターテイメントなど、様々な分野での応用可能性を探索。</li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
+</main>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, doc, setDoc, serverTimestamp, collection, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+<footer class="bg-stone-800 text-stone-300 text-center p-6 mt-12">
+  <p>&copy; 2025 JGRIDコーパス構築計画. All rights reserved.</p>
+  <p class="text-sm mt-1">Suman Shrestha shrestha-lab.com</p>
+</footer>
 
-  const nameSection = document.getElementById('nameSection');
-  const userNameInput = document.getElementById('userName');
-  const sentenceBatchSelect = document.getElementById('sentenceBatch');
-  const proceedToDeviceSetupButton = document.getElementById('proceedToDeviceSetupButton');
+<script>
+  const navButtons = document.querySelectorAll('.nav-button');
+  const tabContents = document.querySelectorAll('.tab-content');
 
-  const deviceSelectionSection = document.getElementById('deviceSelectionSection');
-  const deviceSelectionPreview = document.getElementById('deviceSelectionPreview');
-  const cameraSelect = document.getElementById('cameraSelect');
-  const micSelect = document.getElementById('micSelect');
-  const confirmDevicesAndTestButton = document.getElementById('confirmDevicesAndTestButton');
-  const backToNameSetupButton = document.getElementById('backToNameSetupButton');
-
-  const testRecordingSection = document.getElementById('testRecordingSection');
-  const videoPreviewTest = document.getElementById('videoPreviewTest');
-  const startStopTestButton = document.getElementById('startStopTestButton');
-  const proceedToMainRecordingButton = document.getElementById('proceedToMainRecordingButton');
-  const backToDeviceSelectionButton = document.getElementById('backToDeviceSelectionButton');
-
-  const recordingSection = document.getElementById('recordingSection');
-  const videoPreview = document.getElementById('videoPreview');
-  const timerDisplayContainer = document.getElementById('timerDisplayContainer');
-  const timerText = document.getElementById('timerText');
-  const sentenceToRead = document.getElementById('sentenceToRead');
-  const nextSentenceButton = document.getElementById('nextSentenceButton');
-  const redoButton = document.getElementById('redoButton');
-  const pauseResumeButton = document.getElementById('pauseResumeButton');
-  const completionMessage = document.getElementById('completionMessage');
-  const restartButton = document.getElementById('restartButton');
-  const displayName = document.getElementById('displayName');
-  const displayUserId = document.getElementById('displayUserId');
-  const displayBatchInfo = document.getElementById('displayBatchInfo');
-  const totalSentencesDisplay = document.getElementById('totalSentencesDisplay');
-  const statusMessages = document.getElementById('statusMessages');
-  const customModal = document.getElementById('customModal');
-  const modalMessage = document.getElementById('modalMessage');
-  const modalOkButton = document.getElementById('modalOkButton');
-
-  let userName = ''; let currentSentenceIndex = 0; let mediaRecorder; let recordedChunks = [];
-  let mainStream;
-  let tempDeviceStream;
-  let firebaseApp, auth, db, storage, userId, appId; let isFirebaseReady = false;
-  let sentences = []; let userNameEntered = false; let batchSelected = false;
-  let isPaused = false; let countdownInterval; let isFirstSentenceOfSession = true;
-  let isPerformingRedo = false; let selectedCameraId = ''; let selectedMicId = '';
-  let isTestRecordingActive = false;
-
-  // --- SENTENCE BATCH DEFINITIONS ---
-  // IMPORTANT: User MUST fill these arrays with actual sentences.
-  // The application will NOT proceed if a selected batch is empty.
-  // For quick testing, you can add a few sentences to sentences_1_100 like:
-  // const sentences_1_100 = ["This is a test sentence for batch 1.", "Another test sentence."];
-  const sentences_1_100 = [
-    "丁寧に 赤い ボールを シ 1 に 投げる。",
-    "ゆっくり 白い 箱を ヒ 3 から 取る。",
-    "今すぐ 白い 本を ユ 6 から 動かす。",
-    "早く 赤い 本を ミ 6 から 取る。",
-    "ゆっくり 青い 箱を オ 0 から 取る。",
-    "今すぐ 青い 本を ト 8 から 取る。",
-    "丁寧に 青い 箱を ヘ 7 から 取る。",
-    "ゆっくり 赤い 本を ウ 5 から 動かす。",
-    "丁寧に 緑の ペンを キ 2 から 取る。",
-    "早く 白い ボールを チ 0 に 置く。",
-    "今すぐ 青い 箱を ヨ 0 から 取る。",
-    "今すぐ 青い 箱を テ 7 に 投げる。",
-    "早く 緑の 箱を ヨ 3 から 動かす。",
-    "早く 白い 箱を ミ 8 に 置く。",
-    "早く 緑の ボールを ロ 5 から 動かす。",
-    "早く 白い 箱を ス 0 に 置く。",
-    "今すぐ 青い ボールを モ 1 から 動かす。",
-    "ゆっくり 赤い 本を ヘ 2 から 取る。",
-    "丁寧に 緑の 本を ク 7 から 取る。",
-    "早く 白い 本を ミ 5 に 投げる。",
-    "早く 青い 本を コ 6 から 動かす。",
-    "今すぐ 白い 本を ウ 5 に 投げる。",
-    "今すぐ 青い ボールを ル 5 に 投げる。",
-    "今すぐ 赤い ペンを サ 0 に 投げる。",
-    "早く 赤い 本を ヌ 4 から 取る。",
-    "早く 緑の ボールを キ 1 から 動かす。",
-    "ゆっくり 緑の 箱を ア 7 から 動かす。",
-    "丁寧に 青い 本を ス 0 から 動かす。",
-    "丁寧に 青い 箱を ユ 4 に 置く。",
-    "ゆっくり 青い 本を シ 5 から 取る。",
-    "丁寧に 緑の ペンを ミ 1 から 取る。",
-    "丁寧に 青い 本を オ 0 から 取る。",
-    "ゆっくり 緑の 本を メ 7 から 動かす。",
-    "ゆっくり 緑の ボールを ス 8 に 投げる。",
-    "今すぐ 青い ボールを ヒ 8 から 動かす。",
-    "丁寧に 青い 箱を ノ 8 から 取る。",
-    "ゆっくり 青い 箱を ノ 7 に 置く。",
-    "今すぐ 青い ボールを ル 8 から 動かす。",
-    "ゆっくり 白い 箱を ニ 1 から 取る。",
-    "今すぐ 緑の 箱を ク 1 に 投げる。",
-    "今すぐ 青い 本を ヨ 6 に 置く。",
-    "早く 赤い ボールを シ 6 に 置く。",
-    "丁寧に 青い ボールを ノ 3 に 投げる。",
-    "早く 緑の ペンを テ 4 に 置く。",
-    "早く 緑の 本を コ 8 に 投げる。",
-    "ゆっくり 緑の 箱を ツ 0 から 取る。",
-    "早く 赤い ペンを ヌ 4 から 動かす。",
-    "丁寧に 緑の ボールを ヨ 6 から 取る。",
-    "丁寧に 赤い ペンを ト 8 から 取る。",
-    "早く 緑の 本を ロ 5 に 投げる。",
-    "丁寧に 赤い ボールを シ 8 から 動かす。",
-    "ゆっくり 赤い 箱を ク 4 に 投げる。",
-    "ゆっくり 白い 箱を メ 1 から 取る。",
-    "ゆっくり 白い 箱を セ 9 から 取る。",
-    "ゆっくり 赤い 箱を ヨ 5 から 動かす。",
-    "丁寧に 白い ボールを ホ 5 から 取る。",
-    "ゆっくり 赤い 箱を ト 7 に 投げる。",
-    "丁寧に 青い 箱を ソ 0 から 動かす。",
-    "早く 赤い ボールを ス 4 から 動かす。",
-    "ゆっくり 赤い ペンを ヌ 8 から 動かす。",
-    "丁寧に 赤い 箱を ノ 7 に 投げる。",
-    "今すぐ 青い 本を ム 8 に 置く。",
-    "ゆっくり 白い 箱を ロ 7 から 取る。",
-    "今すぐ 緑の 箱を ロ 8 から 動かす。",
-    "ゆっくり 白い 本を テ 1 から 動かす。",
-    "ゆっくり 緑の ボールを セ 7 から 動かす。",
-    "今すぐ 白い 箱を テ 2 から 取る。",
-    "早く 赤い 本を ヨ 2 から 動かす。",
-    "ゆっくり 白い ペンを ク 5 から 取る。",
-    "ゆっくり 緑の ボールを ワ 7 に 置く。",
-    "ゆっくり 赤い 本を キ 3 から 取る。",
-    "丁寧に 白い 本を エ 2 から 取る。",
-    "早く 青い 箱を サ 6 から 動かす。",
-    "今すぐ 青い ボールを ヒ 6 に 投げる。",
-    "早く 赤い ボールを カ 2 に 置く。",
-    "丁寧に 青い 箱を タ 0 に 投げる。",
-    "今すぐ 白い ボールを ニ 1 から 動かす。",
-    "今すぐ 白い ボールを ネ 5 から 取る。",
-    "ゆっくり 緑の 箱を テ 0 に 投げる。",
-    "ゆっくり 緑の ペンを フ 1 から 動かす。",
-    "ゆっくり 白い 本を ラ 2 に 置く。",
-    "今すぐ 緑の ペンを ニ 0 に 置く。",
-    "ゆっくり 白い 箱を モ 9 に 置く。",
-    "今すぐ 緑の 本を ス 5 に 置く。",
-    "今すぐ 赤い 箱を ホ 7 に 置く。",
-    "丁寧に 緑の ボールを ヒ 0 から 取る。",
-    "今すぐ 赤い 箱を シ 3 から 動かす。",
-    "丁寧に 赤い 箱を キ 7 から 取る。",
-    "丁寧に 緑の 箱を ア 6 に 置く。",
-    "丁寧に 白い ペンを ル 8 から 動かす。",
-    "丁寧に 白い ペンを ワ 7 から 取る。",
-    "早く 青い 箱を ウ 3 に 置く。",
-    "丁寧に 赤い 箱を ヌ 5 に 置く。",
-    "今すぐ 青い ペンを タ 2 に 置く。",
-    "丁寧に 緑の 箱を オ 2 に 投げる。",
-    "丁寧に 白い ペンを チ 2 に 置く。",
-    "今すぐ 赤い 本を ラ 7 から 取る。",
-    "早く 緑の ボールを シ 0 に 投げる。",
-    "ゆっくり 青い 本を ユ 1 から 動かす。",
-    "今すぐ 青い ペンを タ 4 から 動かす。"
-  ];
-  const sentences_101_200 = [
-    "早く 緑の 本を ネ 7 に 投げる。",
-    "今すぐ 白い 箱を ユ 8 から 取る。",
-    "今すぐ 緑の ボールを カ 4 から 取る。",
-    "丁寧に 赤い ペンを ケ 6 から 取る。",
-    "丁寧に 青い ペンを カ 1 から 動かす。",
-    "今すぐ 青い ボールを ム 9 に 置く。",
-    "今すぐ 緑の ボールを ヘ 3 から 動かす。",
-    "ゆっくり 青い 箱を マ 1 から 動かす。",
-    "丁寧に 緑の ボールを ケ 6 に 置く。",
-    "丁寧に 赤い ペンを ウ 0 に 投げる。",
-    "ゆっくり 青い 箱を ケ 9 から 動かす。",
-    "丁寧に 緑の 箱を ル 2 に 置く。",
-    "早く 白い ボールを コ 8 から 取る。",
-    "早く 白い 箱を シ 6 に 投げる。",
-    "ゆっくり 緑の ペンを ネ 9 から 動かす。",
-    "丁寧に 緑の 箱を リ 4 に 投げる。",
-    "ゆっくり 白い 本を ラ 2 に 投げる。",
-    "丁寧に 白い ボールを ノ 8 から 取る。",
-    "ゆっくり 青い 箱を ユ 8 に 投げる。",
-    "今すぐ 青い ボールを キ 0 に 投げる。",
-    "ゆっくり 赤い 本を ヒ 1 に 置く。",
-    "ゆっくり 赤い 本を ノ 6 から 取る。",
-    "今すぐ 青い 本を メ 5 に 投げる。",
-    "丁寧に 青い 本を ヒ 1 から 動かす。",
-    "早く 白い ボールを マ 0 から 取る。",
-    "今すぐ 白い ペンを ウ 8 から 取る。",
-    "今すぐ 緑の ボールを ノ 5 に 投げる。",
-    "今すぐ 白い 本を エ 6 に 置く。",
-    "早く 青い 本を シ 7 から 動かす。",
-    "ゆっくり 白い 箱を ニ 6 に 置く。",
-    "早く 赤い ペンを ナ 9 から 動かす。",
-    "今すぐ 赤い ペンを ユ 3 に 投げる。",
-    "ゆっくり 青い 箱を ス 0 から 動かす。",
-    "ゆっくり 白い 本を オ 6 から 動かす。",
-    "早く 赤い 箱を ソ 5 に 置く。",
-    "ゆっくり 白い ボールを ナ 9 に 投げる。",
-    "ゆっくり 青い 本を ス 3 に 置く。",
-    "ゆっくり 赤い ペンを ム 6 から 取る。",
-    "丁寧に 白い 箱を ム 3 から 取る。",
-    "今すぐ 白い 箱を ア 7 に 投げる。",
-    "早く 白い ボールを メ 9 に 投げる。",
-    "丁寧に 青い ボールを ケ 8 に 投げる。",
-    "ゆっくり 青い ボールを フ 4 から 動かす。",
-    "ゆっくり 緑の ボールを ス 5 から 取る。",
-    "丁寧に 赤い 本を ヌ 3 から 取る。",
-    "丁寧に 緑の 箱を フ 0 に 置く。",
-    "今すぐ 緑の ボールを リ 0 に 置く。",
-    "ゆっくり 青い 箱を メ 9 から 動かす。",
-    "ゆっくり 青い ボールを ミ 7 に 置く。",
-    "今すぐ 赤い ボールを ヤ 5 に 置く。",
-    "丁寧に 赤い 箱を ノ 1 から 取る。",
-    "早く 緑の ペンを カ 8 から 取る。",
-    "ゆっくり 白い 箱を モ 5 から 取る。",
-    "今すぐ 赤い 本を ニ 8 に 置く。",
-    "ゆっくり 緑の ボールを ケ 3 に 投げる。",
-    "今すぐ 赤い 箱を ナ 4 から 動かす。",
-    "丁寧に 白い ボールを ト 3 から 取る。",
-    "丁寧に 青い 本を ホ 2 から 動かす。",
-    "ゆっくり 白い ボールを カ 3 から 取る。",
-    "ゆっくり 白い 本を ト 4 から 取る。",
-    "今すぐ 白い 箱を ヤ 3 から 動かす。",
-    "今すぐ 白い ボールを オ 3 から 動かす。",
-    "今すぐ 緑の ボールを リ 1 から 動かす。",
-    "ゆっくり 赤い 本を キ 3 に 置く。",
-    "ゆっくり 白い ペンを イ 3 から 動かす。",
-    "今すぐ 緑の 本を ツ 5 に 投げる。",
-    "丁寧に 緑の 箱を レ 0 に 置く。",
-    "今すぐ 赤い 箱を ア 8 に 投げる。",
-    "今すぐ 赤い ボールを フ 7 から 動かす。",
-    "丁寧に 緑の ボールを ネ 0 から 取る。",
-    "早く 赤い 箱を ト 8 に 投げる。",
-    "早く 白い 箱を ヨ 7 から 動かす。",
-    "今すぐ 赤い 箱を チ 8 に 投げる。",
-    "今すぐ 白い ボールを ラ 2 に 投げる。",
-    "早く 緑の ボールを タ 5 から 動かす。",
-    "今すぐ 白い 本を ノ 6 に 投げる。",
-    "丁寧に 青い 箱を ク 8 に 投げる。",
-    "早く 青い ペンを ミ 9 から 動かす。",
-    "ゆっくり 緑の 本を ハ 4 から 取る。",
-    "ゆっくり 青い ペンを ヌ 5 に 置く。",
-    "ゆっくり 白い 本を モ 3 に 投げる。",
-    "今すぐ 赤い 本を エ 2 から 取る。",
-    "早く 青い 箱を レ 9 に 投げる。",
-    "今すぐ 赤い ボールを ル 8 から 動かす。",
-    "早く 白い 箱を ヨ 8 に 置く。",
-    "早く 青い 箱を メ 3 に 置く。",
-    "ゆっくり 白い ペンを タ 5 に 置く。",
-    "丁寧に 白い ペンを ラ 1 に 投げる。",
-    "丁寧に 青い 箱を ト 2 に 置く。",
-    "今すぐ 青い 箱を キ 7 から 取る。",
-    "丁寧に 白い ペンを メ 5 に 置く。",
-    "ゆっくり 緑の 本を ウ 7 に 投げる。",
-    "早く 青い 箱を リ 3 に 置く。",
-    "今すぐ 白い 箱を シ 2 から 取る。",
-    "丁寧に 赤い ペンを ワ 2 から 取る。",
-    "丁寧に 赤い 本を ナ 5 に 投げる。",
-    "早く 青い 本を ム 4 に 置く。",
-    "今すぐ 赤い ペンを ミ 0 に 投げる。",
-    "今すぐ 緑の ボールを ス 1 に 置く。",
-    "ゆっくり 青い 本を ミ 9 に 置く。"
-  ];
-  const sentences_201_300 = [
-    "ゆっくり 赤い 箱を ホ 7 に 置く。",
-    "今すぐ 青い ペンを マ 8 に 置く。",
-    "ゆっくり 青い 箱を ヤ 0 に 投げる。",
-    "今すぐ 青い 箱を ミ 5 に 置く。",
-    "早く 白い ボールを ケ 2 に 置く。",
-    "早く 赤い ボールを オ 4 に 置く。",
-    "ゆっくり 赤い 本を ロ 2 に 投げる。",
-    "ゆっくり 白い ボールを ネ 2 から 動かす。",
-    "早く 青い ペンを セ 0 に 投げる。",
-    "今すぐ 緑の 箱を イ 0 に 投げる。",
-    "ゆっくり 赤い ボールを ミ 0 に 投げる。",
-    "丁寧に 緑の 本を ヤ 2 から 取る。",
-    "ゆっくり 青い 箱を ム 3 に 置く。",
-    "ゆっくり 青い 本を タ 7 から 動かす。",
-    "今すぐ 赤い 箱を ク 7 から 取る。",
-    "丁寧に 青い 本を ソ 3 から 動かす。",
-    "今すぐ 緑の ペンを ラ 2 から 動かす。",
-    "早く 赤い 本を ニ 7 に 投げる。",
-    "ゆっくり 青い 本を ニ 6 に 投げる。",
-    "早く 緑の 箱を ケ 4 に 投げる。",
-    "今すぐ 白い ペンを ヒ 7 に 投げる。",
-    "丁寧に 白い 箱を カ 2 に 置く。",
-    "早く 赤い ペンを ハ 3 に 投げる。",
-    "早く 白い ボールを ラ 8 に 投げる。",
-    "丁寧に 緑の ペンを ト 3 に 投げる。",
-    "早く 赤い 本を シ 7 に 置く。",
-    "今すぐ 青い 箱を ト 0 に 投げる。",
-    "ゆっくり 青い ボールを メ 8 に 置く。",
-    "丁寧に 白い ボールを マ 2 から 動かす。",
-    "丁寧に 赤い 本を カ 6 から 取る。",
-    "今すぐ 赤い ボールを ア 2 から 動かす。",
-    "今すぐ 青い ボールを サ 2 に 置く。",
-    "ゆっくり 青い 箱を セ 6 に 投げる。",
-    "今すぐ 緑の ペンを ヤ 3 から 動かす。",
-    "早く 緑の 箱を テ 2 から 取る。",
-    "早く 白い ボールを コ 6 から 取る。",
-    "今すぐ 青い 本を キ 1 に 投げる。",
-    "丁寧に 白い 箱を ア 2 に 投げる。",
-    "ゆっくり 青い ペンを ク 7 から 動かす。",
-    "今すぐ 青い 本を ク 6 に 投げる。",
-    "早く 白い 本を レ 8 に 投げる。",
-    "早く 緑の 箱を タ 1 から 動かす。",
-    "早く 白い 箱を ア 3 から 動かす。",
-    "丁寧に 赤い 箱を ユ 0 に 投げる。",
-    "ゆっくり 青い ボールを ム 2 から 動かす。",
-    "ゆっくり 緑の ボールを ヒ 6 に 投げる。",
-    "丁寧に 白い 本を タ 1 に 置く。",
-    "ゆっくり 赤い ペンを ス 8 から 動かす。",
-    "丁寧に 白い 本を タ 1 から 動かす。",
-    "ゆっくり 緑の ペンを イ 7 に 投げる。",
-    "今すぐ 白い 本を ス 8 から 取る。",
-    "ゆっくり 白い ボールを ノ 3 に 置く。",
-    "丁寧に 緑の 箱を ヤ 1 から 動かす。",
-    "早く 青い ペンを モ 1 に 置く。",
-    "早く 青い 本を コ 7 に 投げる。",
-    "ゆっくり 緑の ペンを ネ 2 に 置く。",
-    "丁寧に 赤い ボールを キ 8 から 取る。",
-    "ゆっくり 緑の 箱を カ 0 から 取る。",
-    "早く 赤い 箱を ソ 1 から 動かす。",
-    "早く 白い ペンを ソ 8 に 投げる。",
-    "今すぐ 白い 箱を ワ 9 に 投げる。",
-    "丁寧に 白い 箱を ナ 1 から 動かす。",
-    "今すぐ 緑の 箱を ア 3 から 動かす。",
-    "今すぐ 赤い 箱を ラ 8 に 投げる。",
-    "今すぐ 緑の 箱を ウ 6 に 置く。",
-    "ゆっくり 白い 本を サ 8 に 置く。",
-    "丁寧に 赤い 箱を ナ 9 から 取る。",
-    "ゆっくり 白い ボールを ア 5 から 動かす。",
-    "ゆっくり 赤い 箱を ナ 0 から 動かす。",
-    "ゆっくり 緑の 箱を セ 9 に 投げる。",
-    "早く 緑の 箱を フ 7 に 投げる。",
-    "今すぐ 白い 箱を ナ 7 に 置く。",
-    "丁寧に 緑の 箱を ヨ 0 に 投げる。",
-    "今すぐ 白い ペンを フ 1 に 投げる。",
-    "早く 緑の ペンを シ 6 に 投げる。",
-    "今すぐ 緑の ペンを メ 2 から 動かす。",
-    "今すぐ 緑の ボールを ノ 1 に 置く。",
-    "今すぐ 白い ボールを ツ 9 に 置く。",
-    "ゆっくり 青い ボールを ヤ 5 から 動かす。",
-    "丁寧に 赤い ペンを テ 4 から 取る。",
-    "ゆっくり 緑の 箱を コ 2 に 置く。",
-    "ゆっくり 赤い 箱を ヒ 1 から 取る。",
-    "丁寧に 緑の ペンを ユ 9 に 置く。",
-    "早く 緑の 箱を ア 9 から 取る。",
-    "早く 緑の ボールを ケ 8 から 動かす。",
-    "早く 青い ペンを ハ 1 から 取る。",
-    "ゆっくり 赤い 本を フ 0 から 取る。",
-    "今すぐ 緑の 箱を ミ 0 から 取る。",
-    "丁寧に 赤い ペンを ニ 3 から 動かす。",
-    "ゆっくり 白い 本を ユ 9 に 投げる。",
-    "今すぐ 赤い 箱を ユ 1 から 取る。",
-    "丁寧に 赤い ペンを ウ 6 から 動かす。",
-    "今すぐ 白い 箱を メ 8 から 動かす。",
-    "丁寧に 赤い 本を ス 8 から 取る。",
-    "ゆっくり 赤い 本を ニ 0 から 動かす。",
-    "今すぐ 白い 箱を サ 3 に 投げる。",
-    "丁寧に 青い 本を オ 0 に 置く。",
-    "ゆっくり 赤い 本を イ 5 に 投げる。",
-    "ゆっくり 白い 箱を オ 3 から 動かす。",
-    "早く 緑の ボールを ス 3 から 取る。"
-  ];
-  const sentences_301_400 = [
-    "今すぐ 白い 箱を メ 4 から 動かす。",
-    "早く 白い 箱を マ 8 から 動かす。",
-    "今すぐ 緑の ペンを イ 5 から 動かす。",
-    "今すぐ 赤い 本を ワ 9 に 置く。",
-    "ゆっくり 白い 箱を ワ 9 から 動かす。",
-    "早く 赤い 箱を ソ 6 から 取る。",
-    "早く 赤い ボールを ミ 5 に 置く。",
-    "早く 青い ボールを ス 8 から 取る。",
-    "丁寧に 白い ペンを ウ 2 から 取る。",
-    "早く 青い ペンを タ 3 に 置く。",
-    "早く 緑の 箱を ク 7 から 動かす。",
-    "早く 緑の ボールを ナ 2 に 投げる。",
-    "ゆっくり 青い ペンを テ 8 から 動かす。",
-    "丁寧に 白い 本を ユ 4 に 投げる。",
-    "丁寧に 青い 本を フ 0 から 取る。",
-    "丁寧に 白い ペンを オ 0 から 取る。",
-    "今すぐ 青い 箱を キ 8 に 投げる。",
-    "今すぐ 赤い 本を チ 8 から 動かす。",
-    "早く 青い ボールを リ 8 に 置く。",
-    "丁寧に 青い ペンを ウ 0 から 取る。",
-    "今すぐ 赤い ペンを ク 5 から 動かす。",
-    "早く 青い 本を セ 0 から 動かす。",
-    "ゆっくり 白い 本を タ 1 から 取る。",
-    "早く 青い ペンを ヨ 8 に 置く。",
-    "ゆっくり 赤い 本を ム 8 から 動かす。",
-    "丁寧に 白い ペンを ワ 0 から 動かす。",
-    "丁寧に 青い ボールを ハ 8 に 置く。",
-    "丁寧に 緑の 箱を リ 4 に 投げる。",
-    "今すぐ 赤い ボールを ネ 5 に 置く。",
-    "丁寧に 赤い ボールを ハ 4 から 取る。",
-    "丁寧に 緑の 箱を ワ 0 から 取る。",
-    "今すぐ 緑の ボールを ヌ 9 に 置く。",
-    "今すぐ 緑の ペンを テ 3 に 投げる。",
-    "今すぐ 青い 本を メ 4 に 投げる。",
-    "ゆっくり 緑の ペンを ツ 7 に 投げる。",
-    "今すぐ 青い ペンを ワ 8 から 取る。",
-    "早く 赤い 箱を ハ 8 に 投げる。",
-    "丁寧に 赤い ペンを ヨ 3 に 置く。",
-    "早く 青い 本を キ 2 に 置く。",
-    "今すぐ 緑の 本を キ 2 に 置く。",
-    "今すぐ 青い 箱を ル 4 から 動かす。",
-    "丁寧に 白い 本を ノ 0 から 取る。",
-    "丁寧に 青い 本を ア 6 に 置く。",
-    "今すぐ 赤い 本を カ 2 に 投げる。",
-    "丁寧に 緑の ペンを ル 8 から 取る。",
-    "ゆっくり 白い 本を ネ 9 から 取る。",
-    "早く 白い 本を エ 2 から 動かす。",
-    "ゆっくり 白い ボールを カ 5 から 取る。",
-    "ゆっくり 青い 箱を ケ 4 から 動かす。",
-    "ゆっくり 青い ペンを チ 5 に 置く。",
-    "早く 白い ボールを ル 0 に 置く。",
-    "丁寧に 赤い ペンを ニ 7 に 投げる。",
-    "早く 緑の 箱を ネ 5 から 動かす。",
-    "丁寧に 白い ボールを ミ 1 に 置く。",
-    "丁寧に 緑の 箱を ナ 2 から 取る。",
-    "ゆっくり 緑の 本を サ 6 に 投げる。",
-    "早く 赤い ペンを ラ 4 から 取る。",
-    "今すぐ 赤い ボールを ヒ 7 から 取る。",
-    "丁寧に 赤い 本を メ 4 に 置く。",
-    "今すぐ 赤い ボールを ユ 6 に 置く。",
-    "今すぐ 白い ペンを シ 7 に 投げる。",
-    "丁寧に 赤い 本を ヘ 7 から 動かす。",
-    "ゆっくり 赤い 箱を ユ 3 に 投げる。",
-    "早く 青い ボールを コ 3 から 動かす。",
-    "今すぐ 白い 本を サ 4 から 取る。",
-    "丁寧に 赤い ボールを ヌ 7 に 投げる。",
-    "ゆっくり 赤い 箱を ク 5 から 動かす。",
-    "今すぐ 白い 箱を ヒ 8 に 置く。",
-    "ゆっくり 赤い ボールを ノ 1 に 投げる。",
-    "今すぐ 赤い 箱を ワ 2 に 投げる。",
-    "ゆっくり 青い 本を サ 8 から 動かす。",
-    "今すぐ 青い 箱を ユ 0 に 投げる。",
-    "今すぐ 白い 箱を ナ 1 に 投げる。",
-    "ゆっくり 緑の ペンを ヘ 2 に 投げる。",
-    "早く 白い ボールを サ 6 に 投げる。",
-    "ゆっくり 白い 本を サ 1 に 置く。",
-    "ゆっくり 青い ボールを ヤ 1 から 動かす。",
-    "ゆっくり 青い 箱を ワ 1 から 動かす。",
-    "今すぐ 青い 箱を イ 9 から 取る。",
-    "丁寧に 緑の 本を ラ 5 に 置く。",
-    "早く 白い ペンを タ 1 から 動かす。",
-    "早く 赤い ペンを ノ 9 から 取る。",
-    "ゆっくり 緑の ボールを ソ 0 に 投げる。",
-    "丁寧に 青い 本を ニ 1 に 置く。",
-    "ゆっくり 青い 箱を ル 1 に 置く。",
-    "今すぐ 白い 本を セ 4 から 取る。",
-    "丁寧に 赤い 本を ル 3 から 動かす。",
-    "丁寧に 白い 本を タ 2 から 取る。",
-    "丁寧に 青い ペンを メ 4 に 投げる。",
-    "ゆっくり 赤い ペンを ヘ 3 から 取る。",
-    "今すぐ 赤い ボールを ハ 5 から 動かす。",
-    "早く 赤い 箱を ツ 1 から 動かす。",
-    "今すぐ 赤い ペンを ホ 9 から 動かす。",
-    "丁寧に 青い ボールを ヘ 1 に 置く。",
-    "ゆっくり 白い 箱を ア 6 から 取る。",
-    "早く 赤い 箱を ロ 4 に 置く。",
-    "早く 青い 箱を ヘ 9 から 取る。",
-    "今すぐ 青い 箱を ム 2 に 置く。",
-    "今すぐ 緑の ボールを タ 2 から 取る。",
-    "丁寧に 青い 箱を テ 2 に 置く。"
-  ];
-  const sentences_401_500 = [
-    "ゆっくり 白い ボールを ク 6 から 動かす。",
-    "今すぐ 赤い ボールを マ 5 に 置く。",
-    "ゆっくり 緑の 箱を ヘ 1 から 動かす。",
-    "早く 青い ボールを ヌ 9 から 取る。",
-    "早く 青い ボールを ニ 9 から 取る。",
-    "丁寧に 赤い 本を タ 7 から 動かす。",
-    "今すぐ 青い ペンを サ 8 から 取る。",
-    "早く 白い ペンを ユ 1 に 投げる。",
-    "早く 緑の ペンを ケ 4 に 置く。",
-    "早く 白い 箱を レ 2 に 置く。",
-    "ゆっくり 赤い ペンを オ 3 に 投げる。",
-    "今すぐ 白い ペンを ケ 9 に 置く。",
-    "丁寧に 青い 本を ネ 9 から 動かす。",
-    "今すぐ 赤い ボールを エ 8 から 取る。",
-    "丁寧に 赤い 本を メ 0 に 投げる。",
-    "早く 青い ボールを ラ 6 に 投げる。",
-    "今すぐ 緑の ペンを ク 5 から 動かす。",
-    "今すぐ 赤い 箱を キ 1 に 置く。",
-    "早く 青い 箱を ヌ 0 に 投げる。",
-    "ゆっくり 緑の ボールを ソ 4 から 動かす。",
-    "丁寧に 青い ペンを サ 2 に 置く。",
-    "今すぐ 赤い 本を ケ 3 から 動かす。",
-    "ゆっくり 白い 箱を ケ 7 に 投げる。",
-    "早く 緑の 箱を ワ 1 から 取る。",
-    "丁寧に 緑の 箱を ク 1 に 投げる。",
-    "早く 赤い ボールを タ 0 に 置く。",
-    "今すぐ 白い 本を メ 4 から 動かす。",
-    "今すぐ 赤い ペンを ウ 1 に 置く。",
-    "丁寧に 白い ボールを ヒ 2 から 動かす。",
-    "ゆっくり 青い ボールを ラ 1 から 動かす。",
-    "ゆっくり 青い ペンを ワ 9 に 置く。",
-    "ゆっくり 青い 本を ヨ 2 に 置く。",
-    "早く 青い 本を サ 4 から 取る。",
-    "丁寧に 赤い ペンを マ 4 から 動かす。",
-    "丁寧に 白い 箱を カ 9 に 置く。",
-    "ゆっくり 緑の 箱を シ 1 に 置く。",
-    "今すぐ 白い ボールを オ 8 に 投げる。",
-    "早く 赤い 箱を モ 1 から 動かす。",
-    "丁寧に 緑の 本を ラ 0 に 投げる。",
-    "丁寧に 赤い ペンを オ 3 から 動かす。",
-    "丁寧に 緑の ボールを マ 8 から 動かす。",
-    "早く 白い 箱を コ 6 から 取る。",
-    "ゆっくり 白い ペンを ヒ 4 から 取る。",
-    "今すぐ 青い ボールを ク 1 から 動かす。",
-    "今すぐ 白い 本を サ 1 から 動かす。",
-    "丁寧に 白い ボールを ヌ 2 に 投げる。",
-    "早く 青い 本を モ 9 から 動かす。",
-    "早く 緑の 本を ユ 9 から 動かす。",
-    "今すぐ 青い 本を ハ 5 から 動かす。",
-    "早く 緑の ペンを ウ 7 に 投げる。",
-    "今すぐ 白い 箱を オ 4 に 置く。",
-    "早く 青い ボールを ラ 3 から 動かす。",
-    "早く 緑の 箱を ヘ 1 に 置く。",
-    "今すぐ 緑の 本を ク 4 に 投げる。",
-    "今すぐ 緑の ボールを キ 2 から 動かす。",
-    "早く 赤い 箱を ヒ 1 に 投げる。",
-    "早く 青い 本を コ 8 から 動かす。",
-    "早く 緑の ペンを ツ 3 から 動かす。",
-    "今すぐ 赤い ペンを リ 1 から 取る。",
-    "早く 赤い ペンを ミ 9 に 置く。",
-    "ゆっくり 緑の 本を ト 8 に 置く。",
-    "ゆっくり 緑の ペンを ホ 4 から 動かす。",
-    "今すぐ 青い ペンを ソ 2 から 取る。",
-    "丁寧に 青い 箱を マ 1 から 取る。",
-    "丁寧に 青い ボールを ヨ 7 から 取る。",
-    "今すぐ 青い ボールを ル 2 に 投げる。",
-    "ゆっくり 青い 箱を ヤ 5 から 動かす。",
-    "丁寧に 赤い ボールを モ 1 から 動かす。",
-    "今すぐ 白い 本を ア 6 から 動かす。",
-    "丁寧に 赤い ペンを ネ 7 に 投げる。",
-    "早く 白い ペンを フ 2 に 投げる。",
-    "丁寧に 青い ボールを ソ 3 から 動かす。",
-    "丁寧に 赤い ペンを タ 3 に 投げる。",
-    "今すぐ 赤い 箱を ユ 7 に 置く。",
-    "ゆっくり 緑の 本を コ 8 から 取る。",
-    "丁寧に 緑の 本を ア 0 から 取る。",
-    "今すぐ 青い 箱を テ 2 に 投げる。",
-    "早く 白い 本を ヤ 0 に 置く。",
-    "ゆっくり 緑の 箱を ム 1 に 置く。",
-    "ゆっくり 青い ボールを ケ 3 に 投げる。",
-    "今すぐ 赤い ペンを メ 2 に 置く。",
-    "丁寧に 青い ペンを エ 9 から 取る。",
-    "丁寧に 青い ボールを ヨ 6 に 置く。",
-    "ゆっくり 青い ペンを ヌ 5 から 動かす。",
-    "ゆっくり 緑の ボールを シ 2 から 取る。",
-    "ゆっくり 緑の ボールを レ 6 に 投げる。",
-    "丁寧に 青い 本を ホ 4 に 置く。",
-    "早く 赤い ペンを ヒ 5 に 置く。",
-    "丁寧に 白い 箱を ヘ 3 から 動かす。",
-    "ゆっくり 緑の 箱を ス 8 に 投げる。",
-    "早く 白い 箱を ナ 6 から 取る。",
-    "丁寧に 白い ボールを チ 8 から 取る。",
-    "ゆっくり 緑の ボールを ル 5 から 動かす。",
-    "丁寧に 青い ペンを ヨ 6 から 動かす。",
-    "今すぐ 青い ボールを モ 3 から 動かす。",
-    "ゆっくり 緑の ペンを ロ 1 から 動かす。",
-    "今すぐ 白い ボールを シ 9 に 置く。",
-    "ゆっくり 白い 本を ノ 9 から 取る。",
-    "ゆっくり 赤い 箱を オ 2 に 置く。",
-    "早く 緑の 箱を キ 3 から 動かす。"
-  ];
-  const sentences_501_600 = [
-    "早く 緑の ペンを イ 7 から 動かす。",
-    "丁寧に 赤い 本を ア 5 に 投げる。",
-    "早く 青い 本を カ 6 から 取る。",
-    "ゆっくり 白い ペンを ミ 5 に 置く。",
-    "今すぐ 赤い 本を エ 5 に 投げる。",
-    "ゆっくり 赤い ボールを オ 5 に 投げる。",
-    "ゆっくり 緑の 箱を シ 1 から 動かす。",
-    "ゆっくり 赤い ボールを ム 8 に 置く。",
-    "丁寧に 青い ボールを メ 0 に 置く。",
-    "丁寧に 赤い 本を ア 9 に 投げる。",
-    "丁寧に 青い ペンを ネ 4 から 動かす。",
-    "今すぐ 白い 本を ロ 4 に 投げる。",
-    "早く 赤い 箱を ソ 9 に 置く。",
-    "ゆっくり 赤い 本を セ 6 に 投げる。",
-    "丁寧に 緑の ペンを ス 3 に 投げる。",
-    "今すぐ 青い 箱を ネ 2 から 取る。",
-    "今すぐ 赤い 箱を ヌ 0 から 取る。",
-    "今すぐ 緑の 本を ル 5 に 置く。",
-    "丁寧に 青い 箱を ア 1 に 投げる。",
-    "ゆっくり 赤い 箱を モ 3 に 置く。",
-    "ゆっくり 緑の ボールを ニ 2 に 置く。",
-    "丁寧に 白い ボールを ワ 9 に 置く。",
-    "丁寧に 緑の 箱を エ 8 に 置く。",
-    "今すぐ 青い ボールを ル 8 に 投げる。",
-    "早く 緑の 箱を ユ 2 に 置く。",
-    "丁寧に 白い ペンを ニ 3 から 取る。",
-    "ゆっくり 白い 本を セ 9 から 取る。",
-    "丁寧に 白い 本を ソ 2 に 置く。",
-    "ゆっくり 赤い 本を メ 2 から 取る。",
-    "早く 緑の ボールを シ 8 に 置く。",
-    "ゆっくり 緑の 本を チ 3 に 投げる。",
-    "早く 赤い ボールを ニ 1 に 置く。",
-    "丁寧に 白い 箱を ヤ 8 に 投げる。",
-    "ゆっくり 赤い ペンを ラ 0 に 投げる。",
-    "ゆっくり 緑の ペンを エ 7 から 取る。",
-    "丁寧に 赤い 本を ヒ 7 から 動かす。",
-    "丁寧に 緑の 本を コ 4 から 動かす。",
-    "ゆっくり 赤い 箱を ケ 1 に 投げる。",
-    "今すぐ 青い ボールを ウ 7 に 投げる。",
-    "丁寧に 青い ペンを ロ 6 から 取る。",
-    "丁寧に 緑の ペンを ナ 9 から 取る。",
-    "丁寧に 青い 本を ニ 1 に 投げる。",
-    "早く 白い ボールを ル 7 に 投げる。",
-    "早く 青い 箱を ト 4 から 動かす。",
-    "ゆっくり 赤い ボールを セ 4 に 投げる。",
-    "早く 白い ボールを コ 7 に 置く。",
-    "今すぐ 赤い 本を ヨ 2 から 取る。",
-    "ゆっくり 緑の 箱を カ 2 に 置く。",
-    "ゆっくり 青い ペンを オ 4 から 取る。",
-    "丁寧に 緑の 箱を ケ 4 に 置く。",
-    "ゆっくり 緑の ペンを ヒ 2 に 置く。",
-    "丁寧に 青い ペンを シ 6 から 取る。",
-    "ゆっくり 白い ペンを テ 3 に 投げる。",
-    "早く 赤い 箱を メ 9 に 置く。",
-    "ゆっくり 緑の ペンを ナ 9 に 置く。",
-    "今すぐ 青い ペンを ラ 5 に 置く。",
-    "丁寧に 白い 箱を ナ 1 から 取る。",
-    "今すぐ 青い ペンを カ 6 に 置く。",
-    "今すぐ 白い 本を ヒ 1 から 取る。",
-    "早く 青い 箱を ヘ 8 に 投げる。",
-    "丁寧に 赤い ボールを フ 9 に 投げる。",
-    "早く 白い ペンを ナ 6 から 取る。",
-    "ゆっくり 赤い ボールを イ 2 から 動かす。",
-    "早く 緑の 箱を ム 4 に 投げる。",
-    "ゆっくり 白い 本を ヘ 0 から 取る。",
-    "早く 白い ペンを フ 1 から 取る。",
-    "早く 白い 本を ラ 8 から 動かす。",
-    "丁寧に 赤い 本を タ 4 に 置く。",
-    "丁寧に 緑の ペンを キ 0 に 置く。",
-    "早く 緑の ペンを ミ 9 から 取る。",
-    "ゆっくり 赤い ペンを ハ 7 に 投げる。",
-    "丁寧に 赤い ペンを ロ 1 から 取る。",
-    "ゆっくり 白い 箱を タ 3 から 動かす。",
-    "ゆっくり 青い ペンを テ 6 に 置く。",
-    "今すぐ 緑の ボールを ミ 3 から 取る。",
-    "今すぐ 緑の ボールを シ 6 に 投げる。",
-    "ゆっくり 赤い 箱を ミ 8 から 取る。",
-    "ゆっくり 赤い 箱を メ 0 に 置く。",
-    "丁寧に 白い 本を オ 8 に 投げる。",
-    "ゆっくり 緑の ボールを ウ 6 から 動かす。",
-    "ゆっくり 緑の ボールを リ 5 に 置く。",
-    "早く 青い 箱を ク 2 から 取る。",
-    "今すぐ 緑の ボールを エ 4 に 置く。",
-    "ゆっくり 白い 本を ホ 5 から 動かす。",
-    "早く 白い ペンを メ 8 に 置く。",
-    "ゆっくり 青い 本を テ 9 に 投げる。",
-    "早く 赤い ボールを ネ 0 から 動かす。",
-    "ゆっくり 赤い 本を ア 8 に 投げる。",
-    "ゆっくり 緑の 本を モ 9 に 投げる。",
-    "ゆっくり 赤い ペンを ハ 8 に 置く。",
-    "今すぐ 白い 箱を ア 4 に 投げる。",
-    "早く 白い 本を メ 1 から 取る。",
-    "丁寧に 赤い ボールを チ 9 から 取る。",
-    "今すぐ 青い 箱を チ 8 に 投げる。",
-    "今すぐ 青い ボールを フ 6 から 動かす。",
-    "ゆっくり 赤い ボールを ラ 1 から 取る。",
-    "丁寧に 緑の ボールを ハ 6 から 動かす。",
-    "早く 赤い 箱を ヘ 2 から 取る。",
-    "ゆっくり 青い ペンを リ 9 に 置く。",
-    "丁寧に 赤い ペンを ヤ 6 から 動かす。"
-  ];
-  const sentences_601_700 = [
-    "今すぐ 緑の 箱を ヘ 4 から 動かす。",
-    "丁寧に 青い ペンを ヌ 0 に 投げる。",
-    "今すぐ 白い 本を ツ 4 から 取る。",
-    "今すぐ 緑の 本を メ 1 に 投げる。",
-    "ゆっくり 赤い 本を ヒ 3 に 置く。",
-    "丁寧に 緑の ペンを タ 8 から 動かす。",
-    "今すぐ 緑の ペンを イ 1 に 投げる。",
-    "丁寧に 青い 本を ク 2 に 投げる。",
-    "ゆっくり 赤い 箱を フ 0 に 置く。",
-    "早く 白い ペンを モ 8 に 投げる。",
-    "丁寧に 青い 箱を ス 4 に 置く。",
-    "ゆっくり 赤い 箱を ミ 7 から 取る。",
-    "ゆっくり 赤い 本を チ 5 から 取る。",
-    "早く 白い 本を テ 4 に 投げる。",
-    "早く 緑の 箱を ヒ 1 に 投げる。",
-    "ゆっくり 緑の 箱を モ 3 から 取る。",
-    "ゆっくり 緑の ボールを ホ 4 に 置く。",
-    "早く 緑の ペンを レ 2 から 動かす。",
-    "丁寧に 青い 本を ホ 2 に 投げる。",
-    "丁寧に 白い ペンを セ 1 から 取る。",
-    "丁寧に 赤い ボールを オ 8 に 投げる。",
-    "ゆっくり 赤い 箱を イ 4 から 取る。",
-    "丁寧に 赤い 箱を コ 2 から 取る。",
-    "丁寧に 青い 箱を ネ 3 に 投げる。",
-    "今すぐ 青い ペンを シ 1 から 取る。",
-    "ゆっくり 緑の 本を エ 9 に 投げる。",
-    "今すぐ 青い 箱を ラ 3 から 動かす。",
-    "今すぐ 赤い 箱を ヤ 8 に 置く。",
-    "早く 赤い ペンを エ 1 に 置く。",
-    "ゆっくり 緑の 箱を ヤ 0 から 取る。",
-    "今すぐ 青い ボールを ナ 7 に 置く。",
-    "丁寧に 赤い ボールを ハ 1 に 投げる。",
-    "今すぐ 赤い 本を タ 6 から 動かす。",
-    "丁寧に 赤い 本を オ 5 から 取る。",
-    "丁寧に 青い ペンを チ 7 に 置く。",
-    "丁寧に 青い 箱を ニ 7 に 置く。",
-    "早く 緑の ボールを ア 7 から 動かす。",
-    "ゆっくり 緑の ペンを ヘ 1 に 置く。",
-    "今すぐ 赤い ペンを ユ 2 から 取る。",
-    "今すぐ 青い ペンを ヨ 0 から 取る。",
-    "今すぐ 緑の 箱を タ 1 から 取る。",
-    "丁寧に 緑の ボールを ユ 7 に 置く。",
-    "ゆっくり 赤い 箱を ラ 7 に 置く。",
-    "今すぐ 青い 箱を エ 7 に 投げる。",
-    "今すぐ 緑の ボールを ユ 6 に 投げる。",
-    "ゆっくり 緑の ボールを カ 5 から 動かす。",
-    "今すぐ 赤い 箱を マ 5 に 置く。",
-    "ゆっくり 白い 本を フ 9 から 取る。",
-    "早く 白い 本を リ 4 から 取る。",
-    "丁寧に 青い ペンを カ 5 から 動かす。",
-    "ゆっくり 緑の ボールを マ 7 に 置く。",
-    "ゆっくり 赤い ボールを ミ 7 から 動かす。",
-    "ゆっくり 青い 箱を ノ 8 に 投げる。",
-    "ゆっくり 緑の ペンを ウ 8 に 置く。",
-    "早く 赤い 箱を ム 4 から 動かす。",
-    "ゆっくり 緑の ボールを シ 2 に 置く。",
-    "ゆっくり 赤い 箱を モ 8 に 置く。",
-    "早く 白い ボールを ラ 6 に 置く。",
-    "早く 白い 本を イ 1 から 取る。",
-    "丁寧に 白い ボールを チ 5 から 動かす。",
-    "早く 白い ボールを ミ 6 から 動かす。",
-    "早く 青い 本を キ 7 に 投げる。",
-    "丁寧に 赤い 本を ニ 1 から 取る。",
-    "早く 緑の 箱を ネ 2 から 動かす。",
-    "ゆっくり 緑の 箱を リ 5 から 取る。",
-    "早く 赤い 箱を ト 2 から 取る。",
-    "早く 青い 箱を ス 8 に 置く。",
-    "今すぐ 青い ペンを ヘ 8 に 投げる。",
-    "早く 白い ボールを セ 5 から 取る。",
-    "早く 白い 本を ツ 6 に 置く。",
-    "ゆっくり 白い 本を ク 6 から 取る。",
-    "ゆっくり 緑の ボールを ヌ 1 に 置く。",
-    "今すぐ 赤い ペンを ナ 7 に 置く。",
-    "今すぐ 青い ボールを メ 2 から 動かす。",
-    "早く 白い 本を ス 2 から 動かす。",
-    "ゆっくり 青い ボールを ル 7 に 投げる。",
-    "早く 青い 箱を キ 5 に 投げる。",
-    "丁寧に 青い 箱を ソ 2 に 置く。",
-    "丁寧に 緑の ペンを ウ 6 に 置く。",
-    "早く 赤い ペンを ル 6 から 取る。",
-    "ゆっくり 赤い ボールを ヘ 1 に 置く。",
-    "ゆっくり 青い ペンを セ 3 から 動かす。",
-    "早く 青い 本を ユ 2 から 取る。",
-    "ゆっくり 白い 箱を ツ 4 から 動かす。",
-    "ゆっくり 赤い 本を ツ 3 から 取る。",
-    "今すぐ 青い ボールを ケ 7 に 投げる。",
-    "丁寧に 白い 箱を チ 4 から 動かす。",
-    "早く 赤い 本を ナ 6 から 取る。",
-    "早く 青い 箱を チ 1 から 取る。",
-    "ゆっくり 白い ボールを ナ 7 に 置く。",
-    "早く 白い 本を シ 9 に 置く。",
-    "ゆっくり 青い 本を ル 2 から 動かす。",
-    "丁寧に 赤い 箱を ク 1 から 取る。",
-    "今すぐ 緑の ボールを ケ 5 に 投げる。",
-    "丁寧に 緑の ボールを ウ 5 に 投げる。",
-    "今すぐ 青い ペンを タ 2 に 置く。",
-    "ゆっくり 青い 箱を ケ 6 から 動かす。",
-    "今すぐ 緑の 本を オ 5 から 動かす。",
-    "今すぐ 白い ペンを ウ 6 に 投げる。",
-    "今すぐ 緑の ペンを マ 2 から 動かす。"
-  ];
-  const sentences_701_800 = [
-    "早く 白い 本を ヤ 3 から 動かす。",
-    "ゆっくり 緑の ボールを レ 8 に 投げる。",
-    "早く 赤い ペンを フ 3 から 取る。",
-    "丁寧に 赤い ペンを イ 7 に 置く。",
-    "ゆっくり 白い 箱を ム 3 から 動かす。",
-    "今すぐ 白い ボールを リ 7 に 投げる。",
-    "今すぐ 赤い ボールを セ 3 から 動かす。",
-    "早く 緑の 本を ア 2 に 投げる。",
-    "丁寧に 赤い 本を キ 3 に 置く。",
-    "今すぐ 緑の ボールを ヘ 2 に 置く。",
-    "早く 緑の 本を ア 3 に 投げる。",
-    "今すぐ 赤い 本を セ 6 から 取る。",
-    "早く 青い 箱を リ 4 から 動かす。",
-    "今すぐ 赤い ペンを オ 9 に 置く。",
-    "早く 赤い ペンを ミ 0 に 置く。",
-    "早く 緑の 本を メ 0 から 取る。",
-    "ゆっくり 白い 箱を ス 7 から 動かす。",
-    "今すぐ 白い ボールを ウ 0 から 動かす。",
-    "ゆっくり 緑の 本を ヘ 4 から 取る。",
-    "ゆっくり 緑の 箱を ヨ 6 に 置く。",
-    "丁寧に 青い ペンを タ 2 から 取る。",
-    "早く 白い 本を メ 0 に 投げる。",
-    "今すぐ 赤い ペンを リ 6 から 動かす。",
-    "今すぐ 白い ペンを サ 8 から 取る。",
-    "丁寧に 緑の ボールを ヨ 7 に 置く。",
-    "ゆっくり 青い ボールを フ 0 に 投げる。",
-    "今すぐ 赤い 本を フ 8 に 置く。",
-    "早く 青い 箱を ム 8 から 取る。",
-    "ゆっくり 赤い ボールを ソ 7 に 置く。",
-    "今すぐ 青い 箱を ツ 0 に 置く。",
-    "今すぐ 赤い 箱を イ 7 から 動かす。",
-    "早く 赤い 箱を ク 4 に 投げる。",
-    "早く 白い ペンを ウ 1 から 動かす。",
-    "今すぐ 白い 箱を オ 1 から 動かす。",
-    "丁寧に 赤い ペンを ヨ 6 から 動かす。",
-    "今すぐ 白い ペンを ワ 0 から 取る。",
-    "ゆっくり 緑の 本を ウ 7 から 取る。",
-    "ゆっくり 赤い 本を ウ 9 から 取る。",
-    "ゆっくり 青い 本を セ 1 に 投げる。",
-    "ゆっくり 白い 箱を シ 1 に 置く。",
-    "今すぐ 青い 箱を ソ 6 から 動かす。",
-    "今すぐ 青い 本を ユ 2 に 投げる。",
-    "ゆっくり 青い 箱を ル 5 に 置く。",
-    "ゆっくり 赤い 箱を レ 2 に 投げる。",
-    "今すぐ 白い ボールを テ 3 に 投げる。",
-    "丁寧に 白い ボールを サ 7 に 投げる。",
-    "ゆっくり 緑の 本を ウ 5 から 取る。",
-    "ゆっくり 青い 本を タ 0 に 投げる。",
-    "早く 緑の 箱を エ 4 から 動かす。",
-    "丁寧に 赤い 本を ロ 8 に 置く。",
-    "今すぐ 赤い 本を セ 0 に 投げる。",
-    "ゆっくり 緑の ボールを ヘ 0 に 置く。",
-    "今すぐ 赤い 本を オ 4 から 動かす。",
-    "ゆっくり 赤い 箱を シ 3 に 投げる。",
-    "早く 赤い 本を タ 6 から 動かす。",
-    "丁寧に 赤い 本を ニ 2 から 取る。",
-    "早く 白い ペンを タ 3 に 置く。",
-    "早く 白い ペンを ス 5 に 置く。",
-    "早く 赤い ボールを ヨ 4 に 置く。",
-    "早く 赤い ペンを ム 9 に 投げる。",
-    "丁寧に 青い ペンを ニ 2 に 置く。",
-    "ゆっくり 青い ボールを シ 8 から 取る。",
-    "早く 緑の 本を ソ 7 から 動かす。",
-    "丁寧に 白い 本を ソ 4 から 動かす。",
-    "早く 緑の 箱を メ 1 から 動かす。",
-    "丁寧に 赤い 本を ミ 5 に 置く。",
-    "丁寧に 白い 本を ワ 9 から 動かす。",
-    "丁寧に 赤い 本を ア 1 に 置く。",
-    "今すぐ 青い 箱を リ 5 に 投げる。",
-    "ゆっくり 緑の 箱を ス 5 から 取る。",
-    "早く 白い ボールを ヤ 3 から 動かす。",
-    "ゆっくり 青い 本を ヘ 3 に 投げる。",
-    "今すぐ 赤い 本を ツ 4 から 動かす。",
-    "早く 青い 箱を サ 0 に 投げる。",
-    "早く 青い 本を サ 0 に 投げる。",
-    "今すぐ 緑の 箱を ヘ 8 から 動かす。",
-    "今すぐ 青い ペンを ヤ 2 から 動かす。",
-    "丁寧に 青い ペンを ミ 9 に 投げる。",
-    "丁寧に 緑の ボールを コ 7 から 取る。",
-    "早く 緑の 本を チ 2 から 動かす。",
-    "ゆっくり 緑の 本を ア 7 に 置く。",
-    "ゆっくり 赤い 本を ア 3 から 取る。",
-    "丁寧に 白い ペンを ケ 0 から 取る。",
-    "早く 白い 箱を コ 3 に 投げる。",
-    "早く 緑の ボールを ラ 4 に 投げる。",
-    "早く 青い 本を コ 9 から 動かす。",
-    "丁寧に 白い 箱を ア 3 から 取る。",
-    "丁寧に 赤い 本を レ 1 に 投げる。",
-    "今すぐ 白い 本を ヨ 5 に 投げる。",
-    "ゆっくり 白い ペンを ロ 4 から 動かす。",
-    "ゆっくり 緑の 箱を ニ 9 から 動かす。",
-    "丁寧に 緑の ボールを ヤ 7 に 置く。",
-    "今すぐ 白い 本を ケ 7 から 取る。",
-    "ゆっくり 緑の 箱を コ 0 から 動かす。",
-    "丁寧に 白い ボールを ヌ 2 に 置く。",
-    "今すぐ 緑の ペンを エ 1 から 取る。",
-    "今すぐ 青い 箱を メ 3 に 投げる。",
-    "丁寧に 緑の 箱を ケ 9 から 取る。",
-    "ゆっくり 赤い ボールを フ 2 から 動かす。",
-    "ゆっくり 赤い 本を ナ 7 に 投げる。"
-  ];
-  const sentences_801_900 = [
-    "丁寧に 青い 箱を フ 9 に 置く。",
-    "今すぐ 緑の 箱を ワ 7 から 動かす。",
-    "丁寧に 緑の ペンを エ 6 から 動かす。",
-    "ゆっくり 赤い 箱を ヤ 3 に 置く。",
-    "今すぐ 赤い 本を エ 7 から 動かす。",
-    "ゆっくり 赤い ペンを ノ 4 に 置く。",
-    "丁寧に 赤い 箱を ラ 8 に 置く。",
-    "今すぐ 赤い 箱を ル 5 から 取る。",
-    "早く 白い 本を ヘ 2 に 投げる。",
-    "ゆっくり 白い ボールを ヒ 7 から 取る。",
-    "ゆっくり 白い ペンを ア 5 に 投げる。",
-    "今すぐ 緑の 本を レ 1 に 投げる。",
-    "早く 青い 箱を ク 7 から 取る。",
-    "ゆっくり 青い 箱を ク 9 から 取る。",
-    "ゆっくり 緑の ペンを ト 8 に 投げる。",
-    "早く 赤い 箱を ネ 3 に 置く。",
-    "丁寧に 白い 本を ユ 5 に 投げる。",
-    "丁寧に 白い 本を セ 1 に 置く。",
-    "早く 赤い 本を モ 5 に 置く。",
-    "丁寧に 緑の 箱を ネ 6 から 動かす。",
-    "今すぐ 白い 本を ヒ 2 から 取る。",
-    "今すぐ 青い ペンを ヨ 7 から 取る。",
-    "早く 緑の 本を チ 7 から 取る。",
-    "丁寧に 赤い 箱を エ 7 に 置く。",
-    "ゆっくり 赤い 本を マ 2 に 置く。",
-    "ゆっくり 青い ボールを ス 3 から 動かす。",
-    "ゆっくり 白い ボールを ウ 8 に 投げる。",
-    "丁寧に 白い ペンを ラ 4 に 置く。",
-    "丁寧に 緑の 本を ノ 0 から 取る。",
-    "今すぐ 青い ペンを ヒ 0 から 取る。",
-    "丁寧に 白い ペンを ク 3 に 置く。",
-    "丁寧に 赤い 箱を ユ 0 から 取る。",
-    "丁寧に 赤い 本を リ 3 から 動かす。",
-    "丁寧に 赤い ペンを キ 2 に 置く。",
-    "丁寧に 赤い 本を タ 1 に 投げる。",
-    "今すぐ 白い 箱を ナ 2 に 置く。",
-    "ゆっくり 青い 箱を ウ 0 に 置く。",
-    "ゆっくり 緑の 本を セ 5 から 動かす。",
-    "丁寧に 緑の 箱を ヤ 2 に 置く。",
-    "今すぐ 緑の 箱を ニ 1 に 置く。",
-    "丁寧に 白い 本を ヒ 4 に 投げる。",
-    "今すぐ 赤い ボールを チ 3 から 動かす。",
-    "早く 青い 箱を ア 8 に 置く。",
-    "ゆっくり 赤い ペンを キ 0 から 動かす。",
-    "早く 緑の ボールを ク 6 から 取る。",
-    "早く 赤い 本を ラ 2 から 動かす。",
-    "今すぐ 赤い ペンを フ 7 に 投げる。",
-    "今すぐ 青い 箱を ユ 5 から 動かす。",
-    "丁寧に 緑の ペンを ヤ 1 から 取る。",
-    "ゆっくり 緑の 箱を ハ 2 に 置く。",
-    "ゆっくり 緑の 本を ク 1 に 置く。",
-    "丁寧に 白い 箱を ロ 3 から 動かす。",
-    "丁寧に 緑の 箱を ム 9 に 投げる。",
-    "ゆっくり 白い ボールを メ 7 から 取る。",
-    "ゆっくり 青い ペンを ユ 1 に 投げる。",
-    "ゆっくり 青い ペンを エ 1 から 取る。",
-    "丁寧に 赤い 本を ウ 1 に 置く。",
-    "丁寧に 緑の 本を ヘ 9 から 取る。",
-    "ゆっくり 赤い 本を セ 5 に 置く。",
-    "今すぐ 白い 箱を オ 4 に 置く。",
-    "早く 青い 本を ネ 9 から 取る。",
-    "今すぐ 赤い 本を ヌ 6 に 置く。",
-    "丁寧に 赤い 箱を モ 6 に 投げる。",
-    "ゆっくり 白い 箱を メ 4 から 取る。",
-    "早く 白い ボールを ワ 6 に 置く。",
-    "今すぐ 白い ボールを ノ 3 に 投げる。",
-    "丁寧に 青い 本を ツ 6 から 取る。",
-    "早く 青い 箱を ネ 8 に 投げる。",
-    "早く 緑の ボールを ネ 2 に 投げる。",
-    "早く 赤い 箱を キ 1 に 置く。",
-    "ゆっくり 緑の 箱を ロ 5 から 動かす。",
-    "丁寧に 青い ボールを サ 9 に 投げる。",
-    "今すぐ 青い ペンを ウ 1 に 置く。",
-    "ゆっくり 緑の ペンを ウ 1 から 取る。",
-    "早く 赤い ペンを タ 2 から 動かす。",
-    "今すぐ 赤い ペンを テ 5 から 動かす。",
-    "ゆっくり 赤い 本を エ 3 から 動かす。",
-    "ゆっくり 赤い 箱を ユ 2 から 取る。",
-    "早く 青い 箱を リ 2 に 置く。",
-    "早く 青い 箱を ユ 4 に 置く。",
-    "今すぐ 赤い 本を イ 5 から 取る。",
-    "今すぐ 青い ボールを ス 8 に 置く。",
-    "今すぐ 青い ボールを ウ 4 から 動かす。",
-    "早く 赤い 箱を ヤ 9 に 投げる。",
-    "丁寧に 青い 箱を ハ 2 に 投げる。",
-    "今すぐ 赤い 本を ル 2 に 置く。",
-    "今すぐ 赤い 箱を マ 3 から 取る。",
-    "ゆっくり 白い 箱を ア 6 から 取る。",
-    "ゆっくり 緑の 箱を ユ 6 から 取る。",
-    "今すぐ 赤い ボールを ア 0 に 置く。",
-    "ゆっくり 赤い ペンを ウ 1 に 置く。",
-    "ゆっくり 赤い ボールを ア 7 から 動かす。",
-    "ゆっくり 赤い 本を ハ 9 に 置く。",
-    "今すぐ 緑の 本を ロ 9 から 動かす。",
-    "丁寧に 赤い 箱を ネ 9 に 置く。",
-    "今すぐ 白い 箱を ニ 9 に 置く。",
-    "丁寧に 白い 本を モ 2 に 置く。",
-    "ゆっくり 白い ボールを チ 4 に 投げる。",
-    "丁寧に 青い 本を ネ 8 から 取る。",
-    "丁寧に 白い ボールを イ 3 に 投げる。"
-  ];
-  const sentences_901_1000 =[
-    "今すぐ 赤い ボールを チ 6 に 置く。",
-    "丁寧に 緑の ペンを ハ 5 から 動かす。",
-    "今すぐ 白い ペンを ケ 4 から 取る。",
-    "ゆっくり 緑の ボールを シ 8 から 取る。",
-    "ゆっくり 青い ペンを ハ 0 に 投げる。",
-    "ゆっくり 赤い 箱を ナ 7 から 動かす。",
-    "今すぐ 赤い ボールを ネ 5 から 取る。",
-    "早く 青い ペンを フ 3 に 投げる。",
-    "早く 赤い 本を ソ 4 に 置く。",
-    "今すぐ 赤い 本を マ 6 から 取る。",
-    "今すぐ 青い 本を ハ 9 から 取る。",
-    "ゆっくり 青い 本を ユ 6 に 置く。",
-    "今すぐ 白い 箱を モ 6 に 投げる。",
-    "丁寧に 赤い ボールを ム 5 から 取る。",
-    "早く 青い 箱を ル 4 に 置く。",
-    "今すぐ 緑の 本を ミ 7 に 置く。",
-    "ゆっくり 白い ボールを イ 5 に 投げる。",
-    "丁寧に 赤い 箱を エ 4 に 投げる。",
-    "ゆっくり 青い ペンを ル 5 に 置く。",
-    "丁寧に 青い 箱を リ 9 から 動かす。",
-    "ゆっくり 緑の ボールを ヘ 4 に 投げる。",
-    "今すぐ 白い ペンを ラ 9 に 置く。",
-    "丁寧に 赤い ペンを シ 6 に 投げる。",
-    "早く 青い 本を ニ 5 から 取る。",
-    "ゆっくり 白い ペンを ニ 9 から 動かす。",
-    "早く 赤い ペンを フ 4 に 置く。",
-    "今すぐ 赤い 本を ス 9 から 動かす。",
-    "ゆっくり 白い 本を イ 8 から 動かす。",
-    "ゆっくり 白い 箱を ユ 0 から 動かす。",
-    "早く 緑の 箱を ル 5 から 取る。",
-    "早く 赤い ボールを ル 2 に 投げる。",
-    "ゆっくり 赤い 箱を オ 9 から 動かす。",
-    "ゆっくり 赤い 箱を イ 2 から 取る。",
-    "丁寧に 赤い 本を ス 1 から 取る。",
-    "早く 青い ペンを ロ 1 から 取る。",
-    "早く 青い ボールを ム 7 に 置く。",
-    "今すぐ 白い 箱を ワ 1 に 置く。",
-    "ゆっくり 緑の 本を ツ 7 に 置く。",
-    "早く 白い 本を ル 9 から 取る。",
-    "丁寧に 白い ペンを モ 1 から 動かす。",
-    "ゆっくり 白い 本を ヘ 9 から 取る。",
-    "ゆっくり 白い 本を ニ 9 に 投げる。",
-    "丁寧に 白い ボールを ノ 8 に 投げる。",
-    "早く 白い ボールを シ 9 から 取る。",
-    "今すぐ 青い ペンを ユ 7 に 置く。",
-    "今すぐ 緑の 箱を イ 9 に 置く。",
-    "丁寧に 白い ボールを マ 9 に 置く。",
-    "丁寧に 緑の 箱を カ 9 に 投げる。",
-    "今すぐ 青い ペンを マ 7 から 取る。",
-    "早く 赤い ペンを フ 7 に 投げる。",
-    "丁寧に 白い ボールを タ 0 から 動かす。",
-    "早く 赤い 本を キ 5 に 置く。",
-    "今すぐ 白い ペンを タ 4 に 置く。",
-    "早く 緑の 本を ツ 8 から 取る。",
-    "丁寧に 白い ペンを イ 3 から 動かす。",
-    "丁寧に 赤い 本を ハ 6 に 投げる。",
-    "ゆっくり 白い 本を カ 6 に 置く。",
-    "丁寧に 白い ペンを メ 1 に 投げる。",
-    "早く 緑の 本を ケ 5 から 取る。",
-    "ゆっくり 青い ボールを マ 5 に 投げる。",
-    "早く 赤い 本を ル 0 に 投げる。",
-    "ゆっくり 緑の 本を セ 5 に 置く。",
-    "早く 緑の 本を ル 5 から 動かす。",
-    "丁寧に 赤い 箱を ル 1 に 投げる。",
-    "今すぐ 緑の 箱を タ 3 から 取る。",
-    "今すぐ 白い 本を ユ 4 に 投げる。",
-    "今すぐ 白い 本を リ 2 に 投げる。",
-    "丁寧に 白い 本を レ 0 から 動かす。",
-    "今すぐ 白い ペンを モ 8 から 取る。",
-    "早く 白い ペンを レ 1 に 投げる。",
-    "丁寧に 青い ペンを オ 9 に 置く。",
-    "ゆっくり 青い 箱を オ 1 に 置く。",
-    "今すぐ 白い 箱を ミ 6 から 動かす。",
-    "早く 青い 箱を ホ 5 に 置く。",
-    "ゆっくり 青い 本を キ 5 から 動かす。",
-    "丁寧に 白い ボールを メ 3 に 置く。",
-    "ゆっくり 緑の 本を ノ 0 から 取る。",
-    "今すぐ 緑の ボールを ス 6 に 置く。",
-    "ゆっくり 白い 本を ア 9 から 取る。",
-    "今すぐ 赤い 本を ツ 8 に 投げる。",
-    "丁寧に 青い ボールを ソ 9 に 置く。",
-    "今すぐ 赤い 箱を エ 0 から 動かす。",
-    "丁寧に 赤い ボールを イ 9 に 置く。",
-    "早く 青い ペンを イ 2 に 投げる。",
-    "今すぐ 白い 本を カ 0 から 動かす。",
-    "早く 緑の ペンを イ 0 から 動かす。",
-    "丁寧に 白い ペンを ヒ 7 に 投げる。",
-    "ゆっくり 青い 箱を タ 9 に 置く。",
-    "今すぐ 白い 本を オ 2 から 動かす。",
-    "早く 赤い 箱を フ 7 に 置く。",
-    "今すぐ 赤い 箱を タ 3 に 置く。",
-    "ゆっくり 赤い 本を ケ 3 から 取る。",
-    "丁寧に 白い ボールを ア 0 から 取る。",
-    "早く 白い 本を オ 8 に 置く。",
-    "ゆっくり 緑の ペンを ロ 9 から 取る。",
-    "ゆっくり 青い 本を ホ 7 から 取る。",
-    "早く 緑の ペンを セ 5 に 置く。",
-    "早く 白い 本を リ 5 から 取る。",
-    "ゆっくり 緑の 本を ヤ 5 から 動かす。",
-    "今すぐ 白い 本を ヨ 6 から 動かす。"
-  ];
-
-  function showModal(message) { modalMessage.textContent = message; customModal.style.display = 'flex'; }
-  modalOkButton.onclick = () => customModal.style.display = 'none';
-
-  function addStatusMessage(message, type = 'info') {
-    const p=document.createElement('p');p.textContent=message;
-    if(type==='error')p.className='text-red-400'; else if(type==='success')p.className='text-green-400'; else p.className='text-sky-300';
-    if(statusMessages.firstChild)statusMessages.insertBefore(p,statusMessages.firstChild); else statusMessages.appendChild(p);
-    while(statusMessages.children.length>15)statusMessages.removeChild(statusMessages.lastChild);
-  }
-
-  function checkCanProceedToDeviceSetup() {
-    if(userNameEntered && batchSelected) {
-      proceedToDeviceSetupButton.disabled=false;
-    } else {
-      proceedToDeviceSetupButton.disabled=true;
+  document.addEventListener('DOMContentLoaded', () => {
+    const initialActiveTab = document.querySelector('.tab-content.active');
+    if (initialActiveTab) {
+      initialActiveTab.style.display = 'block';
+      initialActiveTab.style.opacity = 1;
     }
-  }
+    // Ensure only the intro tab's button is styled as active initially
+    navButtons.forEach(btn => {
+      if (btn.dataset.tab === 'intro') {
+        btn.classList.add('text-blue-600', 'border-blue-600');
+        btn.classList.remove('text-stone-600', 'border-transparent', 'hover:text-blue-600', 'hover:border-blue-500');
+      } else {
+        btn.classList.remove('text-blue-600', 'border-blue-600');
+        btn.classList.add('text-stone-600', 'border-transparent', 'hover:text-blue-600', 'hover:border-blue-500');
+      }
+    });
+  });
 
-  async function stopTempDeviceStream() {
-    if (tempDeviceStream) {
-      tempDeviceStream.getTracks().forEach(track => track.stop());
-      tempDeviceStream = null;
-      if (deviceSelectionPreview) deviceSelectionPreview.srcObject = null;
-    }
-  }
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      navButtons.forEach(btn => {
+        btn.classList.remove('text-blue-600', 'border-blue-600');
+        btn.classList.add('text-stone-600', 'border-transparent', 'hover:text-blue-600', 'hover:border-blue-500');
+      });
 
-  async function updateDeviceSelectionPreview() {
-    await stopTempDeviceStream();
-    const currentCamId = cameraSelect.value;
-    if (!currentCamId) { if(deviceSelectionPreview) deviceSelectionPreview.srcObject = null; return; }
-    try {
-      const constraints = { video: { deviceId: { exact: currentCamId } }, audio: false };
-      tempDeviceStream = await navigator.mediaDevices.getUserMedia(constraints);
-      if (deviceSelectionPreview) deviceSelectionPreview.srcObject = tempDeviceStream;
-    } catch (err) {
-      addStatusMessage(`Error previewing camera: ${err.message.split(':')[0]}`, "error");
-      if (deviceSelectionPreview) deviceSelectionPreview.srcObject = null;
-    }
-  }
+      const currentActiveTab = document.querySelector('.tab-content.active');
+      const newActiveTabId = button.dataset.tab;
+      const newActiveTab = document.getElementById(newActiveTabId);
 
-  async function populateDeviceSelectors() {
-    addStatusMessage("Listing devices...", "info");
-    confirmDevicesAndTestButton.disabled = true;
-    cameraSelect.innerHTML = '<option value="">Loading cameras...</option>';
-    micSelect.innerHTML = '<option value="">Loading mics...</option>';
-    let permissionGranted = false;
-    try {
-      const tempPermStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-      tempPermStream.getTracks().forEach(track => track.stop());
-      permissionGranted = true;
-      addStatusMessage("Device permissions active.", "info");
-    } catch (err) {
-      showModal("Permission needed for camera/mic to list devices and record. Please grant permissions and refresh if issue persists.");
-      addStatusMessage("Permission denied for device listing. Cannot proceed.", "error");
-      cameraSelect.innerHTML = '<option value="">Permission Denied</option>'; micSelect.innerHTML = '<option value="">Permission Denied</option>';
-      return;
-    }
-    if (!permissionGranted) return;
+      if (currentActiveTab && currentActiveTab !== newActiveTab) {
+        currentActiveTab.style.opacity = 0;
+        setTimeout(() => {
+          currentActiveTab.classList.remove('active');
+          currentActiveTab.style.display = 'none';
 
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const cameras = devices.filter(d => d.kind === 'videoinput');
-      const mics = devices.filter(d => d.kind === 'audioinput');
+          newActiveTab.style.display = 'block';
+          newActiveTab.classList.add('active');
+          newActiveTab.offsetWidth;
+          newActiveTab.style.opacity = 1;
 
-      cameraSelect.innerHTML = ''; micSelect.innerHTML = '';
-
-      if (cameras.length > 0) {
-        cameras.forEach(camera => { const option=document.createElement('option'); option.value=camera.deviceId; option.textContent=camera.label||`Camera ${cameraSelect.options.length+1}`; cameraSelect.appendChild(option); });
-        cameraSelect.selectedIndex = 0;
-        await updateDeviceSelectionPreview();
-      } else { cameraSelect.innerHTML = '<option value="">No cameras found</option>'; }
-
-      if (mics.length > 0) {
-        mics.forEach(mic => { const option=document.createElement('option'); option.value=mic.deviceId; option.textContent=mic.label||`Microphone ${micSelect.options.length+1}`; micSelect.appendChild(option); });
-        micSelect.selectedIndex = 0;
-      } else { micSelect.innerHTML = '<option value="">No microphones found</option>'; }
-
-      if (cameras.length > 0 && mics.length > 0) { confirmDevicesAndTestButton.disabled = false; addStatusMessage("Please select your camera and microphone.", "info"); }
-      else { showModal("No cameras or microphones found. Please ensure they are connected and enabled."); addStatusMessage("No cameras or microphones found.", "error"); }
-    } catch (err) { console.error("Error enumerating devices:", err); showModal("Error listing devices: " + err.message); addStatusMessage("Error listing devices: "+err.message, "error"); cameraSelect.innerHTML='<option value="">Error</option>'; micSelect.innerHTML='<option value="">Error</option>';}
-  }
-
-  cameraSelect.addEventListener('change', updateDeviceSelectionPreview);
-
-  async function initializeFirebase() {
-    try { const cs = typeof __firebase_config !== 'undefined' ? __firebase_config : null; appId = typeof __app_id !== 'undefined' ? __app_id : 'video-sentence-recorder-default'; if (!cs) { console.warn("Firebase config missing."); addStatusMessage("Firebase config missing. Cloud backup disabled.", "info"); isFirebaseReady = false; return; } const fc = JSON.parse(cs); firebaseApp = initializeApp(fc); auth = getAuth(firebaseApp); db = getFirestore(firebaseApp); storage = getStorage(firebaseApp); setLogLevel('debug'); await setPersistence(auth, browserLocalPersistence); onAuthStateChanged(auth, async (user) => { if (user) { userId = user.uid; addStatusMessage(`Firebase Auth OK. User: ${userId.substring(0,10)}...`, 'success'); if(displayUserId) displayUserId.textContent = userId; isFirebaseReady = true; } else { const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; if (token) { try { await signInWithCustomToken(auth, token); } catch (e) { await signInAnonymously(auth); } } else { await signInAnonymously(auth); } addStatusMessage("Firebase signed in.", "success"); } });
-    } catch (e) { console.error("FB Init Err:", e); showModal("FB Init Err: " + e.message); addStatusMessage("FB Init Err: " + e.message, "error"); isFirebaseReady = false; }
-  }
-
-  async function setupMedia(micId, cameraId) {
-    addStatusMessage("Setting up media with selected devices...");
-    if (mainStream) { mainStream.getTracks().forEach(track => track.stop()); mainStream = null; }
-    await stopTempDeviceStream();
-
-    try {
-      const audioConstraint = micId ? { deviceId: micId } : true; // Not using 'exact' for mic
-      const constraints = {
-        audio: audioConstraint,
-        video: {
-          ...(cameraId ? { deviceId: { exact: cameraId } } : {}),
-          frameRate: { ideal: 30, max: 30 }
+          button.classList.add('text-blue-600', 'border-blue-600');
+          button.classList.remove('text-stone-600', 'border-transparent', 'hover:text-blue-600', 'hover:border-blue-500');
+        }, 300);
+      } else if (!currentActiveTab || currentActiveTab === newActiveTab) {
+        if (newActiveTab){ // Ensure newActiveTab is not null
+          newActiveTab.style.display = 'block';
+          newActiveTab.classList.add('active');
+          newActiveTab.style.opacity = 1;
         }
-      };
-      addStatusMessage(`Using constraints: ${JSON.stringify(constraints)}`, "info");
-
-      if (!micId || !cameraId) {
-        showModal("Device ID missing. Please re-select devices.");
-        addStatusMessage("Mic or Cam ID missing.", "error");
-        return false;
+        button.classList.add('text-blue-600', 'border-blue-600');
+        button.classList.remove('text-stone-600', 'border-transparent', 'hover:text-blue-600', 'hover:border-blue-500');
       }
-      mainStream = await navigator.mediaDevices.getUserMedia(constraints);
-
-      const audioTracks = mainStream.getAudioTracks();
-      if (audioTracks.length > 0) {
-        addStatusMessage(`Audio track found: ${audioTracks[0].label || 'No Label'} (ID: ${audioTracks[0].id})`, "success");
-        console.log("Active audio track details:", audioTracks[0].getSettings());
-      } else {
-        addStatusMessage("No audio track found in the stream!", "error");
-        showModal("Critical error: No audio track could be established from the selected microphone. Please check microphone settings and permissions, or try a different microphone.");
-        if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null; // Clean up video-only stream
-        return false;
+      // Scroll to the top of the main content area when a tab is clicked
+      const mainContentArea = document.querySelector('main');
+      if (mainContentArea) {
+        mainContentArea.scrollIntoView({ behavior: 'smooth' });
       }
+    });
+  });
 
-      if (typeof MediaRecorder==='undefined') { showModal("MediaRecorder not supported."); throw new Error("MediaRecorder not supported"); }
-      const opts = { mimeType: 'video/mp4' };
-      if (!MediaRecorder.isTypeSupported(opts.mimeType)) {
-        opts.mimeType = 'video/webm';
-        if (!MediaRecorder.isTypeSupported(opts.mimeType)) delete opts.mimeType;
+  const vocabData = {
+    adverbs: ["今すぐ", "ゆっくり", "早く", "丁寧に"],
+    colors: ["赤い", "青い", "緑の", "白い"],
+    objects: ["ボール", "本", "ペン", "箱"],
+    locations: ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ', 'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト', 'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ', 'ル', 'レ', 'ロ', 'ワ'],
+    numbers: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+    verbs: ["置く", "取る", "動かす", "投げる"],
+    particles: {
+      "置く": "に",
+      "取る": "から",
+      "動かす": "から",
+      "投げる": "に"
+    }
+  };
+
+  const adverbSelect = document.getElementById('adverb');
+  const colorSelect = document.getElementById('color');
+  const objectSelect = document.getElementById('object');
+  const locationSelect = document.getElementById('location');
+  const numberSelect = document.getElementById('number');
+  const verbSelect = document.getElementById('verb');
+  const generatedSentenceP = document.getElementById('generatedSentence');
+  const generateSentenceBtn = document.getElementById('generateSentenceBtn');
+
+  function populateSelect(selectElement, items) {
+    if (!selectElement) return; // Guard against null elements if structure changes
+    selectElement.innerHTML = '';
+    items.forEach(item => {
+      const option = document.createElement('option');
+      option.value = item;
+      option.textContent = item;
+      selectElement.appendChild(option);
+    });
+  }
+
+  if (adverbSelect) populateSelect(adverbSelect, vocabData.adverbs);
+  if (colorSelect) populateSelect(colorSelect, vocabData.colors);
+  if (objectSelect) populateSelect(objectSelect, vocabData.objects);
+  if (locationSelect) populateSelect(locationSelect, vocabData.locations);
+  if (numberSelect) populateSelect(numberSelect, vocabData.numbers);
+  if (verbSelect) populateSelect(verbSelect, vocabData.verbs);
+
+  function getRandomElement(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function generateRandomSentence() {
+    if (!generatedSentenceP) return; // Guard
+    const randomAdverb = getRandomElement(vocabData.adverbs);
+    const randomColor = getRandomElement(vocabData.colors);
+    const randomObject = getRandomElement(vocabData.objects);
+    const randomLocation = getRandomElement(vocabData.locations);
+    const randomNumber = getRandomElement(vocabData.numbers);
+    const randomVerb = getRandomElement(vocabData.verbs);
+    const randomParticle = vocabData.particles[randomVerb];
+
+    if (adverbSelect) adverbSelect.value = randomAdverb;
+    if (colorSelect) colorSelect.value = randomColor;
+    if (objectSelect) objectSelect.value = randomObject;
+    if (locationSelect) locationSelect.value = randomLocation;
+    if (numberSelect) numberSelect.value = randomNumber;
+    if (verbSelect) verbSelect.value = randomVerb;
+
+    generatedSentenceP.textContent = `${randomAdverb} ${randomColor} ${randomObject}を ${randomLocation} ${randomNumber} ${randomParticle} ${randomVerb}。`;
+  }
+
+  if (generateSentenceBtn) {
+    generateSentenceBtn.addEventListener('click', generateRandomSentence);
+    generateRandomSentence(); // Initial random sentence generation only if button exists
+  }
+
+
+  // Chart for Total Sentences (JGRID vs GRID CORPUS)
+  const totalSentencesCtx = document.getElementById('totalSentencesChart')?.getContext('2d');
+  if (totalSentencesCtx) {
+    new Chart(totalSentencesCtx, {
+      type: 'bar',
+      data: {
+        labels: ['JGRID (計画)', 'GRID CORPUS [1]'],
+        datasets: [{
+          label: '総文数',
+          data: [15000, 34000],
+          backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(54, 162, 235, 0.6)'],
+          borderColor: ['rgba(75, 192, 192, 1)', 'rgba(54, 162, 235, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, title: { display: true, text: '文の数' } } },
+        plugins: { legend: { display: true, position: 'top' }, title: { display: true, text: '総文数比較' } }
       }
-
-      if (opts.mimeType === 'video/webm') { opts.audioBitsPerSecond = 128000; }
-      else if (opts.mimeType === 'video/mp4') { opts.audioBitsPerSecond = 128000; }
-      addStatusMessage(`MediaRecorder options: ${JSON.stringify(opts)}`, "info");
-
-      mediaRecorder = new MediaRecorder(mainStream, opts);
-      addStatusMessage(`Recorder initialized. Type: ${mediaRecorder.mimeType||'default'}`, 'success');
-      mediaRecorder.ondataavailable = e => e.data.size > 0 && recordedChunks.push(e.data);
-      mediaRecorder.onstop = handleRecordingStop;
-      addStatusMessage("Media setup complete.", "success");
-      return true;
-    } catch (err) {
-      console.error("Media setup error.", err);
-      let detailedError = err.message; if (err.name) detailedError = `${err.name}: ${err.message}`;
-      showModal("Camera/mic setup error: " + detailedError + ". Try different devices or check permissions.");
-      addStatusMessage("Media setup error: " + detailedError, "error");
-      if(testRecordingSection) testRecordingSection.classList.add('hidden');
-      if(recordingSection) recordingSection.classList.add('hidden');
-      if(deviceSelectionSection) deviceSelectionSection.classList.remove('hidden');
-      return false;
-    }
+    });
   }
 
-  async function handleRecordingStop() {
-    const wasRedo = isPerformingRedo; isPerformingRedo = false;
-    const wasTest = isTestRecordingActive; isTestRecordingActive = false;
-
-    const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' }); recordedChunks = [];
-
-    if (wasTest) {
-      addStatusMessage("Test recording complete. Devices seem to work.", "success");
-      startStopTestButton.textContent = "Restart Test"; startStopTestButton.disabled = false;
-      proceedToMainRecordingButton.classList.remove('hidden'); proceedToMainRecordingButton.disabled = false;
-      return;
-    }
-    if (wasRedo) { addStatusMessage("Previous attempt discarded. Starting redo.", "info"); startRecordingInternal(); return; }
-
-    addStatusMessage("Recording stopped for sentence " + currentSentenceIndex + ".");
-    const sentenceText = sentences[currentSentenceIndex - 1];
-    const fileBase = `${userName}_batch${sentenceBatchSelect.value}_${currentSentenceIndex}`;
-    const ext = mediaRecorder.mimeType?.includes('mp4') ? 'mp4' : 'webm';
-    const videoFile = `${fileBase}.${ext}`; const textFile = `${fileBase}.txt`;
-    downloadFile(blob, videoFile); addStatusMessage(`Video "${videoFile}" download initiated.`, 'success');
-    downloadFile(new Blob([sentenceText], { type: 'text/plain' }), textFile); addStatusMessage(`Text "${textFile}" download initiated.`, 'success');
-
-    if (isFirebaseReady && auth.currentUser) {
-      try { addStatusMessage(`Cloud backup for ${videoFile}...`); const storagePath = `artifacts/${appId}/users/${userId}/sentenceReadings_videos/${videoFile}`; const videoStorageRef = ref(storage, storagePath); const snapshot = await uploadBytes(videoStorageRef, blob); const videoUrl = await getDownloadURL(snapshot.ref); addStatusMessage(`Video uploaded.`, 'success'); const firestoreDocPath = `artifacts/${appId}/users/${userId}/sentenceReadings/${fileBase}`; await setDoc(doc(db, firestoreDocPath), { userName, sentenceBatch: sentenceBatchSelect.value, sentenceText, sentenceIndexInBatch: currentSentenceIndex, videoFileName: videoFile, videoStoragePath: storagePath, videoUrl, mimeType: mediaRecorder.mimeType || 'video/webm', locallySaved: true, timestamp: serverTimestamp() }); addStatusMessage(`Metadata for sentence ${currentSentenceIndex} backed up.`, 'success');
-      } catch (e) { console.error("FB Backup Err:", e); addStatusMessage(`Cloud backup failed: ${e.message}`, 'error'); }
-    } else { addStatusMessage("FB not ready/authed; skipping cloud backup.", "info"); }
-
-    if (currentSentenceIndex < sentences.length) { displayNextSentence(); startRecordingInternal(); }
-    else { completeRecordingSession(); }
-  }
-
-  function startRecordingInternal() {
-    if (mediaRecorder && mediaRecorder.state === "inactive" && mainStream?.active) {
-      if (isTestRecordingActive) {
-        if(videoPreviewTest) videoPreviewTest.srcObject = mainStream;
-      } else {
-        if(videoPreview) videoPreview.srcObject = mainStream;
+  // Chart for Speaker Distribution (JGRID)
+  const speakerDistributionCtx = document.getElementById('speakerDistributionChart')?.getContext('2d');
+  if (speakerDistributionCtx) {
+    new Chart(speakerDistributionCtx, {
+      type: 'bar',
+      data: {
+        labels: ['男性', '女性'],
+        datasets: [{
+          label: '話者数', data: [10, 5],
+          backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+          borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: { y: { beginAtZero: true, title: { display: true, text: '話者数' }, ticks: { stepSize: 1 } } },
+        plugins: { legend: { display: false }, title: { display: true, text: 'JGRID話者数の男女別内訳' } }
       }
+    });
+  }
 
-      if (!isTestRecordingActive && (sentences.length === 0 || currentSentenceIndex >= sentences.length)) {
-        addStatusMessage("No more sentences or sentences not loaded.", "error");
-        if (sentences.length > 0 && currentSentenceIndex >= sentences.length) completeRecordingSession(); return;
+  // Chart for Vocabulary Distribution
+  const vocabDistributionCtx = document.getElementById('vocabDistributionChart')?.getContext('2d');
+  if (vocabDistributionCtx) {
+    const vocabCounts = {
+      '副詞': vocabData.adverbs.length, '色': vocabData.colors.length,
+      '物体': vocabData.objects.length, '場所': vocabData.locations.length,
+      '数詞': vocabData.numbers.length, '動詞': vocabData.verbs.length
+    };
+    new Chart(vocabDistributionCtx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(vocabCounts),
+        datasets: [{
+          label: '単語数', data: Object.values(vocabCounts),
+          backgroundColor: ['rgba(255, 99, 132, 0.7)', 'rgba(54, 162, 235, 0.7)', 'rgba(255, 206, 86, 0.7)', 'rgba(75, 192, 192, 0.7)', 'rgba(153, 102, 255, 0.7)', 'rgba(255, 159, 64, 0.7)'],
+          borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' }, title: { display: true, text: '語彙カテゴリ別単語数' },
+          tooltip: { callbacks: { label: function(context) { let label = context.label || ''; if (label) { label += ': '; } if (context.parsed !== null) { label += context.parsed + '語'; } return label; } } }
+        }
       }
-      recordedChunks = []; mediaRecorder.start(); isPaused = false;
-
-      if (isTestRecordingActive) {
-        addStatusMessage(`Test recording started...`);
-        startStopTestButton.textContent = "Stop Test Recording";
-        proceedToMainRecordingButton.classList.add('hidden');
-      } else {
-        addStatusMessage(`Recording for sentence ${currentSentenceIndex + 1}...`);
-        nextSentenceButton.textContent = `Next & Save (${currentSentenceIndex + 1}/${sentences.length})`;
-        nextSentenceButton.classList.remove('bg-emerald-600', 'hover:bg-emerald-700'); nextSentenceButton.classList.add('bg-red-600', 'hover:bg-red-700');
-        nextSentenceButton.disabled = false;
-        pauseResumeButton.textContent = "Pause"; pauseResumeButton.disabled = false;
-        pauseResumeButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'opacity-50'); pauseResumeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
-        redoButton.disabled = false;
-      }
-    } else {
-      addStatusMessage("Cannot start recording. Recorder not ready or stream inactive.", "error");
-      if (!mainStream?.active) showModal("Camera/mic stream inactive. Check permissions.");
-    }
+    });
   }
-
-  function runCountdownAndStart() {
-    timerDisplayContainer.classList.remove('hidden'); let count = 3; timerText.textContent = count;
-    nextSentenceButton.disabled = true; pauseResumeButton.disabled = true; redoButton.disabled = true;
-    countdownInterval = setInterval(() => { count--; timerText.textContent = count; if (count <= 0) { clearInterval(countdownInterval); timerDisplayContainer.classList.add('hidden'); isFirstSentenceOfSession = false; startRecordingInternal(); } }, 1000);
-  }
-  function displayNextSentence() {
-    if (currentSentenceIndex < sentences.length) { sentenceToRead.textContent = sentences[currentSentenceIndex]; addStatusMessage(`Sentence ${currentSentenceIndex + 1}: "${sentences[currentSentenceIndex].substring(0,30)}..."`); }
-  }
-  function handleNextAction() {
-    if (isPaused) { showModal("Please resume recording before proceeding."); return; }
-    if (mediaRecorder && mediaRecorder.state === "inactive" && currentSentenceIndex === 0) {
-      displayNextSentence();
-      if (isFirstSentenceOfSession) { runCountdownAndStart(); }
-      else { startRecordingInternal(); }
-    } else if (mediaRecorder && (mediaRecorder.state === "recording" || mediaRecorder.state === "paused")) {
-      if (mediaRecorder.state === "paused") mediaRecorder.resume();
-      isPerformingRedo = false; mediaRecorder.stop(); currentSentenceIndex++;
-    }
-  }
-  redoButton.addEventListener('click', () => {
-    if (!mediaRecorder || isPaused || isTestRecordingActive) return;
-    addStatusMessage("Redo requested for current sentence.", "info"); isPerformingRedo = true;
-    if (mediaRecorder.state === "recording") { mediaRecorder.stop(); }
-  });
-  pauseResumeButton.addEventListener('click', () => {
-    if (!mediaRecorder || mediaRecorder.state === "inactive" || isTestRecordingActive) return;
-    if (!isPaused) { if (mediaRecorder.state === "recording") { mediaRecorder.pause(); isPaused = true; pauseResumeButton.textContent = "Resume"; pauseResumeButton.classList.remove('bg-yellow-500', 'hover:bg-yellow-600'); pauseResumeButton.classList.add('bg-green-500', 'hover:bg-green-600'); addStatusMessage("Recording paused.", "info"); nextSentenceButton.disabled = true; redoButton.disabled = true; } }
-    else { if (mediaRecorder.state === "paused") { mediaRecorder.resume(); isPaused = false; pauseResumeButton.textContent = "Pause"; pauseResumeButton.classList.remove('bg-green-500', 'hover:bg-green-600'); pauseResumeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600'); addStatusMessage("Recording resumed.", "info"); nextSentenceButton.disabled = false; redoButton.disabled = false; } }
-  });
-  function completeRecordingSession() {
-    addStatusMessage("All sentences recorded!", "success"); if(recordingSection) recordingSection.classList.add('hidden'); if(completionMessage) completionMessage.classList.remove('hidden');
-    if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null;
-    if(videoPreview) videoPreview.srcObject = null; if(videoPreviewTest) videoPreviewTest.srcObject = null;
-    isFirstSentenceOfSession = true; if(redoButton) redoButton.disabled = true; if(pauseResumeButton) pauseResumeButton.disabled = true; if(countdownInterval) clearInterval(countdownInterval);
-  }
-  function downloadFile(blob, filename) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
-
-  function resetApp() {
-    userName = ''; currentSentenceIndex = 0; recordedChunks = []; isPaused = false;
-    if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null;
-    stopTempDeviceStream();
-    if(videoPreview) videoPreview.srcObject = null; if(videoPreviewTest) videoPreviewTest.srcObject = null; mediaRecorder = null; sentences = [];
-    userNameEntered = false; batchSelected = false; isFirstSentenceOfSession = true; isPerformingRedo = false; isTestRecordingActive = false;
-    selectedCameraId = ''; selectedMicId = '';
-    if(countdownInterval) clearInterval(countdownInterval); if(timerDisplayContainer) timerDisplayContainer.classList.add('hidden');
-
-    if(nameSection) nameSection.classList.remove('hidden');
-    if(deviceSelectionSection) deviceSelectionSection.classList.add('hidden');
-    if(testRecordingSection) testRecordingSection.classList.add('hidden');
-    if(recordingSection) recordingSection.classList.add('hidden');
-    if(completionMessage) completionMessage.classList.add('hidden');
-
-    if(userNameInput) userNameInput.value = ''; if(sentenceBatchSelect) sentenceBatchSelect.value = '';
-    if(cameraSelect) cameraSelect.innerHTML = ''; if(micSelect) micSelect.innerHTML = '';
-    if(statusMessages) statusMessages.innerHTML = ''; addStatusMessage("App reset. Enter name & select batch.");
-    if(nextSentenceButton) { nextSentenceButton.textContent = 'Start First'; nextSentenceButton.disabled = true; nextSentenceButton.classList.remove('bg-red-600', 'hover:bg-red-700'); nextSentenceButton.classList.add('bg-emerald-600', 'hover:bg-emerald-700'); }
-    if(pauseResumeButton) { pauseResumeButton.textContent = "Pause"; pauseResumeButton.disabled = true; }
-    if(redoButton) redoButton.disabled = true;
-    if(proceedToDeviceSetupButton) proceedToDeviceSetupButton.disabled = true;
-    if(confirmDevicesAndTestButton) confirmDevicesAndTestButton.disabled = true;
-    if(startStopTestButton) { startStopTestButton.textContent = "Start Test Recording"; startStopTestButton.disabled=true; }
-    if(proceedToMainRecordingButton) proceedToMainRecordingButton.classList.add('hidden');
-    checkCanProceedToDeviceSetup();
-    if(totalSentencesDisplay) totalSentencesDisplay.textContent = "0"; if(displayBatchInfo) displayBatchInfo.textContent = "";
-  }
-
-  userNameInput.addEventListener('input', () => { userNameEntered = userNameInput.value.trim() !== ''; checkCanProceedToDeviceSetup(); });
-  sentenceBatchSelect.addEventListener('change', () => { batchSelected = sentenceBatchSelect.value !== ''; if (batchSelected) addStatusMessage(`Batch selected: ${sentenceBatchSelect.options[sentenceBatchSelect.selectedIndex].text}`, "info"); checkCanProceedToDeviceSetup();});
-
-  proceedToDeviceSetupButton.addEventListener('click', async () => {
-    userName = userNameInput.value.trim().replace(/[^a-zA-Z0-9_-]/g, '');
-    if (!userName) { showModal("Please enter a valid name."); return; }
-    const sbv = sentenceBatchSelect.value; if (!sbv) { showModal("Please select a sentence batch."); return; }
-    switch(sbv) {
-      case '1': sentences = sentences_1_100; break; case '2': sentences = sentences_101_200; break; case '3': sentences = sentences_201_300; break; case '4': sentences = sentences_301_400; break; case '5': sentences = sentences_401_500; break; case '6': sentences = sentences_501_600; break; case '7': sentences = sentences_601_700; break; case '8': sentences = sentences_701_800; break; case '9': sentences = sentences_801_900; break; case '10': sentences = sentences_901_1000; break; default: showModal("Invalid batch."); return;
-    }
-    if (sentences.length === 0 && sbv !== "") {
-      showModal(`Selected sentence batch (Batch ${sbv}) is empty. Please add sentences to the code manually.`);
-      addStatusMessage(`Batch ${sbv} is empty. Add sentences to it in the JS code.`, "error");
-      return;
-    }
-    addStatusMessage(`${sentences.length} sentences for Batch ${sbv} loaded.`, "success");
-    nameSection.classList.add('hidden'); deviceSelectionSection.classList.remove('hidden');
-    await populateDeviceSelectors();
-  });
-
-  backToNameSetupButton.addEventListener('click', () => { stopTempDeviceStream(); deviceSelectionSection.classList.add('hidden'); nameSection.classList.remove('hidden'); });
-
-  backToDeviceSelectionButton.addEventListener('click', async () => {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') { isTestRecordingActive = true; mediaRecorder.stop(); }
-    if (mainStream) { mainStream.getTracks().forEach(track => track.stop()); mainStream = null; }
-    if(videoPreviewTest) videoPreviewTest.srcObject = null;
-    testRecordingSection.classList.add('hidden'); deviceSelectionSection.classList.remove('hidden');
-    await populateDeviceSelectors();
-  });
-
-  confirmDevicesAndTestButton.addEventListener('click', async () => {
-    selectedCameraId = cameraSelect.value; selectedMicId = micSelect.value;
-    if (!selectedCameraId || !selectedMicId) { showModal("Please select both camera and microphone."); return; }
-
-    await stopTempDeviceStream();
-
-    const mediaReady = await setupMedia(selectedMicId, selectedCameraId); // Corrected: selectedCameraId for camera
-    if (mediaReady) {
-      deviceSelectionSection.classList.add('hidden');
-      testRecordingSection.classList.remove('hidden');
-      if(videoPreviewTest) videoPreviewTest.srcObject = mainStream;
-      startStopTestButton.textContent = "Start Test Recording"; startStopTestButton.disabled = false;
-      proceedToMainRecordingButton.classList.add('hidden'); proceedToMainRecordingButton.disabled = true;
-      addStatusMessage("Ready for test recording.", "info");
-    } else {
-      addStatusMessage("Failed to set up media. Please check devices and permissions.", "error");
-    }
-  });
-
-  startStopTestButton.addEventListener('click', () => {
-    if (!mediaRecorder) { addStatusMessage("MediaRecorder not ready for test.", "error"); return; }
-    if (mediaRecorder.state === 'inactive') {
-      isTestRecordingActive = true;
-      startRecordingInternal();
-    } else if (mediaRecorder.state === 'recording') {
-      mediaRecorder.stop();
-      addStatusMessage("Stopping test recording...", "info");
-    }
-  });
-
-  proceedToMainRecordingButton.addEventListener('click', () => {
-    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-      // This case should ideally be handled by onstop enabling this button only when inactive.
-      // If it's still recording/paused, stopping here might be abrupt.
-      addStatusMessage("Finalizing test. Please wait if test was running.", "warn");
-      return; // Let onstop handle enabling this button properly
-    }
-    if(videoPreviewTest) videoPreviewTest.srcObject = null; testRecordingSection.classList.add('hidden');
-    recordingSection.classList.remove('hidden'); if(videoPreview) videoPreview.srcObject = mainStream;
-
-    isFirstSentenceOfSession = true; currentSentenceIndex = 0;
-    displayNextSentence();
-    nextSentenceButton.textContent = "Start First"; nextSentenceButton.disabled = false;
-    pauseResumeButton.disabled = true; redoButton.disabled = true;
-    displayBatchInfo.textContent = sentenceBatchSelect.options[sentenceBatchSelect.selectedIndex].text;
-    totalSentencesDisplay.textContent = sentences.length;
-    displayName.textContent = userName;
-    addStatusMessage("Ready for main recording session.", "info");
-  });
-
-  initializeFirebase(); addStatusMessage("App loaded. Enter name & select batch."); checkCanProceedToDeviceSetup();
-  nextSentenceButton.addEventListener('click', handleNextAction);
-  restartButton.addEventListener('click', resetApp);
-  document.addEventListener('keydown', (e) => {
-    if (testRecordingSection && !testRecordingSection.classList.contains('hidden')) return; // Ignore global keys if test section is active
-    if (recordingSection && !recordingSection.classList.contains('hidden') && !isPaused && (e.key === 'Enter' || e.code === 'Space')) {
-      e.preventDefault();
-      if (!nextSentenceButton.disabled) nextSentenceButton.click();
-    }
-  });
 </script>
 </body>
-</html>
+</html>html>
