@@ -16,15 +16,19 @@
       display: block;
       opacity: 1;
     }
-    /* For aspect ratio video iframe */
+    /* For aspect ratio content (videos, images) */
     .aspect-w-16 { position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ }
-    .aspect-h-9 { /* Helper class, not strictly needed if padding-bottom is set on parent */ }
-    .aspect-w-16 > iframe {
+    .aspect-h-9 { /* Helper class */ }
+    .aspect-w-4 { position: relative; padding-bottom: 75%; /* 4:3 Aspect Ratio */ }
+    .aspect-h-3 { /* Helper class */ }
+    .aspect-content > iframe,
+    .aspect-content > img {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: contain; /* Changed to contain for screenshots */
     }
     .nav-button.active-tab {
       color: #2563eb; /* text-blue-600 */
@@ -37,6 +41,17 @@
     .nav-button:not(.active-tab):hover {
       color: #3b82f6; /* hover:text-blue-500 */
       border-bottom-color: #3b82f6; /* hover:border-blue-500 */
+    }
+    .screenshot-placeholder {
+      background-color: #f0f0f0;
+      border: 2px dashed #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #777;
+      font-size: 0.9em;
+      min-height: 200px; /* Ensure placeholder is visible */
     }
   </style>
 </head>
@@ -103,15 +118,13 @@
         どのような雰囲気の動画になるか、参考として英語のGRIDコーパスから同様の形式で収録された動画（音声あり）をご覧ください。
         JGRIDでは、これと似た形で、日本語の文を読み上げていただきます。
       </p>
-      <div class="my-4 rounded-md overflow-hidden shadow">
-        <div class="aspect-w-16 aspect-h-9 bg-black">
-          <iframe
-                  src="https://drive.google.com/file/d/1LEguiRfB1lRsExlyKcElK4_ofk09KtSt/preview"
-                  allow="autoplay; encrypted-media"
-                  allowfullscreen
-                  title="GRID Corpus Example Video (Audio Available)">
-          </iframe>
-        </div>
+      <div class="my-4 rounded-md overflow-hidden shadow aspect-w-16 aspect-h-9 aspect-content">
+        <iframe
+                src="https://drive.google.com/file/d/1LEguiRfB1lRsExlyKcElK4_ofk09KtSt/preview"
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                title="GRID Corpus Example Video (Audio Available)">
+        </iframe>
       </div>
       <p class="text-sm text-stone-600 mb-4 text-center">（この参考動画は英語のもので、音声が含まれています。JGRIDでは同様の形式で日本語の文を読み上げます。）</p>
 
@@ -133,26 +146,46 @@
       </p>
 
       <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. 撮影前の設定</h3>
-      <ul class="list-disc list-inside space-y-3 text-stone-700">
+      <p class="text-sm text-stone-600 mb-3">各ステップのスクリーンショットも参考にしてください。（スクリーンショットはクリックで拡大表示できます - 準備中）</p>
+      <ul class="list-disc list-inside space-y-4 text-stone-700">
         <li>
           <strong>参加者番号の入力:</strong> 撮影アプリケーションの「名前」の欄に、ご自身の参加者番号を入力してください。例えば、参加者番号が「3」の場合は「<samp class="bg-stone-200 px-1 rounded">s3</samp>」と入力します。
         </li>
         <li>
           <strong>文章バッチの選択:</strong> 「文章バッチを選択してください」という項目で、今回撮影するバッチ（1から10まであります）を選択します。これらは順番に行っていただきます。
+          <div class="my-2 rounded-md overflow-hidden shadow">
+            <img src="start_screen.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+          </div>
         </li>
         <li>
           <strong>カメラとマイクの選択:</strong>
-          <ul class="list-disc list-inside ml-6 mt-1 space-y-1">
-            <li>「カメラを選択してください」では、「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称）を選択してください。</li>
-            <li>「マイクを選択してください」でも、同様に「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称のついたマイク）を選択してください。</li>
+          <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
+            <li>「カメラを選択してください」では、「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称）を選択してください。
+            </li>
+            <li>「マイクを選択してください」でも、同様に「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称のついたマイク）を選択してください。
+              <div class="my-2 rounded-md overflow-hidden shadow">
+                <img src="camera_mic.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+              </div>
+            </li>
           </ul>
         </li>
         <li>
           <strong>テスト記録とダウンロード許可:</strong>
-          <ul class="list-disc list-inside ml-6 mt-1 space-y-1">
-            <li>設定後、「テスト記録を開始」ボタンを押して、短いテスト録画を行ってください。</li>
-            <li>テスト録画が終わったら「終了」ボタンを押します。すると、録画された動画のダウンロードが自動的に開始されます。</li>
-            <li>ブラウザから「ファイルのダウンロードを許可しますか？」といった趣旨の確認が表示された場合は、「許可」をクリックしてください。一度許可すると、次回以降のダウンロードではこの確認は表示されません。</li>
+          <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
+            <li>設定後、「テスト記録を開始」ボタンを押して、短いテスト録画を行ってください。
+              <div class="my-2 rounded-md overflow-hidden shadow">
+                <img src="test.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+              </div>
+            </li>
+            <li>テスト録画が終わったら「終了」ボタンを押します。すると、録画された動画のダウンロードが自動的に開始されます。
+
+            </li>
+            <li class="font-semibold text-red-600">
+              <strong>重要：</strong> ブラウザから「ファイルのダウンロードを許可しますか？」といった趣旨の確認が表示された場合は、<strong class="underline">必ず「許可」をクリック</strong>してください。一度許可すると、次回以降のダウンロードではこの確認は表示されません。許可しないと、撮影データが保存されません。
+              <div class="my-2 rounded-md overflow-hidden shadow">
+                <img src="allow.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+              </div>
+            </li>
           </ul>
         </li>
       </ul>
@@ -209,9 +242,28 @@
         </li>
       </ul>
 
-      <div class="mt-10 text-center">
-        <a href="https://sthasmn.github.io/sthasmn/camera/" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">6. 撮影終了後：ファイルのアップロード</h3>
+      <ul class="list-disc list-inside space-y-3 text-stone-700">
+        <li>
+          1つのバッチ（100文章）の撮影が完了すると、録画された動画ファイル（通常は`.webm`形式）が、お使いのPCの「ダウンロード」フォルダに自動的に保存されます。
+        </li>
+        <li class="font-semibold text-red-600">
+          <strong>重要：</strong> 各バッチの撮影が完了するたびに、ダウンロードされた動画ファイルを指定のGoogle Driveフォルダにアップロードしてください。
+        </li>
+        <li>
+          ファイル名は、参加者番号とバッチ番号が含まれたものになっているはずです（例: <samp class="bg-stone-200 px-1 rounded">s3_batch1.webm</samp>）。ファイル名を変更せずにそのままアップロードしてください。
+        </li>
+        <li>
+          全てのバッチ（10バッチ）の撮影とアップロードが完了したら、研究担当者にご連絡ください。
+        </li>
+      </ul>
+
+      <div class="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <a href="https://sthasmn.github.io/sthasmn/camera/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-center">
           実際の撮影ページへ進む
+        </a>
+        <a href="https://drive.google.com/drive/folders/1AiF_rUCamsYbAAO6ZknZ9WzWcbtThbe8?usp=sharing" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 text-center">
+          撮影済みファイルをアップ
         </a>
       </div>
     </div>
@@ -286,7 +338,7 @@
   // Event listener for the "動画撮影の説明へ進む" button
   if (goToRecordingGuideBtn) {
     goToRecordingGuideBtn.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default button behavior if it were a submit type
+      event.preventDefault();
       setActiveTab('recording-guide');
     });
   }
