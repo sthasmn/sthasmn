@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Sentence Recorder</title>
+    <title>ビデオ文章録画アプリ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -22,87 +22,94 @@
 <div id="appContainer" class="w-full max-w-2xl bg-slate-800 p-6 md:p-8 rounded-xl shadow-2xl space-y-6">
 
     <div id="nameSection" class="space-y-4">
-        <h1 class="text-3xl font-bold text-sky-400 text-center">Video Sentence Recorder</h1>
-        <p class="text-slate-300 text-center">Step 1: Enter your name and select a sentence batch.</p>
+        <h1 class="text-3xl font-bold text-sky-400 text-center">ビデオ文章録画アプリ</h1>
+        <p class="text-slate-300 text-center">ステップ1：参加者番号を入力し、文章バッチを選択してください。</p>
         <div>
-            <label for="userName" class="block text-sm font-medium text-sky-300 mb-1">Your Name:</label>
-            <input type="text" id="userName" name="userName" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="E.g., Alex">
+            <label for="userName" class="block text-sm font-medium text-sky-300 mb-1">参加者番号：</label>
+            <input type="text" id="userName" name="userName" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="例：s2">
         </div>
         <div>
-            <label for="sentenceBatch" class="block text-sm font-medium text-sky-300 mb-1">Select Sentence Batch:</label>
+            <label for="sentenceBatch" class="block text-sm font-medium text-sky-300 mb-1">文章バッチを選択：</label>
             <select id="sentenceBatch" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-                <option value="">-- Select a Batch --</option>
-                <option value="1">Sentences 1-100</option><option value="2">Sentences 101-200</option><option value="3">Sentences 201-300</option><option value="4">Sentences 301-400</option><option value="5">Sentences 401-500</option><option value="6">Sentences 501-600</option><option value="7">Sentences 601-700</option><option value="8">Sentences 701-800</option><option value="9">Sentences 801-900</option><option value="10">Sentences 901-1000</option>
+                <option value="">-- バッチを選択 --</option>
+                <option value="1">文章バッチ１</option>
+                <option value="2">文章バッチ２</option>
+                <option value="3">文章バッチ３</option>
+                <option value="4">文章バッチ４</option>
+                <option value="5">文章バッチ５</option>
+                <option value="6">文章バッチ６</option>
+                <option value="7">文章バッチ７</option>
+                <option value="8">文章バッチ８</option>
+                <option value="9">文章バッチ９</option>
+                <option value="10">文章バッチ１０</option>
             </select>
         </div>
         <button id="proceedToDeviceSetupButton" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50 transition duration-150 ease-in-out" disabled>
-            Proceed to Device Setup
+            デバイス設定へ進む
         </button>
     </div>
 
     <div id="deviceSelectionSection" class="hidden space-y-4">
-        <h2 class="text-2xl font-semibold text-sky-400 text-center">Step 2: Select Devices</h2>
-        <p class="text-slate-300 text-center">Choose your camera and microphone. A brief permission request may appear to list devices.</p>
+        <h2 class="text-2xl font-semibold text-sky-400 text-center">ステップ2：デバイス選択</h2>
+        <p class="text-slate-300 text-center">使用するカメラとマイクを選択してください。デバイス一覧表示のために許可を求めることがあります。</p>
         <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg">
             <video id="deviceSelectionPreview" playsinline autoplay muted class="w-full h-full object-cover"></video>
         </div>
         <div>
-            <label for="cameraSelect" class="block text-sm font-medium text-sky-300 mb-1">Camera:</label>
+            <label for="cameraSelect" class="block text-sm font-medium text-sky-300 mb-1">カメラ：</label>
             <select id="cameraSelect" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></select>
         </div>
         <div>
-            <label for="micSelect" class="block text-sm font-medium text-sky-300 mb-1">Microphone:</label>
+            <label for="micSelect" class="block text-sm font-medium text-sky-300 mb-1">マイク：</label>
             <select id="micSelect" class="mt-1 block w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-slate-100 shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm"></select>
         </div>
         <button id="confirmDevicesAndTestButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition duration-150 ease-in-out" disabled>
-            Confirm Devices & Do Test Recording
+            デバイスを確認してテスト録画へ
         </button>
         <button id="backToNameSetupButton" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-50 transition duration-150 ease-in-out mt-2">
-            Back
+            戻る
         </button>
     </div>
 
     <div id="testRecordingSection" class="hidden space-y-4">
-        <h2 class="text-2xl font-semibold text-sky-400 text-center">Step 3: Test Your Setup</h2>
+        <h2 class="text-2xl font-semibold text-sky-400 text-center">ステップ3：テスト録画</h2>
+        <div class="bg-slate-700 p-4 rounded-lg shadow text-center">
+            <p class="text-lg font-medium text-slate-100">読み上げてください： <span id="testSentenceDisplay" class="text-yellow-400">天気がいいから散歩しましょう。</span></p>
+        </div>
         <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg">
             <video id="videoPreviewTest" playsinline autoplay muted class="w-full h-full object-cover"></video>
         </div>
-        <div class="bg-slate-700 p-4 rounded-lg shadow text-center">
-            <p class="text-lg font-medium text-slate-100">Please read: <span id="testSentenceDisplay" class="text-yellow-400">天気がいいから散歩しましょう。</span></p>
-        </div>
-        <button id="startStopTestButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md">Start Test Recording</button>
-        <button id="proceedToMainRecordingButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hidden mt-2">Proceed to Main Recording</button>
+        <button id="startStopTestButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md">テスト録画開始</button>
+        <button id="proceedToMainRecordingButton" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hidden mt-2">本番録画へ進む</button>
         <button id="backToDeviceSelectionButton" class="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md mt-2">
-            Back to Device Selection
+            デバイス選択へ戻る
         </button>
     </div>
 
     <div id="recordingSection" class="hidden space-y-4 relative">
-        <h2 class="text-2xl font-semibold text-sky-400 text-center">Main Recording Session</h2>
-        <div class="bg-slate-700 p-4 rounded-lg shadow">
-            <p class="text-sm text-slate-300">User: <span id="displayName" class="font-medium text-sky-300"></span></p>
-            <p class="text-sm text-slate-300">Batch: <span id="displayBatchInfo" class="font-medium text-sky-300"></span></p>
-            <p class="text-sm text-slate-300">Sentences in Batch: <span id="totalSentencesDisplay" class="font-medium text-sky-300">0</span></p>
+        <h2 class="text-2xl font-semibold text-sky-400 text-center">本番録画</h2>
+        <div id="sentenceDisplayContainer" class="bg-slate-700 p-6 rounded-lg shadow text-center min-h-[100px] flex items-center justify-center">
+            <p id="sentenceToRead" class="text-xl md:text-2xl font-medium text-slate-100"></p>
         </div>
         <div class="w-full aspect-video bg-slate-900 rounded-lg overflow-hidden shadow-lg relative">
             <video id="videoPreview" playsinline autoplay muted class="w-full h-full object-cover"></video>
             <div id="timerDisplayContainer" class="hidden timer-display"><p id="timerText" class="text-6xl font-bold text-yellow-400"></p></div>
         </div>
-        <div id="sentenceDisplayContainer" class="bg-slate-700 p-6 rounded-lg shadow text-center min-h-[100px] flex items-center justify-center">
-            <p id="sentenceToRead" class="text-xl md:text-2xl font-medium text-slate-100"></p>
-        </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-            <button id="pauseResumeButton" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>Pause</button>
-            <button id="redoButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>Redo</button>
-            <button id="nextSentenceButton" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md">Start First</button>
+            <button id="pauseResumeButton" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>一時停止</button>
+            <button id="redoButton" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md" disabled>やり直し</button>
+            <button id="nextSentenceButton" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md">最初の文章から開始</button>
         </div>
-        <p class="text-xs text-slate-400 text-center">Press <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> or <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Space</kbd> to advance.</p>
+        <p class="text-xs text-slate-400 text-center"><kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Enter</kbd> または <kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Space</kbd> で次へ</p>
+        <div class="bg-slate-700 p-4 rounded-lg shadow mt-4"> <p class="text-sm text-slate-300">参加者番号： <span id="displayName" class="font-medium text-sky-300"></span></p>
+            <p class="text-sm text-slate-300">バッチ： <span id="displayBatchInfo" class="font-medium text-sky-300"></span></p>
+            <p class="text-sm text-slate-300">バッチ内の文章数： <span id="totalSentencesDisplay" class="font-medium text-sky-300">0</span></p>
+        </div>
     </div>
 
     <div id="completionMessage" class="hidden text-center space-y-3 p-6 bg-slate-700 rounded-lg shadow">
-        <h2 class="text-2xl font-bold text-green-400">All Sentences Recorded!</h2>
-        <p class="text-slate-200">Files saved locally. Cloud backup (if enabled) attempted.</p>
-        <button id="restartButton" class="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md">Start Over</button>
+        <h2 class="text-2xl font-bold text-green-400">バッチ完了！</h2>
+        <p class="text-slate-200">ファイルはローカルに保存されました。</p>
     </div>
 
     <div id="statusMessages" class="mt-4 text-sm text-slate-300 space-y-1 h-20 overflow-y-auto"></div>
@@ -149,10 +156,11 @@
     const nextSentenceButton = document.getElementById('nextSentenceButton');
     const redoButton = document.getElementById('redoButton');
     const pauseResumeButton = document.getElementById('pauseResumeButton');
-    const completionMessage = document.getElementById('completionMessage');
-    const restartButton = document.getElementById('restartButton');
+    const completionMessage = document.getElementById('completionMessage'); // May not be used persistently
+    const restartButton = document.getElementById('restartButton'); // This button is in the old completionMessage, might be removed or repurposed
+
     const displayName = document.getElementById('displayName');
-    const displayUserId = document.getElementById('displayUserId');
+    const displayUserId = document.getElementById('displayUserId'); // Kept for Firebase, can be hidden if Firebase not used
     const displayBatchInfo = document.getElementById('displayBatchInfo');
     const totalSentencesDisplay = document.getElementById('totalSentencesDisplay');
     const statusMessages = document.getElementById('statusMessages');
@@ -168,12 +176,9 @@
     let isPaused = false; let countdownInterval; let isFirstSentenceOfSession = true;
     let isPerformingRedo = false; let selectedCameraId = ''; let selectedMicId = '';
     let isTestRecordingActive = false;
+    const TEST_SENTENCE = "天気がいいから散歩しましょう。";
 
-    // --- SENTENCE BATCH DEFINITIONS ---
-    // IMPORTANT: User MUST fill these arrays with actual sentences.
-    // The application will NOT proceed if a selected batch is empty.
-    // For quick testing, you can add a few sentences to sentences_1_100 like:
-    // const sentences_1_100 = ["This is a test sentence for batch 1.", "Another test sentence."];
+
     const sentences_1_100 = [
         "丁寧に 赤い ボールを シ 1 に 投げる。",
         "ゆっくり 白い 箱を ヒ 3 から 取る。",
@@ -1230,26 +1235,26 @@
             tempDeviceStream = await navigator.mediaDevices.getUserMedia(constraints);
             if (deviceSelectionPreview) deviceSelectionPreview.srcObject = tempDeviceStream;
         } catch (err) {
-            addStatusMessage(`Error previewing camera: ${err.message.split(':')[0]}`, "error");
+            addStatusMessage(`カメラプレビューエラー: ${err.message.split(':')[0]}`, "error");
             if (deviceSelectionPreview) deviceSelectionPreview.srcObject = null;
         }
     }
 
     async function populateDeviceSelectors() {
-        addStatusMessage("Listing devices...", "info");
+        addStatusMessage("デバイス一覧を取得中...", "info");
         confirmDevicesAndTestButton.disabled = true;
-        cameraSelect.innerHTML = '<option value="">Loading cameras...</option>';
-        micSelect.innerHTML = '<option value="">Loading mics...</option>';
+        cameraSelect.innerHTML = '<option value="">カメラを読込中...</option>';
+        micSelect.innerHTML = '<option value="">マイクを読込中...</option>';
         let permissionGranted = false;
         try {
             const tempPermStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
             tempPermStream.getTracks().forEach(track => track.stop());
             permissionGranted = true;
-            addStatusMessage("Device permissions active.", "info");
+            addStatusMessage("デバイス利用許可を確認しました。", "info");
         } catch (err) {
-            showModal("Permission needed for camera/mic to list devices and record. Please grant permissions and refresh if issue persists.");
-            addStatusMessage("Permission denied for device listing. Cannot proceed.", "error");
-            cameraSelect.innerHTML = '<option value="">Permission Denied</option>'; micSelect.innerHTML = '<option value="">Permission Denied</option>';
+            showModal("カメラとマイクへのアクセス許可が必要です。許可されていない場合、デバイス一覧の表示や録画ができません。設定を確認し、ページを再読み込みしてください。");
+            addStatusMessage("デバイス一覧表示のためのアクセス許可がありません。", "error");
+            cameraSelect.innerHTML = '<option value="">アクセス許可なし</option>'; micSelect.innerHTML = '<option value="">アクセス許可なし</option>';
             return;
         }
         if (!permissionGranted) return;
@@ -1262,35 +1267,35 @@
             cameraSelect.innerHTML = ''; micSelect.innerHTML = '';
 
             if (cameras.length > 0) {
-                cameras.forEach(camera => { const option=document.createElement('option'); option.value=camera.deviceId; option.textContent=camera.label||`Camera ${cameraSelect.options.length+1}`; cameraSelect.appendChild(option); });
+                cameras.forEach(camera => { const option=document.createElement('option'); option.value=camera.deviceId; option.textContent=camera.label||`カメラ ${cameraSelect.options.length+1}`; cameraSelect.appendChild(option); });
                 cameraSelect.selectedIndex = 0;
                 await updateDeviceSelectionPreview();
-            } else { cameraSelect.innerHTML = '<option value="">No cameras found</option>'; }
+            } else { cameraSelect.innerHTML = '<option value="">カメラが見つかりません</option>'; }
 
             if (mics.length > 0) {
-                mics.forEach(mic => { const option=document.createElement('option'); option.value=mic.deviceId; option.textContent=mic.label||`Microphone ${micSelect.options.length+1}`; micSelect.appendChild(option); });
+                mics.forEach(mic => { const option=document.createElement('option'); option.value=mic.deviceId; option.textContent=mic.label||`マイク ${micSelect.options.length+1}`; micSelect.appendChild(option); });
                 micSelect.selectedIndex = 0;
-            } else { micSelect.innerHTML = '<option value="">No microphones found</option>'; }
+            } else { micSelect.innerHTML = '<option value="">マイクが見つかりません</option>'; }
 
-            if (cameras.length > 0 && mics.length > 0) { confirmDevicesAndTestButton.disabled = false; addStatusMessage("Please select your camera and microphone.", "info"); }
-            else { showModal("No cameras or microphones found. Please ensure they are connected and enabled."); addStatusMessage("No cameras or microphones found.", "error"); }
-        } catch (err) { console.error("Error enumerating devices:", err); showModal("Error listing devices: " + err.message); addStatusMessage("Error listing devices: "+err.message, "error"); cameraSelect.innerHTML='<option value="">Error</option>'; micSelect.innerHTML='<option value="">Error</option>';}
+            if (cameras.length > 0 && mics.length > 0) { confirmDevicesAndTestButton.disabled = false; addStatusMessage("カメラとマイクを選択してください。", "info"); }
+            else { showModal("カメラまたはマイクが見つかりません。接続を確認してください。"); addStatusMessage("カメラまたはマイクが見つかりません。", "error"); }
+        } catch (err) { console.error("デバイス一覧取得エラー:", err); showModal("デバイス一覧取得エラー: " + err.message); addStatusMessage("デバイス一覧取得エラー: "+err.message, "error"); cameraSelect.innerHTML='<option value="">読込エラー</option>'; micSelect.innerHTML='<option value="">読込エラー</option>';}
     }
 
     cameraSelect.addEventListener('change', updateDeviceSelectionPreview);
 
     async function initializeFirebase() {
-        try { const cs = typeof __firebase_config !== 'undefined' ? __firebase_config : null; appId = typeof __app_id !== 'undefined' ? __app_id : 'video-sentence-recorder-default'; if (!cs) { console.warn("Firebase config missing."); addStatusMessage("Firebase config missing. Cloud backup disabled.", "info"); isFirebaseReady = false; return; } const fc = JSON.parse(cs); firebaseApp = initializeApp(fc); auth = getAuth(firebaseApp); db = getFirestore(firebaseApp); storage = getStorage(firebaseApp); setLogLevel('debug'); await setPersistence(auth, browserLocalPersistence); onAuthStateChanged(auth, async (user) => { if (user) { userId = user.uid; addStatusMessage(`Firebase Auth OK. User: ${userId.substring(0,10)}...`, 'success'); if(displayUserId) displayUserId.textContent = userId; isFirebaseReady = true; } else { const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; if (token) { try { await signInWithCustomToken(auth, token); } catch (e) { await signInAnonymously(auth); } } else { await signInAnonymously(auth); } addStatusMessage("Firebase signed in.", "success"); } });
-        } catch (e) { console.error("FB Init Err:", e); showModal("FB Init Err: " + e.message); addStatusMessage("FB Init Err: " + e.message, "error"); isFirebaseReady = false; }
+        try { const cs = typeof __firebase_config !== 'undefined' ? __firebase_config : null; appId = typeof __app_id !== 'undefined' ? __app_id : 'video-sentence-recorder-default'; if (!cs) { console.warn("Firebase設定がありません。"); addStatusMessage("Firebase設定がありません。クラウドバックアップは無効です。", "info"); isFirebaseReady = false; return; } const fc = JSON.parse(cs); firebaseApp = initializeApp(fc); auth = getAuth(firebaseApp); db = getFirestore(firebaseApp); storage = getStorage(firebaseApp); setLogLevel('debug'); await setPersistence(auth, browserLocalPersistence); onAuthStateChanged(auth, async (user) => { if (user) { userId = user.uid; addStatusMessage(`Firebase認証OK。ユーザーID: ${userId.substring(0,10)}...`, 'success'); if(displayUserId) displayUserId.textContent = userId; isFirebaseReady = true; } else { const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null; if (token) { try { await signInWithCustomToken(auth, token); } catch (e) { await signInAnonymously(auth); } } else { await signInAnonymously(auth); } addStatusMessage("Firebaseにサインインしました。", "success"); } });
+        } catch (e) { console.error("Firebase初期化エラー:", e); showModal("Firebase初期化エラー: " + e.message); addStatusMessage("Firebase初期化エラー: " + e.message, "error"); isFirebaseReady = false; }
     }
 
     async function setupMedia(micId, cameraId) {
-        addStatusMessage("Setting up media with selected devices...");
+        addStatusMessage("選択されたデバイスでメディアを準備中...");
         if (mainStream) { mainStream.getTracks().forEach(track => track.stop()); mainStream = null; }
         await stopTempDeviceStream();
 
         try {
-            const audioConstraint = micId ? { deviceId: micId } : true; // Not using 'exact' for mic
+            const audioConstraint = micId ? { deviceId: micId } : true;
             const constraints = {
                 audio: audioConstraint,
                 video: {
@@ -1298,27 +1303,27 @@
                     frameRate: { ideal: 30, max: 30 }
                 }
             };
-            addStatusMessage(`Using constraints: ${JSON.stringify(constraints)}`, "info");
+            addStatusMessage(`使用する制約: ${JSON.stringify(constraints)}`, "info");
 
             if (!micId || !cameraId) {
-                showModal("Device ID missing. Please re-select devices.");
-                addStatusMessage("Mic or Cam ID missing.", "error");
+                showModal("デバイスIDがありません。デバイスを再選択してください。");
+                addStatusMessage("マイクまたはカメラのIDがありません。", "error");
                 return false;
             }
             mainStream = await navigator.mediaDevices.getUserMedia(constraints);
 
             const audioTracks = mainStream.getAudioTracks();
             if (audioTracks.length > 0) {
-                addStatusMessage(`Audio track found: ${audioTracks[0].label || 'No Label'} (ID: ${audioTracks[0].id})`, "success");
-                console.log("Active audio track details:", audioTracks[0].getSettings());
+                addStatusMessage(`音声トラック確認: ${audioTracks[0].label || 'ラベルなし'} (ID: ${audioTracks[0].id})`, "success");
+                console.log("有効な音声トラック詳細:", audioTracks[0].getSettings());
             } else {
-                addStatusMessage("No audio track found in the stream!", "error");
-                showModal("Critical error: No audio track could be established from the selected microphone. Please check microphone settings and permissions, or try a different microphone.");
-                if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null; // Clean up video-only stream
+                addStatusMessage("ストリームに音声トラックがありません！", "error");
+                showModal("重大なエラー：選択されたマイクから音声トラックを確立できませんでした。マイク設定と許可を確認するか、別のマイクを試してください。");
+                if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null;
                 return false;
             }
 
-            if (typeof MediaRecorder==='undefined') { showModal("MediaRecorder not supported."); throw new Error("MediaRecorder not supported"); }
+            if (typeof MediaRecorder==='undefined') { showModal("MediaRecorderがサポートされていません。"); throw new Error("MediaRecorder not supported"); }
             const opts = { mimeType: 'video/mp4' };
             if (!MediaRecorder.isTypeSupported(opts.mimeType)) {
                 opts.mimeType = 'video/webm';
@@ -1327,19 +1332,19 @@
 
             if (opts.mimeType === 'video/webm') { opts.audioBitsPerSecond = 128000; }
             else if (opts.mimeType === 'video/mp4') { opts.audioBitsPerSecond = 128000; }
-            addStatusMessage(`MediaRecorder options: ${JSON.stringify(opts)}`, "info");
+            addStatusMessage(`MediaRecorderオプション: ${JSON.stringify(opts)}`, "info");
 
             mediaRecorder = new MediaRecorder(mainStream, opts);
-            addStatusMessage(`Recorder initialized. Type: ${mediaRecorder.mimeType||'default'}`, 'success');
+            addStatusMessage(`レコーダー初期化完了。タイプ: ${mediaRecorder.mimeType||'デフォルト'}`, 'success');
             mediaRecorder.ondataavailable = e => e.data.size > 0 && recordedChunks.push(e.data);
             mediaRecorder.onstop = handleRecordingStop;
-            addStatusMessage("Media setup complete.", "success");
+            addStatusMessage("メディアの準備が完了しました。", "success");
             return true;
         } catch (err) {
-            console.error("Media setup error.", err);
+            console.error("メディア準備エラー:", err);
             let detailedError = err.message; if (err.name) detailedError = `${err.name}: ${err.message}`;
-            showModal("Camera/mic setup error: " + detailedError + ". Try different devices or check permissions.");
-            addStatusMessage("Media setup error: " + detailedError, "error");
+            showModal("カメラ/マイク準備エラー: " + detailedError + "。別のデバイスを試すか、許可を確認してください。");
+            addStatusMessage("メディア準備エラー: " + detailedError, "error");
             if(testRecordingSection) testRecordingSection.classList.add('hidden');
             if(recordingSection) recordingSection.classList.add('hidden');
             if(deviceSelectionSection) deviceSelectionSection.classList.remove('hidden');
@@ -1352,27 +1357,35 @@
         const wasTest = isTestRecordingActive; isTestRecordingActive = false;
 
         const blob = new Blob(recordedChunks, { type: mediaRecorder.mimeType || 'video/webm' }); recordedChunks = [];
+        const ext = mediaRecorder.mimeType?.includes('mp4') ? 'mp4' : 'webm';
 
         if (wasTest) {
-            addStatusMessage("Test recording complete. Devices seem to work.", "success");
-            startStopTestButton.textContent = "Restart Test"; startStopTestButton.disabled = false;
+            addStatusMessage("テスト録画完了。デバイスは正常に動作するようです。", "success");
+            // Download test recording
+            const testVideoFileName = `${userName}_テスト録画.${ext}`;
+            const testTextFileName = `${userName}_テスト文章.txt`;
+            downloadFile(blob, testVideoFileName);
+            addStatusMessage(`テスト動画「${testVideoFileName}」のダウンロードを開始しました。`, "success");
+            downloadFile(new Blob([TEST_SENTENCE], { type: 'text/plain' }), testTextFileName);
+            addStatusMessage(`テスト文章「${testTextFileName}」のダウンロードを開始しました。`, "success");
+
+            startStopTestButton.textContent = "テスト再実行"; startStopTestButton.disabled = false;
             proceedToMainRecordingButton.classList.remove('hidden'); proceedToMainRecordingButton.disabled = false;
             return;
         }
-        if (wasRedo) { addStatusMessage("Previous attempt discarded. Starting redo.", "info"); startRecordingInternal(); return; }
+        if (wasRedo) { addStatusMessage("前回の録画は破棄されました。やり直します。", "info"); startRecordingInternal(); return; }
 
-        addStatusMessage("Recording stopped for sentence " + currentSentenceIndex + ".");
+        addStatusMessage(currentSentenceIndex + "番目の文章の録画を停止しました。", "info");
         const sentenceText = sentences[currentSentenceIndex - 1];
-        const fileBase = `${userName}_batch${sentenceBatchSelect.value}_${currentSentenceIndex}`;
-        const ext = mediaRecorder.mimeType?.includes('mp4') ? 'mp4' : 'webm';
+        const fileBase = `${userName}_文章バッチ${sentenceBatchSelect.value}_${currentSentenceIndex}`;
         const videoFile = `${fileBase}.${ext}`; const textFile = `${fileBase}.txt`;
-        downloadFile(blob, videoFile); addStatusMessage(`Video "${videoFile}" download initiated.`, 'success');
-        downloadFile(new Blob([sentenceText], { type: 'text/plain' }), textFile); addStatusMessage(`Text "${textFile}" download initiated.`, 'success');
+        downloadFile(blob, videoFile); addStatusMessage(`動画「${videoFile}」のダウンロードを開始しました。`, 'success');
+        downloadFile(new Blob([sentenceText], { type: 'text/plain' }), textFile); addStatusMessage(`文章「${textFile}」のダウンロードを開始しました。`, 'success');
 
         if (isFirebaseReady && auth.currentUser) {
-            try { addStatusMessage(`Cloud backup for ${videoFile}...`); const storagePath = `artifacts/${appId}/users/${userId}/sentenceReadings_videos/${videoFile}`; const videoStorageRef = ref(storage, storagePath); const snapshot = await uploadBytes(videoStorageRef, blob); const videoUrl = await getDownloadURL(snapshot.ref); addStatusMessage(`Video uploaded.`, 'success'); const firestoreDocPath = `artifacts/${appId}/users/${userId}/sentenceReadings/${fileBase}`; await setDoc(doc(db, firestoreDocPath), { userName, sentenceBatch: sentenceBatchSelect.value, sentenceText, sentenceIndexInBatch: currentSentenceIndex, videoFileName: videoFile, videoStoragePath: storagePath, videoUrl, mimeType: mediaRecorder.mimeType || 'video/webm', locallySaved: true, timestamp: serverTimestamp() }); addStatusMessage(`Metadata for sentence ${currentSentenceIndex} backed up.`, 'success');
-            } catch (e) { console.error("FB Backup Err:", e); addStatusMessage(`Cloud backup failed: ${e.message}`, 'error'); }
-        } else { addStatusMessage("FB not ready/authed; skipping cloud backup.", "info"); }
+            try { addStatusMessage(`${videoFile} のクラウドバックアップを試行中...`); const storagePath = `artifacts/${appId}/users/${userId}/sentenceReadings_videos/${videoFile}`; const videoStorageRef = ref(storage, storagePath); const snapshot = await uploadBytes(videoStorageRef, blob); const videoUrl = await getDownloadURL(snapshot.ref); addStatusMessage(`動画アップロード完了。`, 'success'); const firestoreDocPath = `artifacts/${appId}/users/${userId}/sentenceReadings/${fileBase}`; await setDoc(doc(db, firestoreDocPath), { userName, sentenceBatch: sentenceBatchSelect.value, sentenceText, sentenceIndexInBatch: currentSentenceIndex, videoFileName: videoFile, videoStoragePath: storagePath, videoUrl, mimeType: mediaRecorder.mimeType || 'video/webm', locallySaved: true, timestamp: serverTimestamp() }); addStatusMessage(`${currentSentenceIndex}番目の文章のメタデータをバックアップしました。`, 'success');
+            } catch (e) { console.error("Firebaseバックアップエラー:", e); addStatusMessage(`クラウドバックアップ失敗: ${e.message}`, 'error'); }
+        } else { addStatusMessage("Firebase未準備/未認証のため、クラウドバックアップをスキップします。", "info"); }
 
         if (currentSentenceIndex < sentences.length) { displayNextSentence(); startRecordingInternal(); }
         else { completeRecordingSession(); }
@@ -1387,27 +1400,27 @@
             }
 
             if (!isTestRecordingActive && (sentences.length === 0 || currentSentenceIndex >= sentences.length)) {
-                addStatusMessage("No more sentences or sentences not loaded.", "error");
+                addStatusMessage("これ以上文章がないか、文章が読み込まれていません。", "error");
                 if (sentences.length > 0 && currentSentenceIndex >= sentences.length) completeRecordingSession(); return;
             }
             recordedChunks = []; mediaRecorder.start(); isPaused = false;
 
             if (isTestRecordingActive) {
-                addStatusMessage(`Test recording started...`);
-                startStopTestButton.textContent = "Stop Test Recording";
+                addStatusMessage(`テスト録画を開始しました...`);
+                startStopTestButton.textContent = "テスト録画停止";
                 proceedToMainRecordingButton.classList.add('hidden');
             } else {
-                addStatusMessage(`Recording for sentence ${currentSentenceIndex + 1}...`);
-                nextSentenceButton.textContent = `Next & Save (${currentSentenceIndex + 1}/${sentences.length})`;
+                addStatusMessage(`${currentSentenceIndex + 1}番目の文章の録画を開始しました...`);
+                nextSentenceButton.textContent = `次へ＆保存 (${currentSentenceIndex + 1}/${sentences.length})`;
                 nextSentenceButton.classList.remove('bg-emerald-600', 'hover:bg-emerald-700'); nextSentenceButton.classList.add('bg-red-600', 'hover:bg-red-700');
                 nextSentenceButton.disabled = false;
-                pauseResumeButton.textContent = "Pause"; pauseResumeButton.disabled = false;
+                pauseResumeButton.textContent = "一時停止"; pauseResumeButton.disabled = false;
                 pauseResumeButton.classList.remove('bg-green-500', 'hover:bg-green-600', 'opacity-50'); pauseResumeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
                 redoButton.disabled = false;
             }
         } else {
-            addStatusMessage("Cannot start recording. Recorder not ready or stream inactive.", "error");
-            if (!mainStream?.active) showModal("Camera/mic stream inactive. Check permissions.");
+            addStatusMessage("録画を開始できません。レコーダーが準備できていないか、ストリームが有効ではありません。", "error");
+            if (!mainStream?.active) showModal("カメラ/マイクストリームが有効ではありません。許可を確認してください。");
         }
     }
 
@@ -1417,10 +1430,10 @@
         countdownInterval = setInterval(() => { count--; timerText.textContent = count; if (count <= 0) { clearInterval(countdownInterval); timerDisplayContainer.classList.add('hidden'); isFirstSentenceOfSession = false; startRecordingInternal(); } }, 1000);
     }
     function displayNextSentence() {
-        if (currentSentenceIndex < sentences.length) { sentenceToRead.textContent = sentences[currentSentenceIndex]; addStatusMessage(`Sentence ${currentSentenceIndex + 1}: "${sentences[currentSentenceIndex].substring(0,30)}..."`); }
+        if (currentSentenceIndex < sentences.length) { sentenceToRead.textContent = sentences[currentSentenceIndex]; addStatusMessage(`${currentSentenceIndex + 1}番目の文章: 「${sentences[currentSentenceIndex].substring(0,30)}...」`); }
     }
     function handleNextAction() {
-        if (isPaused) { showModal("Please resume recording before proceeding."); return; }
+        if (isPaused) { showModal("録画を再開してから次に進んでください。"); return; }
         if (mediaRecorder && mediaRecorder.state === "inactive" && currentSentenceIndex === 0) {
             displayNextSentence();
             if (isFirstSentenceOfSession) { runCountdownAndStart(); }
@@ -1432,23 +1445,47 @@
     }
     redoButton.addEventListener('click', () => {
         if (!mediaRecorder || isPaused || isTestRecordingActive) return;
-        addStatusMessage("Redo requested for current sentence.", "info"); isPerformingRedo = true;
+        addStatusMessage("現在の文章をやり直します。", "info"); isPerformingRedo = true;
         if (mediaRecorder.state === "recording") { mediaRecorder.stop(); }
     });
     pauseResumeButton.addEventListener('click', () => {
         if (!mediaRecorder || mediaRecorder.state === "inactive" || isTestRecordingActive) return;
-        if (!isPaused) { if (mediaRecorder.state === "recording") { mediaRecorder.pause(); isPaused = true; pauseResumeButton.textContent = "Resume"; pauseResumeButton.classList.remove('bg-yellow-500', 'hover:bg-yellow-600'); pauseResumeButton.classList.add('bg-green-500', 'hover:bg-green-600'); addStatusMessage("Recording paused.", "info"); nextSentenceButton.disabled = true; redoButton.disabled = true; } }
-        else { if (mediaRecorder.state === "paused") { mediaRecorder.resume(); isPaused = false; pauseResumeButton.textContent = "Pause"; pauseResumeButton.classList.remove('bg-green-500', 'hover:bg-green-600'); pauseResumeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600'); addStatusMessage("Recording resumed.", "info"); nextSentenceButton.disabled = false; redoButton.disabled = false; } }
+        if (!isPaused) { if (mediaRecorder.state === "recording") { mediaRecorder.pause(); isPaused = true; pauseResumeButton.textContent = "再開"; pauseResumeButton.classList.remove('bg-yellow-500', 'hover:bg-yellow-600'); pauseResumeButton.classList.add('bg-green-500', 'hover:bg-green-600'); addStatusMessage("録画を一時停止しました。", "info"); nextSentenceButton.disabled = true; redoButton.disabled = true; } }
+        else { if (mediaRecorder.state === "paused") { mediaRecorder.resume(); isPaused = false; pauseResumeButton.textContent = "一時停止"; pauseResumeButton.classList.remove('bg-green-500', 'hover:bg-green-600'); pauseResumeButton.classList.add('bg-yellow-500', 'hover:bg-yellow-600'); addStatusMessage("録画を再開しました。", "info"); nextSentenceButton.disabled = false; redoButton.disabled = false; } }
     });
+
     function completeRecordingSession() {
-        addStatusMessage("All sentences recorded!", "success"); if(recordingSection) recordingSection.classList.add('hidden'); if(completionMessage) completionMessage.classList.remove('hidden');
+        addStatusMessage("このバッチのすべての文章の録画が完了しました！次のバッチを選択してください。", "success");
+        if(recordingSection) recordingSection.classList.add('hidden');
+        // completionMessage.classList.remove('hidden'); // Optionally show a brief completion message
+
         if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null;
         if(videoPreview) videoPreview.srcObject = null; if(videoPreviewTest) videoPreviewTest.srcObject = null;
-        isFirstSentenceOfSession = true; if(redoButton) redoButton.disabled = true; if(pauseResumeButton) pauseResumeButton.disabled = true; if(countdownInterval) clearInterval(countdownInterval);
+
+        // Reset for next batch
+        currentSentenceIndex = 0;
+        isFirstSentenceOfSession = true;
+        sentences = []; // Clear sentences, will be reloaded
+        batchSelected = false; // Force re-selection of batch
+
+        if(nameSection) nameSection.classList.remove('hidden'); // Go back to name/batch selection
+        if(sentenceBatchSelect) sentenceBatchSelect.value = ""; // Reset dropdown
+        checkCanProceedToDeviceSetup(); // This will disable the proceed button
+
+        if(redoButton) redoButton.disabled = true;
+        if(pauseResumeButton) pauseResumeButton.disabled = true;
+        if(nextSentenceButton) {
+            nextSentenceButton.textContent = "最初の文章から開始";
+            nextSentenceButton.disabled = true; // Will be enabled after device setup for next batch
+            nextSentenceButton.classList.remove('bg-red-600', 'hover:bg-red-700');
+            nextSentenceButton.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+        }
+        if(countdownInterval) clearInterval(countdownInterval);
     }
+
     function downloadFile(blob, filename) { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }
 
-    function resetApp() {
+    function resetApp() { // Full reset for "Start Over"
         userName = ''; currentSentenceIndex = 0; recordedChunks = []; isPaused = false;
         if (mainStream) mainStream.getTracks().forEach(track => track.stop()); mainStream = null;
         stopTempDeviceStream();
@@ -1461,38 +1498,38 @@
         if(deviceSelectionSection) deviceSelectionSection.classList.add('hidden');
         if(testRecordingSection) testRecordingSection.classList.add('hidden');
         if(recordingSection) recordingSection.classList.add('hidden');
-        if(completionMessage) completionMessage.classList.add('hidden');
+        if(completionMessage) completionMessage.classList.add('hidden'); // Hide completion message too
 
         if(userNameInput) userNameInput.value = ''; if(sentenceBatchSelect) sentenceBatchSelect.value = '';
         if(cameraSelect) cameraSelect.innerHTML = ''; if(micSelect) micSelect.innerHTML = '';
-        if(statusMessages) statusMessages.innerHTML = ''; addStatusMessage("App reset. Enter name & select batch.");
-        if(nextSentenceButton) { nextSentenceButton.textContent = 'Start First'; nextSentenceButton.disabled = true; nextSentenceButton.classList.remove('bg-red-600', 'hover:bg-red-700'); nextSentenceButton.classList.add('bg-emerald-600', 'hover:bg-emerald-700'); }
-        if(pauseResumeButton) { pauseResumeButton.textContent = "Pause"; pauseResumeButton.disabled = true; }
+        if(statusMessages) statusMessages.innerHTML = ''; addStatusMessage("アプリをリセットしました。参加者番号と文章バッチを選択してください。", "info");
+        if(nextSentenceButton) { nextSentenceButton.textContent = '最初の文章から開始'; nextSentenceButton.disabled = true; nextSentenceButton.classList.remove('bg-red-600', 'hover:bg-red-700'); nextSentenceButton.classList.add('bg-emerald-600', 'hover:bg-emerald-700'); }
+        if(pauseResumeButton) { pauseResumeButton.textContent = "一時停止"; pauseResumeButton.disabled = true; }
         if(redoButton) redoButton.disabled = true;
         if(proceedToDeviceSetupButton) proceedToDeviceSetupButton.disabled = true;
         if(confirmDevicesAndTestButton) confirmDevicesAndTestButton.disabled = true;
-        if(startStopTestButton) { startStopTestButton.textContent = "Start Test Recording"; startStopTestButton.disabled=true; }
+        if(startStopTestButton) { startStopTestButton.textContent = "テスト録画開始"; startStopTestButton.disabled=true; }
         if(proceedToMainRecordingButton) proceedToMainRecordingButton.classList.add('hidden');
         checkCanProceedToDeviceSetup();
         if(totalSentencesDisplay) totalSentencesDisplay.textContent = "0"; if(displayBatchInfo) displayBatchInfo.textContent = "";
     }
 
     userNameInput.addEventListener('input', () => { userNameEntered = userNameInput.value.trim() !== ''; checkCanProceedToDeviceSetup(); });
-    sentenceBatchSelect.addEventListener('change', () => { batchSelected = sentenceBatchSelect.value !== ''; if (batchSelected) addStatusMessage(`Batch selected: ${sentenceBatchSelect.options[sentenceBatchSelect.selectedIndex].text}`, "info"); checkCanProceedToDeviceSetup();});
+    sentenceBatchSelect.addEventListener('change', () => { batchSelected = sentenceBatchSelect.value !== ''; if (batchSelected) addStatusMessage(`バッチ選択: ${sentenceBatchSelect.options[sentenceBatchSelect.selectedIndex].text}`, "info"); checkCanProceedToDeviceSetup();});
 
     proceedToDeviceSetupButton.addEventListener('click', async () => {
-        userName = userNameInput.value.trim().replace(/[^a-zA-Z0-9_-]/g, '');
-        if (!userName) { showModal("Please enter a valid name."); return; }
-        const sbv = sentenceBatchSelect.value; if (!sbv) { showModal("Please select a sentence batch."); return; }
+        userName = userNameInput.value.trim().replace(/[^a-zA-Z0-9_\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAFー々]/g, ''); // Allow Japanese characters in username
+        if (!userName) { showModal("有効な参加者番号を入力してください。"); return; }
+        const sbv = sentenceBatchSelect.value; if (!sbv) { showModal("文章バッチを選択してください。"); return; }
         switch(sbv) {
-            case '1': sentences = sentences_1_100; break; case '2': sentences = sentences_101_200; break; case '3': sentences = sentences_201_300; break; case '4': sentences = sentences_301_400; break; case '5': sentences = sentences_401_500; break; case '6': sentences = sentences_501_600; break; case '7': sentences = sentences_601_700; break; case '8': sentences = sentences_701_800; break; case '9': sentences = sentences_801_900; break; case '10': sentences = sentences_901_1000; break; default: showModal("Invalid batch."); return;
+            case '1': sentences = sentences_1_100; break; case '2': sentences = sentences_101_200; break; case '3': sentences = sentences_201_300; break; case '4': sentences = sentences_301_400; break; case '5': sentences = sentences_401_500; break; case '6': sentences = sentences_501_600; break; case '7': sentences = sentences_601_700; break; case '8': sentences = sentences_701_800; break; case '9': sentences = sentences_801_900; break; case '10': sentences = sentences_901_1000; break; default: showModal("無効なバッチです。"); return;
         }
         if (sentences.length === 0 && sbv !== "") {
-            showModal(`Selected sentence batch (Batch ${sbv}) is empty. Please add sentences to the code manually.`);
-            addStatusMessage(`Batch ${sbv} is empty. Add sentences to it in the JS code.`, "error");
+            showModal(`選択された文章バッチ (バッチ ${sbv}) は空です。コードに文章を手動で追加してください。`);
+            addStatusMessage(`バッチ ${sbv} は空です。JSコードに文章を追加してください。`, "error");
             return;
         }
-        addStatusMessage(`${sentences.length} sentences for Batch ${sbv} loaded.`, "success");
+        addStatusMessage(`バッチ ${sbv} の ${sentences.length} 個の文章を読み込みました。`, "success");
         nameSection.classList.add('hidden'); deviceSelectionSection.classList.remove('hidden');
         await populateDeviceSelectors();
     });
@@ -1509,59 +1546,58 @@
 
     confirmDevicesAndTestButton.addEventListener('click', async () => {
         selectedCameraId = cameraSelect.value; selectedMicId = micSelect.value;
-        if (!selectedCameraId || !selectedMicId) { showModal("Please select both camera and microphone."); return; }
+        if (!selectedCameraId || !selectedMicId) { showModal("カメラとマイクの両方を選択してください。"); return; }
 
         await stopTempDeviceStream();
 
-        const mediaReady = await setupMedia(selectedMicId, selectedCameraId); // Corrected: selectedCameraId for camera
+        const mediaReady = await setupMedia(selectedMicId, selectedCameraId);
         if (mediaReady) {
             deviceSelectionSection.classList.add('hidden');
             testRecordingSection.classList.remove('hidden');
             if(videoPreviewTest) videoPreviewTest.srcObject = mainStream;
-            startStopTestButton.textContent = "Start Test Recording"; startStopTestButton.disabled = false;
+            startStopTestButton.textContent = "テスト録画開始"; startStopTestButton.disabled = false;
             proceedToMainRecordingButton.classList.add('hidden'); proceedToMainRecordingButton.disabled = true;
-            addStatusMessage("Ready for test recording.", "info");
+            addStatusMessage("テスト録画の準備ができました。", "info");
         } else {
-            addStatusMessage("Failed to set up media. Please check devices and permissions.", "error");
+            addStatusMessage("メディアの準備に失敗しました。デバイスと許可を確認してください。", "error");
         }
     });
 
     startStopTestButton.addEventListener('click', () => {
-        if (!mediaRecorder) { addStatusMessage("MediaRecorder not ready for test.", "error"); return; }
+        if (!mediaRecorder) { addStatusMessage("MediaRecorderがテストの準備ができていません。", "error"); return; }
         if (mediaRecorder.state === 'inactive') {
             isTestRecordingActive = true;
             startRecordingInternal();
         } else if (mediaRecorder.state === 'recording') {
             mediaRecorder.stop();
-            addStatusMessage("Stopping test recording...", "info");
+            addStatusMessage("テスト録画を停止中...", "info");
         }
     });
 
     proceedToMainRecordingButton.addEventListener('click', () => {
         if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-            // This case should ideally be handled by onstop enabling this button only when inactive.
-            // If it's still recording/paused, stopping here might be abrupt.
-            addStatusMessage("Finalizing test. Please wait if test was running.", "warn");
-            return; // Let onstop handle enabling this button properly
+            addStatusMessage("テストを終了しています。停止するまでお待ちください。", "warn");
+            return;
         }
         if(videoPreviewTest) videoPreviewTest.srcObject = null; testRecordingSection.classList.add('hidden');
         recordingSection.classList.remove('hidden'); if(videoPreview) videoPreview.srcObject = mainStream;
 
         isFirstSentenceOfSession = true; currentSentenceIndex = 0;
         displayNextSentence();
-        nextSentenceButton.textContent = "Start First"; nextSentenceButton.disabled = false;
+        nextSentenceButton.textContent = "最初の文章から開始"; nextSentenceButton.disabled = false;
         pauseResumeButton.disabled = true; redoButton.disabled = true;
         displayBatchInfo.textContent = sentenceBatchSelect.options[sentenceBatchSelect.selectedIndex].text;
         totalSentencesDisplay.textContent = sentences.length;
         displayName.textContent = userName;
-        addStatusMessage("Ready for main recording session.", "info");
+        addStatusMessage("本番録画セッションの準備ができました。", "info");
     });
 
-    initializeFirebase(); addStatusMessage("App loaded. Enter name & select batch."); checkCanProceedToDeviceSetup();
+    initializeFirebase(); addStatusMessage("アプリを読み込みました。参加者番号と文章バッチを選択してください。", "info"); checkCanProceedToDeviceSetup();
     nextSentenceButton.addEventListener('click', handleNextAction);
-    restartButton.addEventListener('click', resetApp);
+    // Removed restartButton event listener as it's not in the active UI after batch completion
+    // If you add a global "Start Over" button, re-add its listener.
     document.addEventListener('keydown', (e) => {
-        if (testRecordingSection && !testRecordingSection.classList.contains('hidden')) return; // Ignore global keys if test section is active
+        if (testRecordingSection && !testRecordingSection.classList.contains('hidden')) return;
         if (recordingSection && !recordingSection.classList.contains('hidden') && !isPaused && (e.key === 'Enter' || e.code === 'Space')) {
             e.preventDefault();
             if (!nextSentenceButton.disabled) nextSentenceButton.click();
