@@ -53,6 +53,48 @@
       font-size: 0.9em;
       min-height: 200px; /* Ensure placeholder is visible */
     }
+    .pdf-container-modal { /* For modal */
+      width: 100%;
+      height: 70vh; /* Adjust height for modal view */
+      border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+    }
+    /* Modal styles */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 100; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto; /* 5% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 90%; /* Could be more or less, depending on screen size */
+      max-width: 800px; /* Max width */
+      border-radius: 0.5rem;
+      position: relative;
+    }
+    .modal-close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+    }
+    .modal-close-button:hover,
+    .modal-close-button:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body class="bg-stone-100 text-stone-800 antialiased">
@@ -67,8 +109,8 @@
 <nav class="bg-white shadow-md sticky top-0 z-50">
   <div class="container mx-auto px-6">
     <ul class="flex space-x-4 sm:space-x-8 py-3 overflow-x-auto">
-      <li><button data-tab="jgrid-info" id="nav-jgrid-info" class="nav-button font-semibold pb-2 border-b-2 active-tab">JGRIDについて</button></li>
-      <li><button data-tab="recording-guide" id="nav-recording-guide" class="nav-button font-semibold pb-2 border-b-2">撮影の説明</button></li>
+      <li><button data-tab="jgrid-info" id="nav-jgrid-info" class="nav-button font-semibold pb-2 border-b-2 active-tab">1. JGRID概要</button></li>
+      <li><button data-tab="recording-guide" id="nav-recording-guide" class="nav-button font-semibold pb-2 border-b-2">2. 撮影の説明</button></li>
     </ul>
   </div>
 </nav>
@@ -79,7 +121,7 @@
       <h2 class="text-2xl font-bold text-blue-600 mb-4">JGRIDコーパスプロジェクトへようこそ！</h2>
       <p class="mb-3 text-stone-700">
         この度は、JGRIDコーパス構築プロジェクトにご関心をお寄せいただき、ありがとうございます。
-        このページでは、本プロジェクトの簡単な概要と、皆様にお願いしたい動画撮影の内容についてご説明します。
+        このページでは、本プロジェクトの概要、皆様にお願いしたい動画撮影の内容についてご説明します。
       </p>
 
       <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. JGRIDコーパスとは？</h3>
@@ -91,8 +133,8 @@
         現在、英語圏では「GRID Corpus」のような大規模なデータセットが存在し、リップリーディング技術の研究開発が活発に進められています。しかし、日本語には同様の標準的なデータセットがまだ整備されていません。
       </p>
       <p class="text-stone-700">
-        そこで私たちは、日本語におけるリップリーディング技術の基盤を構築し、将来的には聴覚に障害を持つ方々のコミュニケーション支援や、様々な応用技術の開発に貢献することを目指して、このJGRIDコーパスを作成しています。
-        ご協力いただく映像・音声データは、この研究にとって非常に重要なものとなります。
+        そこで私たちは、日本語におけるリップリーディング技術の基盤を構築し、将来的には聴覚に障害を持つ方々のコミュニケーション支援や、様々な応用技術の開発に貢献することを目指して、このJGRIDコーパスを作成しています。JGRIDコーパスデータベースに保存する映像は口の動きのみであり、個人の特定はできないように処理を行なったものです。
+        ご協力いただく録画の際には顔の全体を収録しますが、後処理で口の動きのみになるようにトリミングを行います。
       </p>
 
       <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">2. どんな文章を読み上げるの？</h3>
@@ -101,12 +143,13 @@
         文章の構造は、例えば以下の6つの要素で構成されます。
       </p>
       <ul class="list-disc list-inside ml-4 my-2 text-stone-700 bg-blue-50 p-3 rounded-md">
-        <li><strong>副詞</strong> (例: 今すぐ, ゆっくり)</li>
-        <li><strong>色</strong> (例: 赤い, 青い)</li>
-        <li><strong>物体</strong> (例: ボール, 本)</li>
-        <li><strong>場所</strong> (例: ア, イ, ウ)</li>
-        <li><strong>数詞</strong> (例: 0, 1, 2)</li>
-        <li><strong>動詞</strong> (例: 置く, 取る) とそれに伴う助詞</li>
+        <li><strong>副詞</strong> ( 今すぐ, ゆっくり, 早く, 丁寧に)</li>
+        <li><strong>色</strong> (赤い, 青い, 緑の, 白い)</li>
+        <li><strong>物体</strong> (ボール, 本, ペン, 箱)</li>
+        <li><strong>場所</strong> (ア, イ, ウ, エ, オ, カ, キ, ク, ケ, コ, サ, シ, ス, セ, ソ, タ, チ, ツ, テ, ト, ナ, ニ, ヌ, ネ, ノ, ハ, ヒ, フ, ヘ, ホ, マ, ミ, ム, メ, モ, ヤ, ユ, ヨ, ラ, リ, ル, レ, ロ, ワ )</li>
+        <li><strong>数詞</strong> (0（ゼロ）, 1, 2, 3, 4（ヨン）, 5, 6, 7（ナナ）, 8, 9（キュウ）)</li>
+        <li><strong>動詞</strong> (置く, 取る, 動かす, 投げる) とそれに伴う助詞</li>
+
       </ul>
       <p class="text-stone-700 mb-2">
         実際の例文としては、「<span class="font-semibold text-emerald-700 font-mono text-base sm:text-lg">今すぐ 赤い ボールを ア １ に 置く。</span>」のような文になります。
@@ -128,9 +171,10 @@
       </div>
       <p class="text-sm text-stone-600 mb-4 text-center">（この参考動画は英語のGRID CORPUSの動画です。JGRIDでは同様の形式で日本語の文を読み上げます。）</p>
       <p class="text-sm text-stone-400 mb-4 text-center">downloaded from : https://spandh.dcs.shef.ac.uk/gridcorpus/</p>
+
       <div class="mt-8 text-center">
-        <button id="goToRecordingGuideBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-          動画撮影の説明へ進む
+        <button id="proceedToRecordingGuideTabBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+          撮影の説明へ進む
         </button>
       </div>
     </div>
@@ -141,30 +185,31 @@
       <h2 class="text-2xl font-bold text-blue-600 mb-4">動画撮影の準備と手順</h2>
       <p class="mb-3 text-stone-700">
         高品質なデータを収集するため、以下の点にご注意いただきながら撮影を進めてください。
-        撮影は、指定されたPC、カメラ、マイクを使用して行います。
+        撮影は、指定のPC、カメラ、マイクを使用して行います。
         発話する文章は全部で1000文あり、100文ずつのバッチ（計10バッチ）に分けて撮影します。
+        <br><strong>参加者番号は、研究者からお伝えします。撮影アプリの「参加者番号」の欄に、その参加者番号を入力してください。番号がわからなければ氏名を入力してください</strong>
       </p>
 
       <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. 撮影前の設定</h3>
-      <p class="text-sm text-stone-600 mb-3">各ステップのスクリーンショットも参考にしてください。（スクリーンショットはクリックで拡大表示できます - 準備中）</p>
+      <p class="text-sm text-stone-600 mb-3">各ステップのスクリーンショットも参考にしてください。</p>
       <ul class="list-disc list-inside space-y-4 text-stone-700">
         <li>
-          <strong>参加者番号の入力:</strong> 撮影アプリケーションの「名前」の欄に、ご自身の参加者番号を入力してください。例えば、参加者番号が「3」の場合は「<samp class="bg-stone-200 px-1 rounded">s3</samp>」と入力します。
+          <strong>参加者番号の入力:</strong> 撮影アプリケーションの「参加者番号」の欄に、研究者から伝えられたご自身の参加者番号または氏名を入力してください。例えば、参加者番号が「s3」の場合は「<samp class="bg-stone-200 px-1 rounded">s3</samp>」と入力します。
         </li>
         <li>
-          <strong>文章バッチの選択:</strong> 「文章バッチを選択してください」という項目で、今回撮影するバッチ（1から10まであります）を選択します。これらは順番に行っていただきます。
+          <strong>文章バッチの選択:</strong> 「文章バッチを選択してください」という項目で、今回撮影するバッチ（1から10まであります）を選択します。これらは順番に行っていただきますが、どこまで撮影するかまたはどれを撮影するかは任意です。できるだけ10バッチすべて協力していただけるとありがたいです。
           <div class="my-2 rounded-md overflow-hidden shadow">
-            <img src="start_screen.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+            <img src="start_screen.png" alt="文章バッチ選択のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
           </div>
         </li>
         <li>
           <strong>カメラとマイクの選択:</strong>
           <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
-            <li>「カメラを選択してください」では、「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称）を選択してください。
+            <li>「カメラを選択してください」では、「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（他のカメラからも可）を選択してください。
             </li>
-            <li>「マイクを選択してください」でも、同様に「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（または類似の名称のついたマイク）を選択してください。
+            <li>「マイクを選択してください」でも、同様に「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（他のマイクからも可）を選択してください。
               <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="camera_mic.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+                <img src="camera_mic.png" alt="カメラとマイク選択のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
               </div>
             </li>
           </ul>
@@ -174,16 +219,15 @@
           <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
             <li>設定後、「テスト記録を開始」ボタンを押して、短いテスト録画を行ってください。
               <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="test.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+                <img src="test.png" alt="テスト記録開始のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
               </div>
             </li>
             <li>テスト録画が終わったら「終了」ボタンを押します。すると、録画された動画のダウンロードが自動的に開始されます。
-
             </li>
             <li class="font-semibold text-red-600">
               <strong>重要：</strong> ブラウザから「ファイルのダウンロードを許可しますか？」といった趣旨の確認が表示された場合は、<strong class="underline">必ず「許可」をクリック</strong>してください。一度許可すると、次回以降のダウンロードではこの確認は表示されません。許可しないと、撮影データが保存されません。
               <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="allow.png" alt="参加者番号入力欄のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
+                <img src="allow.png" alt="ダウンロード許可のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
               </div>
             </li>
           </ul>
@@ -206,13 +250,10 @@
       <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">3. 発話時の注意点</h3>
       <ul class="list-disc list-inside space-y-2 text-stone-700">
         <li>
-          <strong>明瞭な発話:</strong> 画面に表示される文章を、一語一語はっきりと、普段話すような自然な声の大きさで読み上げてください。早口になったり、声が小さすぎたりしないように意識しましょう。
+          <strong>明瞭な発話:</strong> 画面に表示される文章を、一語一語はっきりと、普段話すような自然な声の大きさで読み上げてください。声が小さすぎたりしないように意識しましょう。
         </li>
         <li>
           <strong>発話のタイミングと長さ:</strong> 1つの文章を読み終えるのに、およそ2～3秒程度を目安にしてください。極端に長く間をあけたり、急いで読み終えたりしないようお願いします。
-        </li>
-        <li>
-          <strong>視線:</strong> 可能であれば、カメラのレンズの少し上あたりを見るように意識すると、より自然な映像になります。ただし、文章を読むために画面を見ることは問題ありません。
         </li>
       </ul>
 
@@ -248,7 +289,7 @@
           1つのバッチ（100文章）の撮影が完了すると、録画された動画ファイル（通常は`.mp4`形式）と発話した文章ファイル（通常は`.txt`形式が、お使いのPCの「ダウンロード」フォルダに自動的に保存されます。
         </li>
         <li class="font-semibold text-red-600">
-          <strong>重要：</strong> 各バッチの撮影が完了するたびに、ダウンロードされた動画ファイルを指定のDropbox フォルダにアップロードしてください。ファイルは研究責任者のみアクセスができます。
+          <strong>重要：</strong> 各バッチの撮影が完了するたびに、ダウンロードされた動画ファイルを指定のDropbox フォルダにアップロードしてください。ファイルは研究責任者のみアクセスができます。ただし、アップロードに時間がかかるため、時間がない方は研究者に連絡し、撮影したPCに保存しておいてください。
         </li>
         <li>
           ファイル名は、参加者番号とバッチ番号が含まれたものになっているはずです（例: <samp class="bg-stone-200 px-1 rounded">s3_batch1_1.mp4 と　s3_batch1_1.txt</samp>）。ファイル名を変更せずにそのままアップロードしてください。
@@ -259,16 +300,39 @@
       </ul>
 
       <div class="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <a href="https://sthasmn.github.io/sthasmn/camera/" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-center">
-          実際の撮影ページへ進む
-        </a>
+        <button id="openConsentModalBtn" class="w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-center">
+          実際の撮影ページへ進む (要同意)
+        </button>
         <a href="https://www.dropbox.com/request/HHMLfBNHY5KXuXRFo5Iq" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 text-center">
-          撮影済みファイルをアップ
+          撮影済みファイルをアップロード
         </a>
       </div>
     </div>
   </section>
 </main>
+
+<!-- Consent Modal -->
+<div id="consentModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close-button" id="modalCloseBtn">&times;</span>
+    <h2 class="text-2xl font-bold text-blue-600 mb-4">研究参加同意書</h2>
+
+    <p class="text-sm text-stone-600 mb-2">以下の同意書の内容をご確認ください。</p>
+    <p class="pdf-container<p class=text-md text-stone-800 font-semibold mb-1">この同意書に自筆署名もしていただきます。</p>
+      <embed src="同意書_JGRID.pdf" type="application/pdf" width="100%" height="100%">
+      <!-- Fallback content for PDF removed as per request -->
+    </div>
+    <div class="mt-6 text-center space-x-4">
+      <button id="declineConsentBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow">
+        同意しない (閉じる)
+      </button>
+      <button id="acceptConsentBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow">
+        同意して撮影に進む
+      </button>
+    </div>
+  </div>
+</div>
+
 
 <footer class="bg-stone-800 text-stone-300 text-center p-6 mt-12">
   <p>&copy; 2025 JGRIDコーパス. All rights reserved.</p>
@@ -278,13 +342,19 @@
 <script>
   const navButtons = document.querySelectorAll('.nav-button');
   const tabContents = document.querySelectorAll('.tab-content');
-  const goToRecordingGuideBtn = document.getElementById('goToRecordingGuideBtn');
+  const proceedToRecordingGuideTabBtn = document.getElementById('proceedToRecordingGuideTabBtn');
+
+  // Consent Modal Elements
+  const consentModal = document.getElementById('consentModal');
+  const openConsentModalBtn = document.getElementById('openConsentModalBtn');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const acceptConsentBtn = document.getElementById('acceptConsentBtn');
+  const declineConsentBtn = document.getElementById('declineConsentBtn');
 
   function setActiveTab(tabId) {
-    // Deactivate all tabs and buttons
     tabContents.forEach(content => {
       content.classList.remove('active');
-      content.style.opacity = 0; // Start fade out
+      content.style.opacity = 0;
     });
     navButtons.forEach(btn => {
       btn.classList.remove('active-tab');
@@ -294,33 +364,28 @@
     const newActiveNavButton = document.querySelector(`.nav-button[data-tab="${tabId}"]`);
 
     if (newActiveTabContent) {
-      // Hide all tabs first, then show the active one after a short delay for fade out
       setTimeout(() => {
         tabContents.forEach(content => {
           if(content.id !== tabId) {
             content.style.display = 'none';
           }
         });
-
-        newActiveTabContent.style.display = 'block'; // Make it visible for transition
-        // Force reflow to ensure opacity transition works from 0
+        newActiveTabContent.style.display = 'block';
         newActiveTabContent.offsetWidth;
-        newActiveTabContent.style.opacity = 1; // Start fade in
+        newActiveTabContent.style.opacity = 1;
         newActiveTabContent.classList.add('active');
-      }, tabContents.length > 0 ? 150 : 0); // Delay if there were other tabs to fade out
+      }, tabContents.length > 0 ? 150 : 0);
     }
 
     if (newActiveNavButton) {
       newActiveNavButton.classList.add('active-tab');
     }
-    // Scroll to the top of the main content area when a tab is activated
     const mainContentArea = document.querySelector('main');
     if (mainContentArea) {
       mainContentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
-  // Initial setup: activate the first tab
   document.addEventListener('DOMContentLoaded', () => {
     const firstTabButton = navButtons[0];
     if (firstTabButton) {
@@ -328,20 +393,56 @@
     }
   });
 
-  // Event listeners for tab navigation
   navButtons.forEach(button => {
     button.addEventListener('click', () => {
-      setActiveTab(button.dataset.tab);
+      if (!button.disabled) {
+        setActiveTab(button.dataset.tab);
+      }
     });
   });
 
-  // Event listener for the "動画撮影の説明へ進む" button
-  if (goToRecordingGuideBtn) {
-    goToRecordingGuideBtn.addEventListener('click', (event) => {
+  if (proceedToRecordingGuideTabBtn) {
+    proceedToRecordingGuideTabBtn.addEventListener('click', (event) => {
       event.preventDefault();
       setActiveTab('recording-guide');
     });
   }
+
+  // Consent Modal Logic
+  if (openConsentModalBtn) {
+    openConsentModalBtn.addEventListener('click', () => {
+      if (consentModal) consentModal.style.display = "block";
+    });
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', () => {
+      if (consentModal) consentModal.style.display = "none";
+    });
+  }
+
+  if (declineConsentBtn) {
+    declineConsentBtn.addEventListener('click', () => {
+      if (consentModal) consentModal.style.display = "none";
+    });
+  }
+
+  if (acceptConsentBtn) {
+    acceptConsentBtn.addEventListener('click', () => {
+      console.log("研究参加に同意しました。"); // Log consent
+      if (consentModal) consentModal.style.display = "none";
+      // Proceed to the actual recording page
+      window.open('https://sthasmn.github.io/sthasmn/camera/', '_blank');
+    });
+  }
+
+  // Close modal if user clicks outside of it
+  window.onclick = function(event) {
+    if (event.target == consentModal) {
+      consentModal.style.display = "none";
+    }
+  }
+
 </script>
 </body>
 </html>
