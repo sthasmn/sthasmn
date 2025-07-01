@@ -1,1 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LipNetをJGRIDによる転移学習</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #F15B40;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center my-8 md:my-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#00A6ED] uppercase tracking-wide">LipNetをJGRIDによる転移学習</h1>
+        </header>
+
+        <section id="foundation" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">使用モデルとデータ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-6xl mb-4">🧠</div>
+                    <h3 class="text-2xl font-bold text-[#00A6ED] mb-2">モデル: LipNet</h3>
+                    <p>文章レベルの読唇を行う事前学習済み深層学習モデル。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-6xl mb-4">🗃️</div>
+                    <h3 class="text-2xl font-bold text-[#00A6ED] mb-2">コーパス: JGRID</h3>
+                    <p>日本語のビデオデータセット。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="milestone" class="bg-white p-6 md:p-8 rounded-lg shadow-xl mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Unseen Speakerでの評価結果</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">学習アプローチ</h3>
+                    <p class="mb-6">英語データセットGRID Corpusで事前学習されたLipNetモデルに対し、日本語JGRIDコーパスを用いて転移学習を実施。その評価結果を以下に示す。</p>
+                    <div class="space-y-2">
+                        <div class="p-4 bg-gray-100 rounded-lg text-center border border-gray-300">
+                            <span class="font-bold">事前学習済みモデル (GRID Corpus / 英語)</span>
+                        </div>
+                        <div class="text-center text-2xl font-bold text-blue-500">↓</div>
+                        <div class="p-4 bg-blue-100 rounded-lg text-center border border-blue-300">
+                            <span class="font-bold">転移学習 (JGRID Corpus / 日本語)</span>
+                        </div>
+                         <div class="text-center text-2xl font-bold text-orange-500">↓</div>
+                        <div class="p-4 bg-orange-100 rounded-lg text-center border border-orange-300">
+                             <span class="font-bold">日本語読唇モデル</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                     <h3 class="text-xl font-bold mb-4">評価結果</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2">エラー率</h4>
+                            <div class="chart-container h-64" style="height: 300px;">
+                                <canvas id="accuracyResultChart"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2">学習曲線</h4>
+                            <div class="p-2">
+                                <img src="https://drive.google.com/uc?export=view&id=1MWPgBHe6zK-Ao3tK3_EWOIGlO-5nLHkj" alt="評価結果グラフ" class="w-full h-auto max-w-lg mx-auto rounded-lg shadow-md border">
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">今後の研究計画</h2>
+            <p class="text-center max-w-3xl mx-auto mb-10">現在の結果を基に、以下の計画を進める。</p>
+            <div class="relative pl-8 border-l-4 border-[#00A6ED]">
+                
+                <div class="mb-12">
+                    <div class="absolute w-6 h-6 bg-[#FFBC0A] rounded-full -left-3.5 border-4 border-white"></div>
+                    <h3 class="text-xl font-bold text-[#F15B40]">フェーズ1：転移学習によるアプローチ</h3>
+                    <p class="mb-4">既存の学習済みモデルを基に、下記タスクへ適応させる。</p>
+                    <div class="space-y-4 ml-4">
+                        <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-[#FFBC0A]"><strong>1. 日本語文字での学習:</strong> ローマ字を介さず、直接日本語の文字（かな・漢字）を出力するよう学習。</div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-[#FFBC0A]"><strong>2. 音素での学習:</strong> 言語の根源的な単位である音素を認識・出力するよう学習。</div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-[#FFBC0A]"><strong>3. 数字の文字化:</strong> 数字を単語として認識するよう学習。</div>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                     <div class="absolute w-6 h-6 bg-[#00A6ED] rounded-full -left-3.5 border-4 border-white"></div>
+                    <h3 class="text-xl font-bold text-[#F15B40]">フェーズ2：追加検証</h3>
+                    <p class="mb-4">多様な条件下での性能を評価する。</p>
+                     <div class="space-y-4 ml-4">
+                        <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-[#00A6ED]"><strong>4. ゼロからの学習:</strong> 上記1〜3のアプローチをゼロから学習させ、性能を比較。</div>
+                        <div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-[#00A6ED]"><strong>5. Overlap Speakerでの検証:</strong> 全ての学習済みモデルに対し、学習データに含まれる話者をテストにも使用し、性能を検証。</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="metrics" class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">話者条件と言語モデル別の目標精度</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <p class="text-center mb-4">各言語モデル（出力形式）に対し、話者条件（Unseen/Overlapped）ごとの目標精度を示す。</p>
+                <div class="chart-container">
+                    <canvas id="performanceGoalsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center my-8 md:my-12 bg-[#00A6ED] text-white p-8 rounded-lg shadow-xl">
+             <div class="text-6xl mb-4">🎯</div>
+            <h2 class="text-3xl font-black uppercase">最終目標</h2>
+            <p class="text-lg mt-2 max-w-3xl mx-auto">自然な日本語テキストを出力し、実環境で機能する読唇システムを構築する。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            } else {
+                return label;
+            }
+        };
+
+        const chartColors = {
+            blue: '#00A6ED',
+            yellow: '#FFBC0A',
+            orange: '#F15B40',
+            grey: '#e2e8f0'
+        };
+
+        new Chart(document.getElementById('accuracyResultChart'), {
+            type: 'bar',
+            data: {
+                labels: ['単語誤り率 (WER)', '文字誤り率 (CER)'],
+                datasets: [{
+                    label: 'エラー率',
+                    data: [0.16, 0.07],
+                    backgroundColor: [chartColors.blue, chartColors.orange],
+                    borderColor: [chartColors.blue, chartColors.orange],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        min: 0.0,
+                        max: 1.0,
+                        title: {
+                            display: true,
+                            text: '低いほど高精度'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+        
+        new Chart(document.getElementById('performanceGoalsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['ローマ字+数字', 'ローマ字のみ', '音素', '日本語文字'],
+                datasets: [
+                    {
+                        label: 'Unseen Speaker',
+                        data: [84, 82, 88, 85],
+                        backgroundColor: chartColors.orange,
+                    },
+                    {
+                        label: 'Overlapped Speaker',
+                        data: [94, 92, 95, 94],
+                        backgroundColor: chartColors.blue,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '目標精度スコア (高いほど良い)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
 
