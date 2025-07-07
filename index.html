@@ -1,448 +1,343 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JGRIDコーパス 動画撮影ご協力のお願い</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .tab-content {
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-    }
-    .tab-content.active {
-      display: block;
-      opacity: 1;
-    }
-    /* For aspect ratio content (videos, images) */
-    .aspect-w-16 { position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ }
-    .aspect-h-9 { /* Helper class */ }
-    .aspect-w-4 { position: relative; padding-bottom: 75%; /* 4:3 Aspect Ratio */ }
-    .aspect-h-3 { /* Helper class */ }
-    .aspect-content > iframe,
-    .aspect-content > img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Changed to contain for screenshots */
-    }
-    .nav-button.active-tab {
-      color: #2563eb; /* text-blue-600 */
-      border-bottom-color: #2563eb; /* border-blue-600 */
-    }
-    .nav-button:not(.active-tab) {
-      color: #57534e; /* text-stone-600 */
-      border-bottom-color: transparent;
-    }
-    .nav-button:not(.active-tab):hover {
-      color: #3b82f6; /* hover:text-blue-500 */
-      border-bottom-color: #3b82f6; /* hover:border-blue-500 */
-    }
-    .screenshot-placeholder {
-      background-color: #f0f0f0;
-      border: 2px dashed #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #777;
-      font-size: 0.9em;
-      min-height: 200px; /* Ensure placeholder is visible */
-    }
-    .pdf-container-modal { /* For modal */
-      width: 100%;
-      height: 70vh; /* Adjust height for modal view */
-      border: 1px solid #e5e7eb; /* Tailwind gray-200 */
-    }
-    /* Modal styles */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 100; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto; /* 5% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 90%; /* Could be more or less, depending on screen size */
-      max-width: 800px; /* Max width */
-      border-radius: 0.5rem;
-      position: relative;
-    }
-    .modal-close-button {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-    }
-    .modal-close-button:hover,
-    .modal-close-button:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suman Shrestha | PhD Student & AI Researcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .glass-card {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(48, 54, 61, 0.5);
+        }
+        .tech-badge {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .tech-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .section-title {
+            font-weight: 900;
+            font-size: 2.5rem;
+            background: -webkit-linear-gradient(45deg, #38bdf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background-color: #0d1117;
+            background-image:
+                radial-gradient(at 20% 20%, hsla(212, 90%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 20%, hsla(282, 90%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 20% 80%, hsla(330, 90%, 50%, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, hsla(180, 90%, 50%, 0.15) 0px, transparent 50%);
+        }
+        .lang-switcher button.active {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body class="bg-stone-100 text-stone-800 antialiased">
-<a href="https://shrestha-lab.com/process/" target="_blank" title="A secret link" class="fixed top-5 right-5 w-5 h-5 block z-50 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-sm"></a>
-<header class="bg-blue-600 text-white shadow-lg">
-  <div class="container mx-auto px-6 py-4">
-    <h1 class="text-3xl font-bold">JGRIDコーパス 動画撮影ご協力のお願い</h1>
-    <p class="text-sm">日本語リップリーディング研究のための映像・音声データ収集</p>
-  </div>
-</header>
+<body class="hero-bg">
 
-<nav class="bg-white shadow-md sticky top-0 z-50">
-  <div class="container mx-auto px-6">
-    <ul class="flex space-x-4 sm:space-x-8 py-3 overflow-x-auto">
-      <li><button data-tab="jgrid-info" id="nav-jgrid-info" class="nav-button font-semibold pb-2 border-b-2 active-tab">1. JGRID概要</button></li>
-      <li><button data-tab="recording-guide" id="nav-recording-guide" class="nav-button font-semibold pb-2 border-b-2">2. 撮影の説明</button></li>
-    </ul>
-  </div>
-</nav>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">Suman Shrestha</a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navAbout">About</a>
+                <a href="#tech" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navTech">Tech Stack</a>
+                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition" data-lang-key="navContact">Contact</a>
+                <!-- Language Switcher -->
+                <div class="lang-switcher flex space-x-2 border-l border-gray-600 ml-4 pl-4">
+                    <button id="lang-en" class="text-gray-400 hover:text-white transition">EN</button>
+                    <button id="lang-ja" class="text-gray-400 hover:text-white transition">JP</button>
+                </div>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
+             <a href="#about" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navAboutMobile">About</a>
+             <a href="#tech" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navTechMobile">Tech Stack</a>
+             <a href="#contact" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navContactMobile">Contact</a>
+             <div class="flex justify-center space-x-4 py-2">
+                <button id="lang-en-mobile" class="text-gray-300 p-2">EN</button>
+                <button id="lang-ja-mobile" class="text-gray-300 p-2">JP</button>
+             </div>
+        </div>
+    </header>
 
-<main class="container mx-auto p-4 sm:p-6">
-  <section id="jgrid-info" class="tab-content active space-y-6">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-2xl font-bold text-blue-600 mb-4">JGRIDコーパスプロジェクトへようこそ！</h2>
-      <p class="mb-3 text-stone-700">
-        この度は、JGRIDコーパス構築プロジェクトにご関心をお寄せいただき、ありがとうございます。
-        このページでは、本プロジェクトの概要、皆様にお願いしたい動画撮影の内容についてご説明します。
-      </p>
+    <main class="container mx-auto px-6">
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. JGRIDコーパスとは？</h3>
-      <p class="text-stone-700 mb-2">
-        JGRIDコーパスは、<strong>日本語の「リップリーディング（読唇術）」研究</strong>のための新しい映像・音声データベースです。
-        リップリーディングとは、騒がしい場所や声が聞こえにくい状況など、音声情報が不明瞭な場合に、話者の唇の動きから発話内容を読み取る技術のことです。
-      </p>
-      <p class="text-stone-700 mb-2">
-        現在、英語圏では「GRID Corpus」のような大規模なデータセットが存在し、リップリーディング技術の研究開発が活発に進められています。しかし、日本語には同様の標準的なデータセットがまだ整備されていません。
-      </p>
-      <p class="text-stone-700">
-        そこで私たちは、日本語におけるリップリーディング技術の基盤を構築し、将来的には聴覚に障害を持つ方々のコミュニケーション支援や、様々な応用技術の開発に貢献することを目指して、このJGRIDコーパスを作成しています。JGRIDコーパスデータベースに保存する映像は口の動きのみであり、個人の特定はできないように処理を行なったものです。
-        ご協力いただく録画の際には顔の全体を収録しますが、後処理で口の動きのみになるようにトリミングを行います。
-      </p>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center">
+            <h1 class="text-5xl md:text-7xl font-black text-white leading-tight mb-4">
+                Suman Shrestha
+            </h1>
+            <p class="text-2xl md:text-3xl mb-8 bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-violet-400 font-bold" data-lang-key="heroSubtitle">
+                PhD Student & AI Researcher
+            </p>
+            <p class="max-w-3xl text-lg text-gray-300 mb-8" data-lang-key="heroDescription">
+                Driving innovation in assistive technology by evaluating body movement with AI. Currently pursuing a PhD at Osaka Sangyo University and contributing to research at the Institute of Hyogo Assistive Technology.
+            </p>
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">2. どんな文章を読み上げるの？</h3>
-      <p class="text-stone-700 mb-2">
-        皆様には、特定の構造で作られた<strong>短い日本語の文章</strong>を、一つずつ読み上げていただく様子を動画で撮影させていただきます。
-        文章の構造は、例えば以下の6つの要素で構成されます。
-      </p>
-      <ul class="list-disc list-inside ml-4 my-2 text-stone-700 bg-blue-50 p-3 rounded-md">
-        <li><strong>副詞</strong> ( 今すぐ, ゆっくり, 早く, 丁寧に)</li>
-        <li><strong>色</strong> (赤い, 青い, 緑の, 白い)</li>
-        <li><strong>物体</strong> (ボール, 本, ペン, 箱)</li>
-        <li><strong>場所</strong> (ア, イ, ウ, エ, オ, カ, キ, ク, ケ, コ, サ, シ, ス, セ, ソ, タ, チ, ツ, テ, ト, ナ, ニ, ヌ, ネ, ノ, ハ, ヒ, フ, ヘ, ホ, マ, ミ, ム, メ, モ, ヤ, ユ, ヨ, ラ, リ, ル, レ, ロ, ワ )</li>
-        <li><strong>数詞</strong> (0（ゼロ）, 1, 2, 3, 4（ヨン）, 5, 6, 7（ナナ）, 8, 9（キュウ）)</li>
-        <li><strong>動詞</strong> (置く, 取る, 動かす, 投げる) とそれに伴う助詞</li>
+            <!-- JGRID Call to Action -->
+            <div class="glass-card rounded-xl p-6 my-8 max-w-2xl w-full mx-auto text-center border-2 border-teal-400 shadow-lg shadow-teal-400/20">
+                <p class="text-lg text-gray-200 mb-4" data-lang-key="jgridPrompt">
+                    For JGRID corpus participation, click the JGRID button.
+                </p>
+                <a href="http://shrestha-lab.com/JGRID" target="_blank" rel="noopener noreferrer"
+                   class="inline-block bg-gradient-to-r from-teal-400 to-blue-500 hover:from-teal-500 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-lg transition text-xl shadow-lg transform hover:scale-105 animate-pulse">
+                    JGRID
+                </a>
+            </div>
 
-      </ul>
-      <p class="text-stone-700 mb-2">
-        実際の例文としては、「<span class="font-semibold text-emerald-700 font-mono text-base sm:text-lg">今すぐ 赤い ボールを ア １ に 置く。</span>」のような文になります。
-        撮影時には、PCの画面に表示されるこれらの文章を読み上げていただきます。全部で1000文章あり、100文章ずつのバッチに分けて撮影を行います。
-      </p>
+            <div class="flex space-x-4">
+                <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition text-lg" data-lang-key="heroTouch">
+                    Get In Touch
+                </a>
+                <a href="https://github.com/sthasmn" target="_blank" rel="noopener noreferrer" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition text-lg">
+                    <i class="fab fa-github mr-2"></i> GitHub
+                </a>
+            </div>
+        </section>
 
-      <h4 class="text-lg font-semibold text-blue-700 mb-2 mt-6">ご参考：英語のGRIDコーパスの収録動画例</h4>
-      <p class="text-stone-700 mb-2">
-        どのような雰囲気の動画になるか、参考として英語のGRIDコーパスから同様の形式で収録された動画（音声あり）をご覧ください。
-        JGRIDでは、これと似た形で、日本語の文を読み上げていただきます。
-      </p>
-      <div class="my-4 rounded-md overflow-hidden shadow aspect-w-16 aspect-h-9 aspect-content">
-        <iframe
-                src="https://drive.google.com/file/d/1LEguiRfB1lRsExlyKcElK4_ofk09KtSt/preview"
-                allow="autoplay; encrypted-media"
-                allowfullscreen
-                title="GRID Corpus Example Video (Audio Available)">
-        </iframe>
-      </div>
-      <p class="text-sm text-stone-600 mb-4 text-center">（この参考動画は英語のGRID CORPUSの動画です。JGRIDでは同様の形式で日本語の文を読み上げます。）</p>
-      <p class="text-sm text-stone-400 mb-4 text-center">downloaded from : https://spandh.dcs.shef.ac.uk/gridcorpus/</p>
+        <!-- About Me Section -->
+        <section id="about" class="py-20">
+            <h2 class="section-title text-center mb-12" data-lang-key="aboutTitle">About Me</h2>
+            <div class="glass-card rounded-xl p-8 md:p-12 max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <p class="text-lg mb-4" data-lang-key="aboutP1">
+                            🔭 I’m currently rolling at <strong class="text-white">Osaka Sangyo University</strong> as a PhD Student and as a researcher at the <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.
+                        </p>
+                        <p class="text-lg mb-4" data-lang-key="aboutP2">
+                            👯 I’m actively looking to collaborate on projects involving the <strong class="text-sky-400">evaluation of body movement using AI</strong>. I also warmly welcome collaboration on Kaggle competitions.
+                        </p>
+                        <p class="text-lg mb-4" data-lang-key="aboutP3">
+                            🌱 My journey in <strong class="text-white">AI and Data Science</strong> is one of continuous learning and growth. Don't hesitate to ask me anything about it!
+                        </p>
+                        <p class="text-lg" data-lang-key="aboutP4">
+                            ⚡ Fun fact: I can speak <strong class="text-sky-400">5 different languages</strong> (and that's not including programming languages)!
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <img src="https://placehold.co/200x200/161b22/c9d1d9?text=S.S." alt="Suman Shrestha" class="rounded-full mx-auto border-4 border-sky-500">
+                         <div class="mt-6 flex justify-center space-x-4">
+                            <a href="https://discord.gg/shaky#6074" target="_blank" class="text-2xl text-gray-400 hover:text-indigo-400 transition"><i class="fab fa-discord"></i></a>
+                            <a href="https://facebook.com/sumanisme" target="_blank" class="text-2xl text-gray-400 hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
+                            <a href="https://linkedin.com/in/suman-shrestha-248a55265" target="_blank" class="text-2xl text-gray-400 hover:text-sky-500 transition"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <div class="mt-8 text-center">
-        <button id="proceedToRecordingGuideTabBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
-          撮影の説明へ進む
-        </button>
-      </div>
-    </div>
-  </section>
+        <!-- Tech Stack Section -->
+        <section id="tech" class="py-20">
+            <h2 class="section-title text-center mb-12" data-lang-key="techTitle">Tech Stack</h2>
+            <div class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-4">
+                <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python" class="tech-badge">
+                <img src="https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white" alt="PyTorch" class="tech-badge">
+                <img src="https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white" alt="TensorFlow" class="tech-badge">
+                <img src="https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white" alt="Keras" class="tech-badge">
+                <img src="https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn" class="tech-badge">
+                <img src="https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas" class="tech-badge">
+                <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy" class="tech-badge">
+                <img src="https://img.shields.io/badge/SciPy-%230C55A5.svg?style=for-the-badge&logo=scipy&logoColor=white" alt="SciPy" class="tech-badge">
+                <img src="https://img.shields.io/badge/Plotly-%233F4F75.svg?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly" class="tech-badge">
+                <img src="https://img.shields.io/badge/Anaconda-%2344A833.svg?style=for-the-badge&logo=anaconda&logoColor=white" alt="Anaconda" class="tech-badge">
+                <img src="https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" class="tech-badge">
+                <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" class="tech-badge">
+                <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" class="tech-badge">
+                <img src="https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white" alt="Java" class="tech-badge">
+                <img src="https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++" class="tech-badge">
+                <img src="https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white" alt="C" class="tech-badge">
+                <img src="https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#" class="tech-badge">
+                <img src="https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white" alt=".Net" class="tech-badge">
+                <img src="https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white" alt="Ruby" class="tech-badge">
+            </div>
+        </section>
 
-  <section id="recording-guide" class="tab-content space-y-6">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-2xl font-bold text-blue-600 mb-4">動画撮影の準備と手順</h2>
-      <p class="mb-3 text-stone-700">
-        高品質なデータを収集するため、以下の点にご注意いただきながら撮影を進めてください。
-        撮影は、指定のPC、カメラ、マイクを使用して行います。
-        発話する文章は全部で1000文あり、100文ずつのバッチ（計10バッチ）に分けて撮影します。
-        <br><strong>参加者番号は、研究者からお伝えします。撮影アプリの「参加者番号」の欄に、その参加者番号を入力してください。番号がわからなければ氏名を入力してください</strong>
-      </p>
+        <!-- Just for Fun Section -->
+        <section id="fun" class="py-20">
+            <h2 class="section-title text-center mb-12" data-lang-key="funTitle">Just for Fun</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4" data-lang-key="funQuote">✍️ Random Dev Quote</h3>
+                    <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="Random Dev Quote" class="rounded-lg w-full">
+                </div>
+                <div class="glass-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-4" data-lang-key="funMeme">😂 Random Dev Meme</h3>
+                    <img src="https://random-memer.herokuapp.com/" alt="Random Dev Meme" class="rounded-lg w-full object-contain h-48 md:h-full">
+                </div>
+            </div>
+        </section>
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-6">1. 撮影前の設定</h3>
-      <p class="text-sm text-stone-600 mb-3">各ステップのスクリーンショットも参考にしてください。</p>
-      <ul class="list-disc list-inside space-y-4 text-stone-700">
-        <li>
-          <strong>参加者番号の入力:</strong> 撮影アプリケーションの「参加者番号」の欄に、研究者から伝えられたご自身の参加者番号または氏名を入力してください。例えば、参加者番号が「s3」の場合は「<samp class="bg-stone-200 px-1 rounded">s3</samp>」と入力します。
-        </li>
-        <li>
-          <strong>文章バッチの選択:</strong> 「文章バッチを選択してください」という項目で、今回撮影するバッチ（1から10まであります）を選択します。これらは順番に行っていただきますが、どこまで撮影するかまたはどれを撮影するかは任意です。できるだけ10バッチすべて協力していただけるとありがたいです。
-          <div class="my-2 rounded-md overflow-hidden shadow">
-            <img src="start_screen.png" alt="文章バッチ選択のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
-          </div>
-        </li>
-        <li>
-          <strong>カメラとマイクの選択:</strong>
-          <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
-            <li>「カメラを選択してください」では、「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（他のカメラからも可）を選択してください。
-            </li>
-            <li>「マイクを選択してください」でも、同様に「<samp class="bg-stone-200 px-1 rounded">C922 Pro Stream Webcam</samp>」（他のマイクからも可）を選択してください。
-              <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="camera_mic.png" alt="カメラとマイク選択のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong>テスト記録とダウンロード許可:</strong>
-          <ul class="list-disc list-inside ml-6 mt-1 space-y-2">
-            <li>設定後、「テスト記録を開始」ボタンを押して、短いテスト録画を行ってください。
-              <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="test.png" alt="テスト記録開始のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
-              </div>
-            </li>
-            <li>テスト録画が終わったら「終了」ボタンを押します。すると、録画された動画のダウンロードが自動的に開始されます。
-            </li>
-            <li class="font-semibold text-red-600">
-              <strong>重要：</strong> ブラウザから「ファイルのダウンロードを許可しますか？」といった趣旨の確認が表示された場合は、<strong class="underline">必ず「許可」をクリック</strong>してください。一度許可すると、次回以降のダウンロードではこの確認は表示されません。許可しないと、撮影データが保存されません。
-              <div class="my-2 rounded-md overflow-hidden shadow">
-                <img src="allow.png" alt="ダウンロード許可のスクリーンショット" style="width:50%; height:50%; object-fit:contain;">
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 text-center">
+            <h2 class="section-title mb-4" data-lang-key="contactTitle">Get In Touch</h2>
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8" data-lang-key="contactPrompt">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team. Feel free to reach out.
+            </p>
+            <a href="mailto:sthasmn@gmail.com" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition text-lg mb-12" data-lang-key="contactButton">
+                Say Hello
+            </a>
+        </section>
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">2. 撮影環境の準備</h3>
-      <ul class="list-disc list-inside space-y-2 text-stone-700">
-        <li>
-          <strong>顔の位置調整:</strong> カメラにご自身の顔がはっきりと映るように位置を調整してください。顔全体、特に口元が明瞭に確認できるように、画面の中央に来るのが理想です。
-        </li>
-        <li>
-          <strong>静かな場所の選択:</strong> 周囲の雑音（話し声、物音、機械音など）ができるだけ入らない静かな場所で撮影を行ってください。マイクは小さな音も拾ってしまいます。
-        </li>
-        <li>
-          <strong>照明:</strong> 顔が明るくはっきりと見えるように、部屋の照明を調整してください。逆光になったり、顔に影ができたりしないように注意しましょう。
-        </li>
-      </ul>
+    </main>
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">3. 発話時の注意点</h3>
-      <ul class="list-disc list-inside space-y-2 text-stone-700">
-        <li>
-          <strong>明瞭な発話:</strong> 画面に表示される文章を、一語一語はっきりと、普段話すような自然な声の大きさで読み上げてください。声が小さすぎたりしないように意識しましょう。
-        </li>
-        <li>
-          <strong>発話のタイミングと長さ:</strong> 1つの文章を読み終えるのに、およそ2～3秒程度を目安にしてください。極端に長く間をあけたり、急いで読み終えたりしないようお願いします。
-        </li>
-      </ul>
+    <!-- Footer -->
+    <footer class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+             <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://github.com/sthasmn" target="_blank" class="text-2xl hover:text-sky-400 transition"><i class="fab fa-github"></i></a>
+                <a href="https://discord.gg/shaky#6074" target="_blank" class="text-2xl hover:text-indigo-400 transition"><i class="fab fa-discord"></i></a>
+                <a href="https://facebook.com/sumanisme" target="_blank" class="text-2xl hover:text-blue-500 transition"><i class="fab fa-facebook"></i></a>
+                <a href="https://linkedin.com/in/suman-shrestha-248a55265" target="_blank" class="text-2xl hover:text-sky-500 transition"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p>&copy; <span id="year"></span> Suman Shrestha. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">4. 本番撮影中の操作</h3>
-      <ul class="list-disc list-inside space-y-2 text-stone-700">
-        <li>
-          <strong>録画開始のタイミング:</strong> 「次へ」ボタンまたは「やり直し」ボタンをクリックした時点で、その文章の録画が自動的に開始されます。ボタンを押したら、すぐに発話を開始して大丈夫です。
-        </li>
-        <li>
-          <strong>次の文へ:</strong> 1つの文章を読み終えたら、画面上の「次へ」ボタンをクリックするか、<kbd class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg">Enter</kbd> キーを押してください。次の文章が表示され、録画が開始されます。
-        </li>
-        <li>
-          <strong>読み間違えた場合:</strong> もし文章を読み間違えたり、言い直したい場合は、画面上の「やり直し」ボタンをクリックしてください。現在の文章の録画をキャンセルし、同じ文章をもう一度録画することができます。
-        </li>
-        <li>
-          <strong>休憩:</strong> 撮影の途中で休憩を取りたい場合は、「休憩」ボタンをクリックしてください。
-        </li>
-      </ul>
+    <script>
+        // --- MULTILINGUAL SCRIPT ---
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">5. その他</h3>
-      <ul class="list-disc list-inside space-y-2 text-stone-700">
-        <li>
-          <strong>リラックスして:</strong> 緊張せず、普段通りリラックスして撮影に臨んでください。
-        </li>
-        <li>
-          <strong>ご協力に感謝します:</strong> 皆様のご協力が、日本語リップリーディング研究の大きな力となります。どうぞよろしくお願いいたします。
-        </li>
-      </ul>
+        const translations = {
+            en: {
+                // Navigation
+                navAbout: "About",
+                navTech: "Tech Stack",
+                navContact: "Contact",
+                navAboutMobile: "About",
+                navTechMobile: "Tech Stack",
+                navContactMobile: "Contact",
+                // Hero Section
+                heroSubtitle: "PhD Student & AI Researcher",
+                heroDescription: "Driving innovation in assistive technology by evaluating body movement with AI. Currently pursuing a PhD at Osaka Sangyo University and contributing to research at the Institute of Hyogo Assistive Technology.",
+                jgridPrompt: "For JGRID corpus participation, click the JGRID button.",
+                heroTouch: "Get In Touch",
+                // About Section
+                aboutTitle: "About Me",
+                aboutP1: '🔭 I’m currently rolling at <strong class="text-white">Osaka Sangyo University</strong> as a PhD Student and as a researcher at the <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.',
+                aboutP2: '👯 I’m actively looking to collaborate on projects involving the <strong class="text-sky-400">evaluation of body movement using AI</strong>. I also warmly welcome collaboration on Kaggle competitions.',
+                aboutP3: "🌱 My journey in <strong class=\"text-white\">AI and Data Science</strong> is one of continuous learning and growth. Don't hesitate to ask me anything about it!",
+                aboutP4: '⚡ Fun fact: I can speak <strong class="text-sky-400">5 different languages</strong> (and that\'s not including programming languages)!',
+                // Tech Stack Section
+                techTitle: "Tech Stack",
+                // Fun Section
+                funTitle: "Just for Fun",
+                funQuote: "✍️ Random Dev Quote",
+                funMeme: "😂 Random Dev Meme",
+                // Contact Section
+                contactTitle: "Get In Touch",
+                contactPrompt: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team. Feel free to reach out.",
+                contactButton: "Say Hello",
+            },
+            ja: {
+                // Navigation
+                navAbout: "私について",
+                navTech: "技術スタック",
+                navContact: "連絡先",
+                navAboutMobile: "私について",
+                navTechMobile: "技術スタック",
+                navContactMobile: "連絡先",
+                // Hero Section
+                heroSubtitle: "博士課程学生・AI研究者",
+                heroDescription: "AIを用いた身体動作の評価により、支援技術の革新を推進しています。現在、大阪産業大学で博士号取得を目指し、兵庫県立福祉のまちづくり研究所で研究に貢献しています。",
+                jgridPrompt: "JGRIDコーパスへの参加は、JGRIDボタンをクリックしてください。",
+                heroTouch: "お問い合わせ",
+                // About Section
+                aboutTitle: "私について",
+                aboutP1: '🔭 現在、<strong class="text-white">大阪産業大学</strong>の博士課程学生として、また<strong class="text-white">兵庫県立福祉のまちづくり研究所</strong>の研究員として活動しています。',
+                aboutP2: '👯 <strong class="text-sky-400">AIを用いた身体動作の評価</strong>に関するプロジェクトでの協力を積極的に探しています。Kaggleコンペティションでの協力も大歓迎です。',
+                aboutP3: "🌱 <strong class=\"text-white\">AIとデータサイエンス</strong>の道は、継続的な学習と成長の旅です。何でもお気軽にご質問ください！",
+                aboutP4: '⚡ 面白い事実：プログラミング言語を除いて、<strong class="text-sky-400">5つの異なる言語</strong>を話せます！',
+                // Tech Stack Section
+                techTitle: "技術スタック",
+                // Fun Section
+                funTitle: "お楽しみ",
+                funQuote: "✍️ ランダムな開発者の名言",
+                funMeme: "😂 ランダムな開発者のミーム",
+                // Contact Section
+                contactTitle: "お問い合わせ",
+                contactPrompt: "新しいプロジェクト、創造的なアイデア、または革新的なチームの一員となる機会について、いつでもご相談ください。お気軽にご連絡ください。",
+                contactButton: "こんにちは",
+            }
+        };
 
-      <h3 class="text-xl font-semibold text-blue-700 mb-2 mt-8">6. 撮影終了後：ファイルのアップロード</h3>
-      <ul class="list-disc list-inside space-y-3 text-stone-700">
-        <li>
-          1つのバッチ（100文章）の撮影が完了すると、録画された動画ファイル（通常は`.mp4`形式）と発話した文章ファイル（通常は`.txt`形式が、お使いのPCの「ダウンロード」フォルダに自動的に保存されます。
-        </li>
-        <li class="font-semibold text-red-600">
-          <strong>重要：</strong> 各バッチの撮影が完了するたびに、ダウンロードされた動画ファイルを指定のDropbox フォルダにアップロードしてください。ファイルは研究責任者のみアクセスができます。ただし、アップロードに時間がかかるため、時間がない方は研究者に連絡し、撮影したPCに保存しておいてください。
-        </li>
-        <li>
-          ファイル名は、参加者番号とバッチ番号が含まれたものになっているはずです（例: <samp class="bg-stone-200 px-1 rounded">s3_batch1_1.mp4 と　s3_batch1_1.txt</samp>）。ファイル名を変更せずにそのままアップロードしてください。
-        </li>
-        <li>
-          全てのバッチ（10バッチ）の撮影とアップロードが完了したら、研究担当者にご連絡ください。
-        </li>
-      </ul>
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
 
-      <div class="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <button id="openConsentModalBtn" class="w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 text-center">
-          実際の撮影ページへ進む (要同意)
-        </button>
-        <a href="https://www.dropbox.com/request/HHMLfBNHY5KXuXRFo5Iq" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-75 text-center">
-          撮影済みファイルをアップロード
-        </a>
-      </div>
-    </div>
-  </section>
-</main>
+            // Update active state for language switchers
+            document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-ja').classList.toggle('active', lang === 'ja');
+            document.getElementById('lang-en-mobile').classList.toggle('active', lang === 'en');
+            document.getElementById('lang-ja-mobile').classList.toggle('active', lang === 'ja');
+        };
 
-<!-- Consent Modal -->
-<div id="consentModal" class="modal">
-  <div class="modal-content">
-    <span class="modal-close-button" id="modalCloseBtn">&times;</span>
-    <h2 class="text-2xl font-bold text-blue-600 mb-4">研究参加同意書</h2>
-
-    <p class="text-sm text-stone-600 mb-2">以下の同意書の内容をご確認ください。</p>
-    <p class="pdf-container<p class=text-md text-stone-800 font-semibold mb-1">この同意書に自筆署名もしていただきます。</p>
-      <embed src="同意書_JGRID.pdf" type="application/pdf" width="100%" height="100%">
-      <!-- Fallback content for PDF removed as per request -->
-    </div>
-    <div class="mt-6 text-center space-x-4">
-      <button id="declineConsentBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg shadow">
-        同意しない (閉じる)
-      </button>
-      <button id="acceptConsentBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow">
-        同意して撮影に進む
-      </button>
-    </div>
-  </div>
-</div>
-
-
-<footer class="bg-stone-800 text-stone-300 text-center p-6 mt-12">
-  <p>&copy; 2025 JGRIDコーパス. All rights reserved.</p>
-  <p class="text-sm mt-1">Suman Shrestha sthasmn@gmail.com</p>
-</footer>
-
-<script>
-  const navButtons = document.querySelectorAll('.nav-button');
-  const tabContents = document.querySelectorAll('.tab-content');
-  const proceedToRecordingGuideTabBtn = document.getElementById('proceedToRecordingGuideTabBtn');
-
-  // Consent Modal Elements
-  const consentModal = document.getElementById('consentModal');
-  const openConsentModalBtn = document.getElementById('openConsentModalBtn');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-  const acceptConsentBtn = document.getElementById('acceptConsentBtn');
-  const declineConsentBtn = document.getElementById('declineConsentBtn');
-
-  function setActiveTab(tabId) {
-    tabContents.forEach(content => {
-      content.classList.remove('active');
-      content.style.opacity = 0;
-    });
-    navButtons.forEach(btn => {
-      btn.classList.remove('active-tab');
-    });
-
-    const newActiveTabContent = document.getElementById(tabId);
-    const newActiveNavButton = document.querySelector(`.nav-button[data-tab="${tabId}"]`);
-
-    if (newActiveTabContent) {
-      setTimeout(() => {
-        tabContents.forEach(content => {
-          if(content.id !== tabId) {
-            content.style.display = 'none';
-          }
+        // Detect browser language and set initial language
+        document.addEventListener('DOMContentLoaded', () => {
+            const userLang = navigator.language || navigator.userLanguage;
+            const initialLang = userLang.startsWith('ja') ? 'ja' : 'en';
+            setLanguage(initialLang);
         });
-        newActiveTabContent.style.display = 'block';
-        newActiveTabContent.offsetWidth;
-        newActiveTabContent.style.opacity = 1;
-        newActiveTabContent.classList.add('active');
-      }, tabContents.length > 0 ? 150 : 0);
-    }
 
-    if (newActiveNavButton) {
-      newActiveNavButton.classList.add('active-tab');
-    }
-    const mainContentArea = document.querySelector('main');
-    if (mainContentArea) {
-      mainContentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
+        // --- END MULTILINGUAL SCRIPT ---
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const firstTabButton = navButtons[0];
-    if (firstTabButton) {
-      setActiveTab(firstTabButton.dataset.tab);
-    }
-  });
 
-  navButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      if (!button.disabled) {
-        setActiveTab(button.dataset.tab);
-      }
-    });
-  });
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-  if (proceedToRecordingGuideTabBtn) {
-    proceedToRecordingGuideTabBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      setActiveTab('recording-guide');
-    });
-  }
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.onscroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add("bg-slate-900/80", "backdrop-blur-sm", "shadow-lg");
+            } else {
+                navbar.classList.remove("bg-slate-900/80", "backdrop-blur-sm", "shadow-lg");
+            }
+        };
 
-  // Consent Modal Logic
-  if (openConsentModalBtn) {
-    openConsentModalBtn.addEventListener('click', () => {
-      if (consentModal) consentModal.style.display = "block";
-    });
-  }
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-  if (modalCloseBtn) {
-    modalCloseBtn.addEventListener('click', () => {
-      if (consentModal) consentModal.style.display = "none";
-    });
-  }
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        for (let link of mobileMenuLinks) {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        }
 
-  if (declineConsentBtn) {
-    declineConsentBtn.addEventListener('click', () => {
-      if (consentModal) consentModal.style.display = "none";
-    });
-  }
+        // Language switcher event listeners
+        document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+        document.getElementById('lang-ja').addEventListener('click', () => setLanguage('ja'));
+        document.getElementById('lang-en-mobile').addEventListener('click', () => setLanguage('en'));
+        document.getElementById('lang-ja-mobile').addEventListener('click', () => setLanguage('ja'));
+    </script>
 
-  if (acceptConsentBtn) {
-    acceptConsentBtn.addEventListener('click', () => {
-      console.log("研究参加に同意しました。"); // Log consent
-      if (consentModal) consentModal.style.display = "none";
-      // Proceed to the actual recording page
-      window.open('https://sthasmn.github.io/sthasmn/camera/', '_blank');
-    });
-  }
-
-  // Close modal if user clicks outside of it
-  window.onclick = function(event) {
-    if (event.target == consentModal) {
-      consentModal.style.display = "none";
-    }
-  }
-
-</script>
 </body>
 </html>
