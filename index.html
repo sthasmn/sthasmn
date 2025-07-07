@@ -53,9 +53,11 @@
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-white">Suman Shrestha</a>
-            <nav class="hidden md:flex space-x-8 items-center">
+            <nav class="hidden md:flex space-x-6 items-center">
                 <a href="#about" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navAbout">About</a>
+                <a href="#research" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navResearch">Research</a>
                 <a href="#tech" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navTech">Tech Stack</a>
+                <a href="#publications" class="text-gray-300 hover:text-sky-400 transition" data-lang-key="navPublications">Publications</a>
                 <a href="#contact" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition" data-lang-key="navContact">Contact</a>
                 <!-- Language Switcher -->
                 <div class="lang-switcher flex space-x-2 border-l border-gray-600 ml-4 pl-4">
@@ -70,7 +72,9 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-800">
              <a href="#about" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navAboutMobile">About</a>
+             <a href="#research" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navResearchMobile">Research</a>
              <a href="#tech" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navTechMobile">Tech Stack</a>
+             <a href="#publications" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navPublicationsMobile">Publications</a>
              <a href="#contact" class="block py-2 px-6 text-white hover:bg-slate-700" data-lang-key="navContactMobile">Contact</a>
              <div class="flex justify-center space-x-4 py-2">
                 <button id="lang-en-mobile" class="text-gray-300 p-2">EN</button>
@@ -90,7 +94,7 @@
                 PhD Student & AI Researcher
             </p>
             <p class="max-w-3xl text-lg text-gray-300 mb-8" data-lang-key="heroDescription">
-                Driving innovation in assistive technology by evaluating body movement with AI. Currently pursuing a PhD at Osaka Sangyo University and contributing to research at the Institute of Hyogo Assistive Technology.
+                Bridging the gap between medicine and technology, I operate at the intersection of academic research and practical application as a dedicated PhD candidate and full-time researcher.
             </p>
 
             <!-- JGRID Call to Action -->
@@ -121,13 +125,13 @@
                 <div class="grid md:grid-cols-3 gap-8 items-center">
                     <div class="md:col-span-2">
                         <p class="text-lg mb-4" data-lang-key="aboutP1">
-                            🔭 I’m currently rolling at <strong class="text-white">Osaka Sangyo University</strong> as a PhD Student and as a researcher at the <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.
+                            🔭 I am advancing my doctoral studies at <strong class="text-white">Osaka Sangyo University</strong> while simultaneously contributing as a researcher at the prestigious <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.
                         </p>
                         <p class="text-lg mb-4" data-lang-key="aboutP2">
-                            👯 I’m actively looking to collaborate on projects involving the <strong class="text-sky-400">evaluation of body movement using AI</strong>. I also warmly welcome collaboration on Kaggle competitions.
+                            👯 My focus is on pioneering the <strong class="text-sky-400">evaluation of human movement through AI</strong>. I am actively seeking collaborations on ambitious research projects and challenging Kaggle competitions.
                         </p>
                         <p class="text-lg mb-4" data-lang-key="aboutP3">
-                            🌱 My journey in <strong class="text-white">AI and Data Science</strong> is one of continuous learning and growth. Don't hesitate to ask me anything about it!
+                            🌱 My expertise in <strong class="text-white">AI and Data Science</strong> is constantly evolving. I am passionate about sharing knowledge and discussing the frontiers of artificial intelligence.
                         </p>
                         <p class="text-lg" data-lang-key="aboutP4">
                             ⚡ Fun fact: I can speak <strong class="text-sky-400">5 different languages</strong> (and that's not including programming languages)!
@@ -141,6 +145,32 @@
                             <a href="https://linkedin.com/in/suman-shrestha-248a55265" target="_blank" class="text-2xl text-gray-400 hover:text-sky-500 transition"><i class="fab fa-linkedin"></i></a>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section id="research" class="py-20">
+            <h2 class="section-title text-center mb-12" data-lang-key="researchTitle">My Research</h2>
+            <div class="max-w-4xl mx-auto glass-card rounded-xl p-8 md:p-12">
+                <ul class="space-y-6 text-lg">
+                    <li class="flex items-start">
+                        <i class="fas fa-brain text-sky-400 mt-1 mr-4"></i>
+                        <span data-lang-key="researchTopic1">Pioneering Japanese Lip-reading AI: From creating novel, large-scale datasets to developing advanced recognition models.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-running text-sky-400 mt-1 mr-4"></i>
+                        <span data-lang-key="researchTopic2">Next-Generation Human Activity Recognition: Engineering lightweight inference AI using IMU sensors and BLE beacons for real-world applications, including nursing care activity recognition.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-camera text-sky-400 mt-1 mr-4"></i>
+                        <span data-lang-key="researchTopic3">AI-Powered Rehabilitation: Innovating methods for objective body movement analysis in clinical settings using standard RGB cameras.</span>
+                    </li>
+                </ul>
+                <div class="text-center mt-10">
+                    <a href="https://researchmap.jp/suman-shrestha" target="_blank" rel="noopener noreferrer" class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg transition text-lg">
+                        <span data-lang-key="researchMapButton">View My Researchmap Profile</span> <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
         </section>
@@ -171,17 +201,29 @@
             </div>
         </section>
 
-        <!-- Just for Fun Section -->
-        <section id="fun" class="py-20">
-            <h2 class="section-title text-center mb-12" data-lang-key="funTitle">Just for Fun</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <div class="glass-card rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-white mb-4" data-lang-key="funQuote">✍️ Random Dev Quote</h3>
-                    <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark" alt="Random Dev Quote" class="rounded-lg w-full">
+        <!-- Publications Section -->
+        <section id="publications" class="py-16">
+            <h2 class="text-2xl font-bold text-center mb-10" data-lang-key="publicationsTitle">Publications & Presentations</h2>
+            <div class="max-w-4xl mx-auto glass-card rounded-xl p-8">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-sky-400 mb-4" data-lang-key="pubSubheading">Academic Papers</h3>
+                    <div class="border-l-4 border-sky-500 pl-6">
+                        <h4 class="text-lg font-bold text-white mb-2" data-lang-key="pub1Title">Research on Measurement System of Upper Limb by Using Single Monocular Web Camera and Inference AI</h4>
+                        <p class="text-gray-400 mb-2">
+                            <strong data-lang-key="pub1AuthorsLabel">Authors:</strong> <span data-lang-key="pub1Authors">Suman Shrestha, Hibiki Takami, Yuichiro Honda, Mitsuru Irie</span>
+                        </p>
+                        <p class="italic" data-lang-key="pub1Journal">i-CREATe 2024</p>
+                    </div>
                 </div>
-                <div class="glass-card rounded-xl p-6">
-                    <h3 class="text-xl font-bold text-white mb-4" data-lang-key="funMeme">😂 Random Dev Meme</h3>
-                    <img src="https://random-memer.herokuapp.com/" alt="Random Dev Meme" class="rounded-lg w-full object-contain h-48 md:h-full">
+
+                <div>
+                    <h3 class="text-xl font-semibold text-sky-400 mb-4" data-lang-key="presSubheading">Conference Presentations</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300">
+                        <li data-lang-key="pres1">The 40th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2024</li>
+                        <li data-lang-key="pres2">The 39th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2023</li>
+                        <li data-lang-key="pres3">The 37th Rehabilitation Engineering Conference in Tokyo, 2023</li>
+                        <li data-lang-key="pres4">The 38th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2022</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -190,7 +232,7 @@
         <section id="contact" class="py-20 text-center">
             <h2 class="section-title mb-4" data-lang-key="contactTitle">Get In Touch</h2>
             <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-8" data-lang-key="contactPrompt">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team. Feel free to reach out.
+                I am actively seeking opportunities to collaborate on transformative projects. If you have an idea that could redefine the future of assistive technology, let's connect.
             </p>
             <a href="mailto:sthasmn@gmail.com" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg transition text-lg mb-12" data-lang-key="contactButton">
                 Say Hello
@@ -219,61 +261,97 @@
             en: {
                 // Navigation
                 navAbout: "About",
+                navResearch: "Research",
+                navPublications: "Publications",
                 navTech: "Tech Stack",
                 navContact: "Contact",
                 navAboutMobile: "About",
+                navResearchMobile: "Research",
+                navPublicationsMobile: "Publications",
                 navTechMobile: "Tech Stack",
                 navContactMobile: "Contact",
                 // Hero Section
                 heroSubtitle: "PhD Student & AI Researcher",
-                heroDescription: "Driving innovation in assistive technology by evaluating body movement with AI. Currently pursuing a PhD at Osaka Sangyo University and contributing to research at the Institute of Hyogo Assistive Technology.",
+                heroDescription: "Bridging the gap between medicine and technology, I operate at the intersection of academic research and practical application as a dedicated PhD candidate and full-time researcher.",
                 jgridPrompt: "For JGRID corpus participation, click the JGRID button.",
                 heroTouch: "Get In Touch",
                 // About Section
                 aboutTitle: "About Me",
-                aboutP1: '🔭 I’m currently rolling at <strong class="text-white">Osaka Sangyo University</strong> as a PhD Student and as a researcher at the <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.',
-                aboutP2: '👯 I’m actively looking to collaborate on projects involving the <strong class="text-sky-400">evaluation of body movement using AI</strong>. I also warmly welcome collaboration on Kaggle competitions.',
-                aboutP3: "🌱 My journey in <strong class=\"text-white\">AI and Data Science</strong> is one of continuous learning and growth. Don't hesitate to ask me anything about it!",
+                aboutP1: '🔭 I am advancing my doctoral studies at <strong class="text-white">Osaka Sangyo University</strong> while simultaneously contributing as a researcher at the prestigious <strong class="text-white">Institute of Hyogo Assistive Technology</strong>.',
+                aboutP2: '👯 My focus is on pioneering the <strong class="text-sky-400">evaluation of human movement through AI</strong>. I am actively seeking collaborations on ambitious research projects and challenging Kaggle competitions.',
+                aboutP3: "🌱 My expertise in <strong class=\"text-white\">AI and Data Science</strong> is constantly evolving. I am passionate about sharing knowledge and discussing the frontiers of artificial intelligence.",
                 aboutP4: '⚡ Fun fact: I can speak <strong class="text-sky-400">5 different languages</strong> (and that\'s not including programming languages)!',
+                // Research Section
+                researchTitle: "My Research",
+                researchTopic1: "Pioneering Japanese Lip-reading AI: From creating novel, large-scale datasets to developing advanced recognition models.",
+                researchTopic2: "Next-Generation Human Activity Recognition: Engineering lightweight inference AI using IMU sensors and BLE beacons for real-world applications, including nursing care activity recognition.",
+                researchTopic3: "AI-Powered Rehabilitation: Innovating methods for objective body movement analysis in clinical settings using standard RGB cameras.",
+                researchMapButton: "View My Researchmap Profile",
+                // Publications Section
+                publicationsTitle: "Publications & Presentations",
+                pubSubheading: "Academic Papers",
+                pub1Title: "Research on Measurement System of Upper Limb by Using Single Monocular Web Camera and Inference AI",
+                pub1AuthorsLabel: "Authors:",
+                pub1Authors: "Suman Shrestha, Hibiki Takami, Yuichiro Honda, Mitsuru Irie",
+                pub1Journal: "i-CREATe 2024",
+                presSubheading: "Conference Presentations",
+                pres1: "The 40th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2024",
+                pres2: "The 39th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2023",
+                pres3: "The 37th Rehabilitation Engineering Conference in Tokyo, 2023",
+                pres4: "The 38th Annual Meeting of the Japanese Society of Prosthetics and Orthotics, 2022",
                 // Tech Stack Section
                 techTitle: "Tech Stack",
-                // Fun Section
-                funTitle: "Just for Fun",
-                funQuote: "✍️ Random Dev Quote",
-                funMeme: "😂 Random Dev Meme",
                 // Contact Section
                 contactTitle: "Get In Touch",
-                contactPrompt: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team. Feel free to reach out.",
+                contactPrompt: "I am actively seeking opportunities to collaborate on transformative projects. If you have an idea that could redefine the future of assistive technology, let's connect.",
                 contactButton: "Say Hello",
             },
             ja: {
                 // Navigation
                 navAbout: "私について",
+                navResearch: "研究内容",
+                navPublications: "研究業績",
                 navTech: "技術スタック",
                 navContact: "連絡先",
                 navAboutMobile: "私について",
+                navResearchMobile: "研究内容",
+                navPublicationsMobile: "研究業績",
                 navTechMobile: "技術スタック",
                 navContactMobile: "連絡先",
                 // Hero Section
                 heroSubtitle: "博士課程学生・AI研究者",
-                heroDescription: "AIを用いた身体動作の評価により、支援技術の革新を推進しています。現在、大阪産業大学で博士号取得を目指し、兵庫県立福祉のまちづくり研究所で研究に貢献しています。",
+                heroDescription: "医学と技術の架け橋となるべく、博士課程の学生として、また常勤の研究員として、学術研究と実用化の最前線で活動しています。",
                 jgridPrompt: "JGRIDコーパスへの参加は、JGRIDボタンをクリックしてください。",
                 heroTouch: "お問い合わせ",
                 // About Section
                 aboutTitle: "私について",
-                aboutP1: '🔭 現在、<strong class="text-white">大阪産業大学</strong>の博士課程学生として、また<strong class="text-white">兵庫県立福祉のまちづくり研究所</strong>の研究員として活動しています。',
-                aboutP2: '👯 <strong class="text-sky-400">AIを用いた身体動作の評価</strong>に関するプロジェクトでの協力を積極的に探しています。Kaggleコンペティションでの協力も大歓迎です。',
-                aboutP3: "🌱 <strong class=\"text-white\">AIとデータサイエンス</strong>の道は、継続的な学習と成長の旅です。何でもお気軽にご質問ください！",
+                aboutP1: '🔭 <strong class="text-white">大阪産業大学</strong>で博士課程の研究を進める傍ら、<strong class="text-white">兵庫県立福祉のまちづくり研究所</strong>の研究員としても活動しています。',
+                aboutP2: '👯 <strong class="text-sky-400">AIによる身体動作の評価</strong>という先進的な分野に注力しています。意欲的な研究プロジェクトや挑戦的なKaggleコンペティションでの協力を積極的に求めています。',
+                aboutP3: "🌱 <strong class=\"text-white\">AIとデータサイエンス</strong>における私の専門知識は常に進化しています。知識を共有し、人工知能の最先端について議論することに情熱を注いでいます。",
                 aboutP4: '⚡ 面白い事実：プログラミング言語を除いて、<strong class="text-sky-400">5つの異なる言語</strong>を話せます！',
+                // Research Section
+                researchTitle: "私の研究",
+                researchTopic1: "日本語読唇術AIの開拓：大規模な新規データセットの構築から高度な認識モデルの開発まで。",
+                researchTopic2: "次世代の行動認識：IMUセンサーとBLEビーコンを活用し、介護活動認識を含む実世界で応用可能な軽量推論AIの設計。",
+                researchTopic3: "AI駆動型リハビリテーション：標準的なRGBカメラを用い、臨床現場における客観的な身体動作分析手法の革新。",
+                researchMapButton: "リサーチマップでプロフィールを見る",
+                // Publications Section
+                publicationsTitle: "研究業績と発表",
+                pubSubheading: "学術論文",
+                pub1Title: "単眼Webカメラと推論AIを用いた上肢計測システムの研究",
+                pub1AuthorsLabel: "著者:",
+                pub1Authors: "Suman Shrestha, 高見 響, 本田 雄一郎, 入江 満",
+                pub1Journal: "i-CREATe 2024",
+                presSubheading: "学会発表",
+                pres1: "第40回日本義肢装具学会学術大会, 2024年",
+                pres2: "第39回日本義肢装具学会学術大会, 2023年",
+                pres3: "第37回リハ工学カンファレンス in TOKYO, 2023年",
+                pres4: "第38回日本義肢装具学会学術大会, 2022年",
                 // Tech Stack Section
                 techTitle: "技術スタック",
-                // Fun Section
-                funTitle: "お楽しみ",
-                funQuote: "✍️ ランダムな開発者の名言",
-                funMeme: "😂 ランダムな開発者のミーム",
                 // Contact Section
                 contactTitle: "お問い合わせ",
-                contactPrompt: "新しいプロジェクト、創造的なアイデア、または革新的なチームの一員となる機会について、いつでもご相談ください。お気軽にご連絡ください。",
+                contactPrompt: "革新的なプロジェクトで協力する機会を積極的に探しています。支援技術の未来を再定義するようなアイデアをお持ちでしたら、ぜひご連絡ください。",
                 contactButton: "こんにちは",
             }
         };
