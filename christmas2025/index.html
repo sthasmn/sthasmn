@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -19,31 +20,49 @@
             border-color: #c53030;
         }
         /* Language visibility logic */
-        .lang-jp {
-            display: none;
-        }
-        body.show-jp .lang-en {
-            display: none;
-        }
-        body.show-jp .lang-jp {
-            display: block;
-        }
+        .lang-jp { display: none; }
+        body.show-jp .lang-en { display: none; }
+        body.show-jp .lang-jp { display: block; }
+
         /* Card-like styling for examples */
         .card {
-            background-color: #fff8e1;
+            background-color: #fefce8; /* Lighter yellow */
             border-left: 5px solid #f59e0b;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
-        .ingredient-card {
-            background-color: #f0fdf4;
-            border: 1px dashed #22c55e;
+
+        /* Flowchart styling */
+        .flowchart-step {
+            position: relative;
+            padding-left: 30px;
+            padding-bottom: 20px;
+            border-left: 2px dashed #d1d5db;
+        }
+        .flowchart-step:last-child {
+            border-left: none;
+        }
+        .flowchart-icon {
+            position: absolute;
+            left: -14px;
+            top: 0;
+            background-color: #4b5563;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+         .flowchart-step:last-child .flowchart-icon {
+            background-color: #16a34a; /* Green for prize */
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-100 text-gray-800">
 
     <!-- Header and Language Switcher -->
-    <header class="bg-white shadow-md sticky top-0 z-10">
+    <header class="bg-white shadow-md sticky top-0 z-20">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl md:text-2xl font-bold text-gray-800">
                 <span class="lang-en">🎅 Santa's Secret Ingredient</span>
@@ -59,30 +78,12 @@
     <!-- Main Content -->
     <main class="container mx-auto p-6 md:p-8">
         <!-- English Content -->
-        <div class="lang-en space-y-12">
+        <div class="lang-en space-y-16">
 
             <!-- Introduction -->
             <section>
                 <h2 class="text-3xl font-bold text-red-700 mb-4">The Ultimate Christmas Icebreaker</h2>
-                <p class="text-lg text-gray-700">
-                    Welcome to the official guide for "Santa's Secret Ingredient"! This game is designed specifically for our Christmas party, with a diverse group of 100 guests including Rotarians, scholarship students, and alumni. The goal is to create maximum fun, interaction, and laughter with simple, easy-to-understand rules.
-                </p>
-            </section>
-
-            <!-- Game Concept -->
-            <section>
-                <h3 class="text-2xl font-bold mb-3">Game Concept</h3>
-                <p class="text-gray-700">
-                    A collaborative trading and storytelling game. Guests form teams to "bake" a magical Christmas recipe. The catch? The necessary ingredients are scattered among all 100 guests. Teams must mingle, negotiate, and trade cards to complete their recipe and win.
-                </p>
-            </section>
-
-            <!-- Game Objective -->
-            <section>
-                <h3 class="text-2xl font-bold mb-3">Objective</h3>
-                <p class="text-gray-700 font-semibold text-lg">
-                    To be the first team to collect all the ingredients for your recipe and creatively present your finished "dish" to everyone.
-                </p>
+                <p class="text-lg text-gray-700">This is the complete guide for "Santa's Secret Ingredient," designed for our Christmas party of 100 guests. This document contains the game concept, rules, a visual flowchart, printable card designs, and the full list of recipes and ingredients needed for a successful event.</p>
             </section>
 
             <!-- How to Play -->
@@ -91,229 +92,267 @@
                 <div class="space-y-6">
                     <div class="flex items-start">
                         <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">1</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">Arrival & First Card</h4>
-                            <p class="text-gray-600">As each guest arrives, hand them one random **Ingredient Card**. This is their starting item for trading.</p>
-                        </div>
+                        <div class="ml-4"><h4 class="text-lg font-semibold">Arrival & First Card</h4><p class="text-gray-600">As each guest arrives, hand them one random **Ingredient Card**.</p></div>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">2</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">The Great Team-Up</h4>
-                            <p class="text-gray-600">To start the game, give each person a **Recipe Card**. Their first task is to find the 9 other people with the *exact same recipe*. This naturally forms 10 teams of 10 and gets everyone talking immediately.</p>
-                        </div>
+                        <div class="ml-4"><h4 class="text-lg font-semibold">The Great Team-Up</h4><p class="text-gray-600">To start the game, give each person a **Recipe Card**. Their first task is to find the 9 other people with the *exact same recipe*.</p></div>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">3</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">Inventory & Strategy</h4>
-                            <p class="text-gray-600">Once teams are formed, they gather to see what ingredients they have and what they need. This is where they plan their trading strategy.</p>
-                        </div>
+                        <div class="ml-4"><h4 class="text-lg font-semibold">Inventory & Strategy</h4><p class="text-gray-600">Teams gather to see what ingredients they have and what they need, then plan their trading strategy.</p></div>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">4</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">The Christmas Barter</h4>
-                            <p class="text-gray-600">The host announces, "Let the trading begin!" Teams must now mingle with other teams to trade for the ingredients they're missing. This is the main part of the game and generates the most energy.</p>
-                        </div>
+                        <div class="ml-4"><h4 class="text-lg font-semibold">The Christmas Barter</h4><p class="text-gray-600">The host announces trading can begin. Teams mingle and negotiate with other teams to get the ingredients they need.</p></div>
                     </div>
                     <div class="flex items-start">
                         <div class="flex-shrink-0 bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">5</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">Winning & Presentation</h4>
-                            <p class="text-gray-600">The first team to collect all their ingredients runs to the stage and shouts "Merry Christmas!" To win, they must present their recipe and creatively explain the importance of their **Secret Ingredient**.</p>
-                        </div>
+                        <div class="ml-4"><h4 class="text-lg font-semibold">Winning & Presentation</h4><p class="text-gray-600">The first team with all their ingredients shouts "Merry Christmas!" To win, they present their recipe and creatively explain their **Secret Ingredient**.</p></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Materials Needed -->
+            <!-- Game Flowchart -->
             <section>
-                <h3 class="text-2xl font-bold mb-4">Materials Checklist (For 100 guests)</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>10 Unique Recipe Concepts:</strong> Create 10 different whimsical Christmas recipes.</li>
-                    <li><strong>100 Recipe Cards:</strong> 10 copies of each of the 10 unique recipes.</li>
-                    <li><strong>~100 Ingredient Cards:</strong> Individual cards for each ingredient listed on the recipe cards. Ensure you have exactly one of each "Secret Ingredient" and duplicates of more common ones.</li>
-                    <li><strong>Prizes:</strong> One main prize for the winning team and an optional prize for the "Most Creative Presentation."</li>
-                </ul>
+                <h3 class="text-2xl font-bold mb-6">Game Flowchart</h3>
+                <div class="card p-6 rounded-lg">
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+                        <h4 class="font-semibold">Guest Arrives</h4>
+                        <p class="text-sm text-gray-600">Receives one random Ingredient Card.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                        <h4 class="font-semibold">Game Starts</h4>
+                        <p class="text-sm text-gray-600">Each guest receives a Recipe Card.</p>
+                    </div>
+                     <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-users"></i></div>
+                        <h4 class="font-semibold">Team Formation</h4>
+                        <p class="text-sm text-gray-600">Guests find 9 others with the same recipe to form a team.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                        <h4 class="font-semibold">Strategy Phase</h4>
+                        <p class="text-sm text-gray-600">Team pools cards and plans who to trade with.</p>
+                    </div>
+                     <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-right-left"></i></div>
+                        <h4 class="font-semibold">Trading Phase</h4>
+                        <p class="text-sm text-gray-600">Mass mingling and bartering between teams.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-flag-checkered"></i></div>
+                        <h4 class="font-semibold">Recipe Complete!</h4>
+                        <p class="text-sm text-gray-600">First team with all ingredients shouts "Merry Christmas!"</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-microphone"></i></div>
+                        <h4 class="font-semibold">Final Presentation</h4>
+                        <p class="text-sm text-gray-600">Winning team presents their dish and secret ingredient.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-icon"><i class="fa-solid fa-trophy"></i></div>
+                        <h4 class="font-semibold">Prizes Awarded</h4>
+                        <p class="text-sm text-gray-600">Prizes for the winner and "Most Creative Presentation."</p>
+                    </div>
+                </div>
             </section>
 
-            <!-- Example Materials -->
+            <!-- Card Designs -->
             <section>
-                <h3 class="text-2xl font-bold mb-4">Example Materials</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Example Recipe Card -->
-                    <div class="card p-6 rounded-lg">
-                        <h4 class="text-xl font-bold text-amber-700 mb-2">Example: Recipe Card</h4>
-                        <p class="italic text-gray-600 mb-4">A team of 10 people will share this card.</p>
-                        <div class="bg-white p-4 border rounded-md shadow-sm">
-                            <h5 class="font-bold text-lg text-center">Santa's Famous Anti-Gravity Cookies</h5>
-                            <hr class="my-2">
-                            <ul class="list-disc list-inside space-y-1">
-                                <li>1 Cup of North Pole Flour</li>
-                                <li>2 Sticks of Yeti Butter</li>
-                                <li>3 Dashes of Cinnamon Sunshine</li>
-                                <li>A Handful of Chocolate Meteorites</li>
-                                <li class="font-bold text-red-600">Secret Ingredient: A Spoonful of Laughter</li>
+                <h3 class="text-2xl font-bold mb-4">Printable Card Designs</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Recipe Card Design -->
+                    <div class="lg:col-span-2">
+                        <h4 class="font-semibold text-lg mb-2">Recipe Card</h4>
+                        <div class="bg-white p-6 border-2 border-red-300 rounded-lg shadow-lg text-center" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath d=%22M10 10 L90 10 L90 90 L10 90 Z%22 fill=%22none%22 stroke=%22%23fca5a5%22 stroke-width=%221%22 stroke-dasharray=%222 2%22/%3E%3C/svg%3E');">
+                            <h5 class="font-bold text-2xl text-red-700">Rudolph's Rocket Fuel Hot Chocolate</h5>
+                            <hr class="my-3 border-red-200">
+                            <ul class="text-left list-none space-y-2 inline-block">
+                                <li><i class="fa-solid fa-star text-yellow-400 mr-2"></i>Starlight Sprinkles</li>
+                                <li><i class="fa-solid fa-moon text-gray-400 mr-2"></i>Cocoa Comets</li>
+                                <li><i class="fa-solid fa-cloud text-blue-300 mr-2"></i>Milky Way Milk</li>
+                                <li><i class="fa-solid fa-snowflake text-cyan-400 mr-2"></i>Sugar Snowflakes</li>
+                                <li class="font-bold text-red-600 bg-red-100 p-2 rounded-md mt-4"><i class="fa-solid fa-key text-red-600 mr-2"></i>Secret Ingredient: A Dash of Courage</li>
                             </ul>
                         </div>
                     </div>
-                    <!-- Example Ingredient Card -->
-                    <div class="card p-6 rounded-lg">
-                        <h4 class="text-xl font-bold text-amber-700 mb-2">Example: Ingredient Cards</h4>
-                        <p class="italic text-gray-600 mb-4">Each guest receives one of these at the start.</p>
-                        <div class="flex flex-wrap gap-4">
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">Yeti Butter</div>
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold text-red-600">A Spoonful of Laughter</div>
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">North Pole Flour</div>
+                    <!-- Ingredient Cards Design -->
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">Ingredient Cards</h4>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-4 border border-dashed border-green-600 rounded-md text-center font-semibold text-green-800 shadow-sm">Milky Way Milk</div>
+                             <div class="bg-red-50 p-4 border border-dashed border-red-600 rounded-md text-center font-bold text-red-800 shadow-sm">
+                                <i class="fa-solid fa-key mr-2"></i>A Dash of Courage
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Why this game is perfect -->
+            <!-- Complete Recipe & Ingredient List -->
             <section>
-                <h3 class="text-2xl font-bold mb-4">Why This Game is Perfect for Our Party</h3>
-                 <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>Simple Rules:</strong> Easy to explain in 2 minutes.</li>
-                    <li><strong>Promotes Mingling:</strong> The core mechanic forces interaction between all guests.</li>
-                    <li><strong>Inclusive for All Ages:</strong> Not physically demanding. Focuses on conversation and fun.</li>
-                    <li><strong>Sparks Creativity:</strong> The presentations are guaranteed to be hilarious and memorable.</li>
-                    <li><strong>Team-Oriented:</strong> Fosters a warm, collaborative atmosphere.</li>
-                </ul>
-            </section>
+                <h3 class="text-2xl font-bold mb-4">Complete Recipe & Ingredient List</h3>
+                <div class="space-y-6">
+                    <!-- Recipe 1 -->
+                    <div>
+                        <h4 class="font-semibold text-lg text-red-700">1. Rudolph's Rocket Fuel Hot Chocolate</h4>
+                        <p class="text-gray-600">Ingredients: Starlight Sprinkles, Cocoa Comets, Milky Way Milk, Sugar Snowflakes. <span class="font-bold">Secret:</span> A Dash of Courage.</p>
+                    </div>
+                    <!-- Recipe 2 -->
+                    <div>
+                        <h4 class="font-semibold text-lg text-green-700">2. The Grinch's Heart-Growing Gingerbread</h4>
+                        <p class="text-gray-600">Ingredients: Mount Crumpit Flour, Max's Molasses, Who-Hash Spices, Grinch-Green Icing. <span class="font-bold">Secret:</span> A Pinch of Kindness.</p>
+                    </div>
+                    <!-- ... and so on for all 10 recipes -->
+                     <div><h4 class="font-semibold text-lg text-blue-700">3. Frosty's Magical Snow Cones</h4><p class="text-gray-600">Ingredients: Freshly Fallen Snow, Winter Wind Syrup, Icicle Crunchies, Blueberry Buttons. <span class="font-bold">Secret:</span> A Spark of Life.</p></div>
+                    <div><h4 class="font-semibold text-lg text-yellow-700">4. Elves' Midnight-Oil Energy Bars</h4><p class="text-gray-600">Ingredients: Workshop Oats, Candy Cane Power Pellets, Toffee Tool Bits, Nut & Bolt Mix. <span class="font-bold">Secret:</span> A Drop of Focus.</p></div>
+                    <div><h4 class="font-semibold text-lg text-orange-700">5. Mrs. Claus's Cozy Apple Crumble</h4><p class="text-gray-600">Ingredients: Angel's Oat Topping, Cinnamon Sunshine, Brown Sugar Sand, Yeti Butter. <span class="font-bold">Secret:</span> A Spoonful of Warmth.</p></div>
+                    <div><h4 class="font-semibold text-lg text-cyan-700">6. Jack Frost's Icy Mint Patties</h4><p class="text-gray-600">Ingredients: Peppermint Crystals, Glacier Water, Dark Chocolate Chunks, Snowflake Sugar. <span class="font-bold">Secret:</span> A Whisper of a Secret.</p></div>
+                    <div><h4 class="font-semibold text-lg text-purple-700">7. The Nutcracker's Sugar Plum Delight</h4><p class="text-gray-600">Ingredients: Sugar Plum Puree, Land of Sweets Sugar, Dancing Spice Mix, Walnut Soldier Crumbs. <span class="font-bold">Secret:</span> A Note of a Melody.</p></div>
+                    <div><h4 class="font-semibold text-lg text-gray-700">8. Polar Express Peppermint Bark</h4><p class="text-gray-600">Ingredients: North Pole White Chocolate, Peppermint Stick Rails, Dark Chocolate Tunnels, Edible Silver Bells. <span class="font-bold">Secret:</span> A Sense of Wonder.</p></div>
+                    <div><h4 class="font-semibold text-lg text-pink-700">9. Carolers' Chorus Cordials</h4><p class="text-gray-600">Ingredients: Cherry Juice, Honey Harmonies, Lemon Zest Trebles, Ginger Bass Notes. <span class="font-bold">Secret:</span> A Verse of a Song.</p></div>
+                    <div><h4 class="font-semibold text-lg text-amber-600">10. Star of Bethlehem Shortbread</h4><p class="text-gray-600">Ingredients: Stardust Flour, Golden Butter Rays, Vanilla Bean Essence, Lemon Twinkle Glaze. <span class="font-bold">Secret:</span> A Glimmer of Hope.</p></div>
+                </div>
 
+                <div class="mt-8 card p-6 rounded-lg">
+                    <h4 class="font-bold text-xl mb-3">Master Ingredient List (100 Cards to Print)</h4>
+                    <p class="text-gray-600 mb-4">This is the exact number of each card to print and randomly distribute to the 100 guests upon arrival.</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2 text-gray-700">
+                        <!-- Secret Ingredients -->
+                        <div class="col-span-full font-bold text-red-700 mb-2">Secret Ingredients (1 of each)</div>
+                        <p>A Dash of Courage</p><p>A Pinch of Kindness</p><p>A Spark of Life</p><p>A Drop of Focus</p>
+                        <p>A Spoonful of Warmth</p><p>A Whisper of a Secret</p><p>A Note of a Melody</p><p>A Sense of Wonder</p>
+                        <p>A Verse of a Song</p><p>A Glimmer of Hope</p>
+
+                        <!-- Common Ingredients -->
+                        <div class="col-span-full font-bold text-gray-800 mt-4 mb-2">Regular Ingredients (90 total)</div>
+                        <p>Starlight Sprinkles (x3)</p><p>Cocoa Comets (x3)</p><p>Milky Way Milk (x3)</p><p>Sugar Snowflakes (x3)</p>
+                        <p>Mount Crumpit Flour (x3)</p><p>Max's Molasses (x2)</p><p>Who-Hash Spices (x2)</p><p>Grinch-Green Icing (x2)</p>
+                        <p>Freshly Fallen Snow (x3)</p><p>Winter Wind Syrup (x2)</p><p>Icicle Crunchies (x2)</p><p>Blueberry Buttons (x2)</p>
+                        <p>Workshop Oats (x3)</p><p>Candy Cane Power Pellets (x2)</p><p>Toffee Tool Bits (x2)</p><p>Nut & Bolt Mix (x2)</p>
+                        <p>Angel's Oat Topping (x3)</p><p>Cinnamon Sunshine (x3)</p><p>Brown Sugar Sand (x3)</p><p>Yeti Butter (x3)</p>
+                        <p>Peppermint Crystals (x3)</p><p>Glacier Water (x2)</p><p>Dark Chocolate Chunks (x3)</p><p>Snowflake Sugar (x3)</p>
+                        <p>Sugar Plum Puree (x2)</p><p>Land of Sweets Sugar (x3)</p><p>Dancing Spice Mix (x2)</p><p>Walnut Soldier Crumbs (x2)</p>
+                        <p>North Pole White Chocolate (x2)</p><p>Peppermint Stick Rails (x2)</p><p>Dark Chocolate Tunnels (x2)</p><p>Edible Silver Bells (x2)</p>
+                        <p>Cherry Juice (x2)</p><p>Honey Harmonies (x2)</p><p>Lemon Zest Trebles (x2)</p><p>Ginger Bass Notes (x2)</p>
+                        <p>Stardust Flour (x3)</p><p>Golden Butter Rays (x3)</p><p>Vanilla Bean Essence (x2)</p><p>Lemon Twinkle Glaze (x2)</p>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <!-- Japanese Content -->
-        <div class="lang-jp space-y-12">
+        <div class="lang-jp space-y-16">
 
             <!-- Introduction -->
             <section>
                 <h2 class="text-3xl font-bold text-red-700 mb-4">究極のクリスマス・アイスブレイク</h2>
-                <p class="text-lg text-gray-700">
-                    「サンタの秘密の材料」公式ガイドへようこそ！このゲームは、ロータリアン、奨学生、そしてOB/OGの皆様が集まる100名規模のクリスマスパーティーのために特別に考案されました。目標は、誰にでも分かりやすいシンプルなルールで、最大限の楽しさ、交流、そして笑いを生み出すことです。
-                </p>
-            </section>
-
-            <!-- Game Concept -->
-            <section>
-                <h3 class="text-2xl font-bold mb-3">ゲームのコンセプト</h3>
-                <p class="text-gray-700">
-                    これは、協力型のトレーディング＆ストーリーテリングゲームです。参加者はチームを組み、魔法のクリスマスレシピを「完成」させます。しかし、必要な材料は100人のゲスト全員にバラバラに配られています。チームはレシピを完成させるために、他の参加者と交流し、交渉し、カードを交換しなければなりません。
-                </p>
-            </section>
-
-            <!-- Game Objective -->
-            <section>
-                <h3 class="text-2xl font-bold mb-3">ゲームの目的</h3>
-                <p class="text-gray-700 font-semibold text-lg">
-                    自分のチームのレシピに必要な材料をすべて集め、完成した「料理」を創造的に発表する最初のチームになること。
-                </p>
+                <p class="text-lg text-gray-700">これは100名のゲストを迎える私たちのクリスマスパーティーのために作られた「サンタの秘密の材料」の完全ガイドです。このドキュメントには、ゲームのコンセプト、ルール、フローチャート、印刷用カードデザイン、そしてイベント成功に必要な全レシピと材料のリストが含まれています。</p>
             </section>
 
             <!-- How to Play -->
             <section>
                 <h3 class="text-2xl font-bold mb-4">ゲームの進め方：ステップ・バイ・ステップ</h3>
-                <div class="space-y-6">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">1</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">受付と最初のカード</h4>
-                            <p class="text-gray-600">ゲストが到着したら、ランダムに選んだ**「材料カード」**を1枚渡します。これがトレーディングのスタートアイテムになります。</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">2</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">チーム分け</h4>
-                            <p class="text-gray-600">ゲーム開始の合図として、各ゲストに**「レシピカード」**を1枚渡します。最初のタスクは、自分と*全く同じレシピ*を持っている他の9人を見つけることです。これにより自然と10人×10チームが形成され、すぐに会話が生まれます。</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">3</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">在庫確認と戦略会議</h4>
-                            <p class="text-gray-600">チームが結成されたら、集まって自分たちが持っている材料と必要な材料を確認します。ここで交換の戦略を立てます。</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">4</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">クリスマス大交換会</h4>
-                            <p class="text-gray-600">司会者が「トレード開始！」と宣言します。チームは他のチームと積極的に交流し、足りない材料を交換してもらいます。ここがゲームで最も盛り上がるパートです。</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">5</div>
-                        <div class="ml-4">
-                            <h4 class="text-lg font-semibold">勝利とプレゼンテーション</h4>
-                            <p class="text-gray-600">全ての材料を集めた最初のチームは、ステージに駆け寄り「メリークリスマス！」と叫びます。勝利するためには、自分たちのレシピを発表し、**「秘密の材料」**の重要性を創造的に説明しなければなりません。</p>
-                        </div>
-                    </div>
+                 <div class="space-y-6">
+                    <div class="flex items-start"><div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">1</div><div class="ml-4"><h4 class="text-lg font-semibold">受付と最初のカード</h4><p class="text-gray-600">ゲストが到着したら、ランダムに**「材料カード」**を1枚渡します。</p></div></div>
+                    <div class="flex items-start"><div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">2</div><div class="ml-4"><h4 class="text-lg font-semibold">チーム分け</h4><p class="text-gray-600">ゲーム開始時、各ゲストに**「レシピカード」**を1枚渡します。最初のタスクは、自分と*全く同じレシピ*を持つ他の9人を見つけることです。</p></div></div>
+                    <div class="flex items-start"><div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">3</div><div class="ml-4"><h4 class="text-lg font-semibold">在庫確認と戦略会議</h4><p class="text-gray-600">チームは自分たちが持つ材料と必要な材料を確認し、交換戦略を立てます。</p></div></div>
+                    <div class="flex items-start"><div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">4</div><div class="ml-4"><h4 class="text-lg font-semibold">クリスマス大交換会</h4><p class="text-gray-600">司会者の合図でトレード開始。チームは他のチームと交流し、必要な材料を手に入れるために交渉します。</p></div></div>
+                    <div class="flex items-start"><div class="flex-shrink-0 bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">5</div><div class="ml-4"><h4 class="text-lg font-semibold">勝利とプレゼンテーション</h4><p class="text-gray-600">全材料を揃えた最初のチームが「メリークリスマス！」と叫びます。勝利するには、レシピを発表し、**「秘密の材料」**について創造的に説明します。</p></div></div>
                 </div>
             </section>
 
-            <!-- Materials Needed -->
+            <!-- Game Flowchart -->
             <section>
-                <h3 class="text-2xl font-bold mb-4">準備物チェックリスト（100名分）</h3>
-                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>ユニークなレシピ10種類：</strong>ユニークで面白いクリスマスレシピを10種類考案します。</li>
-                    <li><strong>レシピカード100枚：</strong>10種類のレシピを各10枚ずつ印刷します。</li>
-                    <li><strong>材料カード約100枚：</strong>レシピカードに記載されている各材料のカード。各「秘密の材料」は1枚だけ、一般的な材料は複数枚用意します。</li>
-                    <li><strong>景品：</strong>優勝チームへの景品と、任意で「最もクリエイティブなプレゼン賞」の景品。</li>
-                </ul>
+                <h3 class="text-2xl font-bold mb-6">ゲームのフローチャート</h3>
+                <div class="card p-6 rounded-lg">
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-right-to-bracket"></i></div><h4 class="font-semibold">ゲスト到着</h4><p class="text-sm text-gray-600">ランダムな材料カードを1枚受け取る。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-bullhorn"></i></div><h4 class="font-semibold">ゲーム開始</h4><p class="text-sm text-gray-600">各ゲストがレシピカードを受け取る。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-users"></i></div><h4 class="font-semibold">チーム結成</h4><p class="text-sm text-gray-600">同じレシピを持つ9人を見つけ、チームを作る。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-lightbulb"></i></div><h4 class="font-semibold">戦略フェーズ</h4><p class="text-sm text-gray-600">チームでカードを共有し、交換相手を計画する。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-right-left"></i></div><h4 class="font-semibold">交換フェーズ</h4><p class="text-sm text-gray-600">チーム間で大規模な交流と交渉が行われる。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-flag-checkered"></i></div><h4 class="font-semibold">レシピ完成！</h4><p class="text-sm text-gray-600">全材料を揃えた最初のチームが「メリークリスマス！」と叫ぶ。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-microphone"></i></div><h4 class="font-semibold">最終プレゼン</h4><p class="text-sm text-gray-600">勝利チームが料理と秘密の材料を発表する。</p></div>
+                    <div class="flowchart-step"><div class="flowchart-icon"><i class="fa-solid fa-trophy"></i></div><h4 class="font-semibold">景品授与</h4><p class="text-sm text-gray-600">勝者と「最優秀クリエイティブ賞」に景品が贈られる。</p></div>
+                </div>
             </section>
 
-            <!-- Example Materials -->
-            <section>
-                <h3 class="text-2xl font-bold mb-4">作成物の例</h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Example Recipe Card -->
-                    <div class="card p-6 rounded-lg">
-                        <h4 class="text-xl font-bold text-amber-700 mb-2">例：レシピカード</h4>
-                        <p class="italic text-gray-600 mb-4">10人のチームでこのカードを共有します。</p>
-                        <div class="bg-white p-4 border rounded-md shadow-sm">
-                            <h5 class="font-bold text-lg text-center">サンタの有名な無重力クッキー</h5>
-                            <hr class="my-2">
-                            <ul class="list-disc list-inside space-y-1">
-                                <li>北極の小麦粉 1カップ</li>
-                                <li>イエティのバター 2本</li>
-                                <li>太陽シナモン 3振り</li>
-                                <li>チョコレートの隕石 ひと掴み</li>
-                                <li class="font-bold text-red-600">秘密の材料：大さじ一杯の笑い声</li>
+            <!-- Card Designs -->
+             <section>
+                <h3 class="text-2xl font-bold mb-4">印刷用カードデザイン</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <h4 class="font-semibold text-lg mb-2">レシピカード</h4>
+                        <div class="bg-white p-6 border-2 border-red-300 rounded-lg shadow-lg text-center" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cpath d=%22M10 10 L90 10 L90 90 L10 90 Z%22 fill=%22none%22 stroke=%22%23fca5a5%22 stroke-width=%221%22 stroke-dasharray=%222 2%22/%3E%3C/svg%3E');">
+                            <h5 class="font-bold text-2xl text-red-700">ルドルフのロケット燃料ホットチョコレート</h5>
+                            <hr class="my-3 border-red-200">
+                            <ul class="text-left list-none space-y-2 inline-block">
+                                <li><i class="fa-solid fa-star text-yellow-400 mr-2"></i>スターライト・スプリンクル</li>
+                                <li><i class="fa-solid fa-moon text-gray-400 mr-2"></i>ココア・コメット</li>
+                                <li><i class="fa-solid fa-cloud text-blue-300 mr-2"></i>天の川ミルク</li>
+                                <li><i class="fa-solid fa-snowflake text-cyan-400 mr-2"></i>砂糖の雪の結晶</li>
+                                <li class="font-bold text-red-600 bg-red-100 p-2 rounded-md mt-4"><i class="fa-solid fa-key text-red-600 mr-2"></i>秘密の材料：ほんの少しの勇気</li>
                             </ul>
                         </div>
                     </div>
-                    <!-- Example Ingredient Card -->
-                    <div class="card p-6 rounded-lg">
-                        <h4 class="text-xl font-bold text-amber-700 mb-2">例：材料カード</h4>
-                        <p class="italic text-gray-600 mb-4">各ゲストは最初にこれを1枚受け取ります。</p>
-                        <div class="flex flex-wrap gap-4">
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">イエティのバター</div>
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold text-red-600">大さじ一杯の笑い声</div>
-                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">北極の小麦粉</div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">材料カード</h4>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-4 border border-dashed border-green-600 rounded-md text-center font-semibold text-green-800 shadow-sm">天の川ミルク</div>
+                             <div class="bg-red-50 p-4 border border-dashed border-red-600 rounded-md text-center font-bold text-red-800 shadow-sm">
+                                <i class="fa-solid fa-key mr-2"></i>ほんの少しの勇気
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Why this game is perfect -->
+             <!-- Complete Recipe & Ingredient List -->
             <section>
-                <h3 class="text-2xl font-bold mb-4">このゲームが私たちのパーティーに最適な理由</h3>
-                 <ul class="list-disc list-inside space-y-2 text-gray-700">
-                    <li><strong>シンプルなルール：</strong>2分で説明できるほど簡単です。</li>
-                    <li><strong>交流を促進：</strong>ゲームの仕組みが、ゲスト全員の交流を自然に促します。</li>
-                    <li><strong>全年齢対象：</strong>体力を使いません。会話と楽しさに焦点を当てています。</li>
-                    <li><strong>創造性を刺激：</strong>プレゼンテーションは、面白く記憶に残るものになること間違いなしです。</li>
-                    <li><strong>チーム志向：</strong>温かく、協力的な雰囲気を作り出します。</li>
-                </ul>
-            </section>
+                <h3 class="text-2xl font-bold mb-4">全レシピ＆材料リスト</h3>
+                <div class="space-y-6">
+                    <div><h4 class="font-semibold text-lg text-red-700">1. ルドルフのロケット燃料ホットチョコレート</h4><p class="text-gray-600">材料: スターライト・スプリンクル, ココア・コメット, 天の川ミルク, 砂糖の雪の結晶. <span class="font-bold">秘密:</span> ほんの少しの勇気.</p></div>
+                    <div><h4 class="font-semibold text-lg text-green-700">2. グリンチの心が育つジンジャーブレッド</h4><p class="text-gray-600">材料: クランピット山の小麦粉, マックスの糖蜜, フー村のスパイス, グリンチグリーンのアイシング. <span class="font-bold">秘密:</span> 一つまみの優しさ.</p></div>
+                    <div><h4 class="font-semibold text-lg text-blue-700">3. フロスティの魔法のかき氷</h4><p class="text-gray-600">材料: 降りたての新雪, 冬風シロップ, つららのクランチ, ブルーベリーのボタン. <span class="font-bold">秘密:</span> 生命のひらめき.</p></div>
+                    <div><h4 class="font-semibold text-lg text-yellow-700">4. エルフの徹夜用エナジーバー</h4><p class="text-gray-600">材料: 仕事場のオーツ麦, キャンディケインのパワーペレット, トフィーの工具ビット, ナッツとボルトのミックス. <span class="font-bold">秘密:</span> 一滴の集中力.</p></div>
+                    <div><h4 class="font-semibold text-lg text-orange-700">5. クラウス夫人の心温まるアップルクランブル</h4><p class="text-gray-600">材料: 天使のオーツトッピング, シナモンの太陽, ブラウンシュガーの砂, イエティのバター. <span class="font-bold">秘密:</span> スプーン一杯の温もり.</p></div>
+                    <div><h4 class="font-semibold text-lg text-cyan-700">6. ジャックフロストの氷のミントパティ</h4><p class="text-gray-600">材料: ペパーミントの結晶, 氷河の水, ダークチョコレートの塊, 雪の結晶の砂糖. <span class="font-bold">秘密:</span> 秘密のささやき.</p></div>
+                    <div><h4 class="font-semibold text-lg text-purple-700">7. くるみ割り人形のシュガープラム</h4><p class="text-gray-600">材料: シュガープラムのピューレ, お菓子の国の砂糖, 踊るスパイスミックス, クルミ兵士のクランブル. <span class="font-bold">秘密:</span> 一節のメロディ.</p></div>
+                    <div><h4 class="font-semibold text-lg text-gray-700">8. ポーラーエクスプレスのペパーミントバーク</h4><p class="text-gray-600">材料: 北極のホワイトチョコ, ペパーミントスティックのレール, ダークチョコのトンネル, 食べられる銀のベル. <span class="font-bold">秘密:</span> 不思議に思う心.</p></div>
+                    <div><h4 class="font-semibold text-lg text-pink-700">9. 聖歌隊のコーラス・コーディアル</h4><p class="text-gray-600">材料: チェリージュース, 蜂蜜のハーモニー, レモンゼストのトレブル, ジンジャーのベースノート. <span class="font-bold">秘密:</span> 歌の一節.</p></div>
+                    <div><h4 class="font-semibold text-lg text-amber-600">10. ベツレヘムの星のショートブレッド</h4><p class="text-gray-600">材料: 星屑の小麦粉, 黄金バターの光線, バニラビーンズのエッセンス, レモンのきらめきグレーズ. <span class="font-bold">秘密:</span> 一筋の希望.</p></div>
+                </div>
 
+                <div class="mt-8 card p-6 rounded-lg">
+                    <h4 class="font-bold text-xl mb-3">全材料リスト（印刷用100枚）</h4>
+                    <p class="text-gray-600 mb-4">受付時に100名のゲストにランダムに配布する各カードの正確な枚数です。</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-2 text-gray-700">
+                        <div class="col-span-full font-bold text-red-700 mb-2">秘密の材料（各1枚）</div>
+                        <p>ほんの少しの勇気</p><p>一つまみの優しさ</p><p>生命のひらめき</p><p>一滴の集中力</p>
+                        <p>スプーン一杯の温もり</p><p>秘密のささやき</p><p>一節のメロディ</p><p>不思議に思う心</p>
+                        <p>歌の一節</p><p>一筋の希望</p>
+
+                        <div class="col-span-full font-bold text-gray-800 mt-4 mb-2">通常材料（合計90枚）</div>
+                        <p>スターライト・スプリンクル (x3)</p><p>ココア・コメット (x3)</p><p>天の川ミルク (x3)</p><p>砂糖の雪の結晶 (x3)</p>
+                        <p>クランピット山の小麦粉 (x3)</p><p>マックスの糖蜜 (x2)</p><p>フー村のスパイス (x2)</p><p>グリンチグリーンのアイシング (x2)</p>
+                        <p>降りたての新雪 (x3)</p><p>冬風シロップ (x2)</p><p>つららのクランチ (x2)</p><p>ブルーベリーのボタン (x2)</p>
+                        <p>仕事場のオーツ麦 (x3)</p><p>キャンディケインのパワーペレット (x2)</p><p>トフィーの工具ビット (x2)</p><p>ナッツとボルトのミックス (x2)</p>
+                        <p>天使のオーツトッピング (x3)</p><p>シナモンの太陽 (x3)</p><p>ブラウンシュガーの砂 (x3)</p><p>イエティのバター (x3)</p>
+                        <p>ペパーミントの結晶 (x3)</p><p>氷河の水 (x2)</p><p>ダークチョコレートの塊 (x3)</p><p>雪の結晶の砂糖 (x3)</p>
+                        <p>シュガープラムのピューレ (x2)</p><p>お菓子の国の砂糖 (x3)</p><p>踊るスパイスミックス (x2)</p><p>クルミ兵士のクランブル (x2)</p>
+                        <p>北極のホワイトチョコ (x2)</p><p>ペパーミントスティックのレール (x2)</p><p>ダークチョコのトンネル (x2)</p><p>食べられる銀のベル (x2)</p>
+                        <p>チェリージュース (x2)</p><p>蜂蜜のハーモニー (x2)</p><p>レモンゼストのトレブル (x2)</p><p>ジンジャーのベースノート (x2)</p>
+                        <p>星屑の小麦粉 (x3)</p><p>黄金バターの光線 (x3)</p><p>バニラビーンズのエッセンス (x2)</p><p>レモンのきらめきグレーズ (x2)</p>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
-    <footer class="text-center text-gray-500 text-sm py-8">
+    <footer class="text-center text-gray-500 text-sm py-8 px-4">
         <p class="lang-en">Game Concept & Plan. Let's make this a Christmas to remember!</p>
         <p class="lang-jp">ゲームコンセプト＆プラン。記憶に残るクリスマスにしましょう！</p>
         <p class="mt-4">
