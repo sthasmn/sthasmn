@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa's Secret Ingredient - Christmas Game Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Style for the active language button */
+        .lang-btn.active {
+            background-color: #c53030; /* A festive red */
+            color: white;
+            border-color: #c53030;
+        }
+        /* Language visibility logic */
+        .lang-jp {
+            display: none;
+        }
+        body.show-jp .lang-en {
+            display: none;
+        }
+        body.show-jp .lang-jp {
+            display: block;
+        }
+        /* Card-like styling for examples */
+        .card {
+            background-color: #fff8e1;
+            border-left: 5px solid #f59e0b;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .ingredient-card {
+            background-color: #f0fdf4;
+            border: 1px dashed #22c55e;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header and Language Switcher -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-gray-800">
+                <span class="lang-en">🎅 Santa's Secret Ingredient</span>
+                <span class="lang-jp">🎅 サンタの秘密の材料</span>
+            </h1>
+            <div class="flex space-x-2">
+                <button id="btn-en" class="lang-btn active text-sm font-semibold border rounded-full px-4 py-1 transition-colors duration-200">English</button>
+                <button id="btn-jp" class="lang-btn text-sm font-semibold border rounded-full px-4 py-1 transition-colors duration-200">日本語</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-6 md:p-8">
+        <!-- English Content -->
+        <div class="lang-en space-y-12">
+
+            <!-- Introduction -->
+            <section>
+                <h2 class="text-3xl font-bold text-red-700 mb-4">The Ultimate Christmas Icebreaker</h2>
+                <p class="text-lg text-gray-700">
+                    Welcome to the official guide for "Santa's Secret Ingredient"! This game is designed specifically for our Christmas party, with a diverse group of 100 guests including Rotarians, scholarship students, and alumni. The goal is to create maximum fun, interaction, and laughter with simple, easy-to-understand rules.
+                </p>
+            </section>
+
+            <!-- Game Concept -->
+            <section>
+                <h3 class="text-2xl font-bold mb-3">Game Concept</h3>
+                <p class="text-gray-700">
+                    A collaborative trading and storytelling game. Guests form teams to "bake" a magical Christmas recipe. The catch? The necessary ingredients are scattered among all 100 guests. Teams must mingle, negotiate, and trade cards to complete their recipe and win.
+                </p>
+            </section>
+
+            <!-- Game Objective -->
+            <section>
+                <h3 class="text-2xl font-bold mb-3">Objective</h3>
+                <p class="text-gray-700 font-semibold text-lg">
+                    To be the first team to collect all the ingredients for your recipe and creatively present your finished "dish" to everyone.
+                </p>
+            </section>
+
+            <!-- How to Play -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">How to Play: Step-by-Step</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">1</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">Arrival & First Card</h4>
+                            <p class="text-gray-600">As each guest arrives, hand them one random **Ingredient Card**. This is their starting item for trading.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">2</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">The Great Team-Up</h4>
+                            <p class="text-gray-600">To start the game, give each person a **Recipe Card**. Their first task is to find the 9 other people with the *exact same recipe*. This naturally forms 10 teams of 10 and gets everyone talking immediately.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">3</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">Inventory & Strategy</h4>
+                            <p class="text-gray-600">Once teams are formed, they gather to see what ingredients they have and what they need. This is where they plan their trading strategy.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">4</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">The Christmas Barter</h4>
+                            <p class="text-gray-600">The host announces, "Let the trading begin!" Teams must now mingle with other teams to trade for the ingredients they're missing. This is the main part of the game and generates the most energy.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">5</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">Winning & Presentation</h4>
+                            <p class="text-gray-600">The first team to collect all their ingredients runs to the stage and shouts "Merry Christmas!" To win, they must present their recipe and creatively explain the importance of their **Secret Ingredient**.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materials Needed -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">Materials Checklist (For 100 guests)</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>10 Unique Recipe Concepts:</strong> Create 10 different whimsical Christmas recipes.</li>
+                    <li><strong>100 Recipe Cards:</strong> 10 copies of each of the 10 unique recipes.</li>
+                    <li><strong>~100 Ingredient Cards:</strong> Individual cards for each ingredient listed on the recipe cards. Ensure you have exactly one of each "Secret Ingredient" and duplicates of more common ones.</li>
+                    <li><strong>Prizes:</strong> One main prize for the winning team and an optional prize for the "Most Creative Presentation."</li>
+                </ul>
+            </section>
+
+            <!-- Example Materials -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">Example Materials</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Example Recipe Card -->
+                    <div class="card p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-amber-700 mb-2">Example: Recipe Card</h4>
+                        <p class="italic text-gray-600 mb-4">A team of 10 people will share this card.</p>
+                        <div class="bg-white p-4 border rounded-md shadow-sm">
+                            <h5 class="font-bold text-lg text-center">Santa's Famous Anti-Gravity Cookies</h5>
+                            <hr class="my-2">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>1 Cup of North Pole Flour</li>
+                                <li>2 Sticks of Yeti Butter</li>
+                                <li>3 Dashes of Cinnamon Sunshine</li>
+                                <li>A Handful of Chocolate Meteorites</li>
+                                <li class="font-bold text-red-600">Secret Ingredient: A Spoonful of Laughter</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Example Ingredient Card -->
+                    <div class="card p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-amber-700 mb-2">Example: Ingredient Cards</h4>
+                        <p class="italic text-gray-600 mb-4">Each guest receives one of these at the start.</p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">Yeti Butter</div>
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold text-red-600">A Spoonful of Laughter</div>
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">North Pole Flour</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why this game is perfect -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">Why This Game is Perfect for Our Party</h3>
+                 <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>Simple Rules:</strong> Easy to explain in 2 minutes.</li>
+                    <li><strong>Promotes Mingling:</strong> The core mechanic forces interaction between all guests.</li>
+                    <li><strong>Inclusive for All Ages:</strong> Not physically demanding. Focuses on conversation and fun.</li>
+                    <li><strong>Sparks Creativity:</strong> The presentations are guaranteed to be hilarious and memorable.</li>
+                    <li><strong>Team-Oriented:</strong> Fosters a warm, collaborative atmosphere.</li>
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- Japanese Content -->
+        <div class="lang-jp space-y-12">
+
+            <!-- Introduction -->
+            <section>
+                <h2 class="text-3xl font-bold text-red-700 mb-4">究極のクリスマス・アイスブレイク</h2>
+                <p class="text-lg text-gray-700">
+                    「サンタの秘密の材料」公式ガイドへようこそ！このゲームは、ロータリアン、奨学生、そしてOB/OGの皆様が集まる100名規模のクリスマスパーティーのために特別に考案されました。目標は、誰にでも分かりやすいシンプルなルールで、最大限の楽しさ、交流、そして笑いを生み出すことです。
+                </p>
+            </section>
+
+            <!-- Game Concept -->
+            <section>
+                <h3 class="text-2xl font-bold mb-3">ゲームのコンセプト</h3>
+                <p class="text-gray-700">
+                    これは、協力型のトレーディング＆ストーリーテリングゲームです。参加者はチームを組み、魔法のクリスマスレシピを「完成」させます。しかし、必要な材料は100人のゲスト全員にバラバラに配られています。チームはレシピを完成させるために、他の参加者と交流し、交渉し、カードを交換しなければなりません。
+                </p>
+            </section>
+
+            <!-- Game Objective -->
+            <section>
+                <h3 class="text-2xl font-bold mb-3">ゲームの目的</h3>
+                <p class="text-gray-700 font-semibold text-lg">
+                    自分のチームのレシピに必要な材料をすべて集め、完成した「料理」を創造的に発表する最初のチームになること。
+                </p>
+            </section>
+
+            <!-- How to Play -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">ゲームの進め方：ステップ・バイ・ステップ</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">1</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">受付と最初のカード</h4>
+                            <p class="text-gray-600">ゲストが到着したら、ランダムに選んだ**「材料カード」**を1枚渡します。これがトレーディングのスタートアイテムになります。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">2</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">チーム分け</h4>
+                            <p class="text-gray-600">ゲーム開始の合図として、各ゲストに**「レシピカード」**を1枚渡します。最初のタスクは、自分と*全く同じレシピ*を持っている他の9人を見つけることです。これにより自然と10人×10チームが形成され、すぐに会話が生まれます。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">3</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">在庫確認と戦略会議</h4>
+                            <p class="text-gray-600">チームが結成されたら、集まって自分たちが持っている材料と必要な材料を確認します。ここで交換の戦略を立てます。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">4</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">クリスマス大交換会</h4>
+                            <p class="text-gray-600">司会者が「トレード開始！」と宣言します。チームは他のチームと積極的に交流し、足りない材料を交換してもらいます。ここがゲームで最も盛り上がるパートです。</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold">5</div>
+                        <div class="ml-4">
+                            <h4 class="text-lg font-semibold">勝利とプレゼンテーション</h4>
+                            <p class="text-gray-600">全ての材料を集めた最初のチームは、ステージに駆け寄り「メリークリスマス！」と叫びます。勝利するためには、自分たちのレシピを発表し、**「秘密の材料」**の重要性を創造的に説明しなければなりません。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Materials Needed -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">準備物チェックリスト（100名分）</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>ユニークなレシピ10種類：</strong>ユニークで面白いクリスマスレシピを10種類考案します。</li>
+                    <li><strong>レシピカード100枚：</strong>10種類のレシピを各10枚ずつ印刷します。</li>
+                    <li><strong>材料カード約100枚：</strong>レシピカードに記載されている各材料のカード。各「秘密の材料」は1枚だけ、一般的な材料は複数枚用意します。</li>
+                    <li><strong>景品：</strong>優勝チームへの景品と、任意で「最もクリエイティブなプレゼン賞」の景品。</li>
+                </ul>
+            </section>
+
+            <!-- Example Materials -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">作成物の例</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Example Recipe Card -->
+                    <div class="card p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-amber-700 mb-2">例：レシピカード</h4>
+                        <p class="italic text-gray-600 mb-4">10人のチームでこのカードを共有します。</p>
+                        <div class="bg-white p-4 border rounded-md shadow-sm">
+                            <h5 class="font-bold text-lg text-center">サンタの有名な無重力クッキー</h5>
+                            <hr class="my-2">
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>北極の小麦粉 1カップ</li>
+                                <li>イエティのバター 2本</li>
+                                <li>太陽シナモン 3振り</li>
+                                <li>チョコレートの隕石 ひと掴み</li>
+                                <li class="font-bold text-red-600">秘密の材料：大さじ一杯の笑い声</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Example Ingredient Card -->
+                    <div class="card p-6 rounded-lg">
+                        <h4 class="text-xl font-bold text-amber-700 mb-2">例：材料カード</h4>
+                        <p class="italic text-gray-600 mb-4">各ゲストは最初にこれを1枚受け取ります。</p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">イエティのバター</div>
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold text-red-600">大さじ一杯の笑い声</div>
+                            <div class="ingredient-card p-4 rounded-md text-center font-semibold">北極の小麦粉</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why this game is perfect -->
+            <section>
+                <h3 class="text-2xl font-bold mb-4">このゲームが私たちのパーティーに最適な理由</h3>
+                 <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong>シンプルなルール：</strong>2分で説明できるほど簡単です。</li>
+                    <li><strong>交流を促進：</strong>ゲームの仕組みが、ゲスト全員の交流を自然に促します。</li>
+                    <li><strong>全年齢対象：</strong>体力を使いません。会話と楽しさに焦点を当てています。</li>
+                    <li><strong>創造性を刺激：</strong>プレゼンテーションは、面白く記憶に残るものになること間違いなしです。</li>
+                    <li><strong>チーム志向：</strong>温かく、協力的な雰囲気を作り出します。</li>
+                </ul>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-500 text-sm py-8">
+        <p class="lang-en">Game Concept & Plan. Let's make this a Christmas to remember!</p>
+        <p class="lang-jp">ゲームコンセプト＆プラン。記憶に残るクリスマスにしましょう！</p>
+    </footer>
+
+    <script>
+        // JavaScript for Language Toggle
+        const btnEn = document.getElementById('btn-en');
+        const btnJp = document.getElementById('btn-jp');
+        const body = document.body;
+
+        function setLanguage(lang) {
+            if (lang === 'jp') {
+                body.classList.add('show-jp');
+                btnJp.classList.add('active');
+                btnEn.classList.remove('active');
+                document.documentElement.lang = 'ja';
+            } else {
+                body.classList.remove('show-jp');
+                btnEn.classList.add('active');
+                btnJp.classList.remove('active');
+                document.documentElement.lang = 'en';
+            }
+        }
+
+        btnEn.addEventListener('click', () => setLanguage('en'));
+        btnJp.addEventListener('click', () => setLanguage('jp'));
+
+        // Set initial state
+        setLanguage('en');
+    </script>
+
+</body>
+</html>
