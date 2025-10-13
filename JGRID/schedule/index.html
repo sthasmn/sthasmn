@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Submission Strategy for Japanese Lip-Reading Corpus Research</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f9f9f9;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: 1px solid #bdc3c7;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e9f5ff;
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+       .gantt-bar {
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 0.8em;
+            padding: 2px 0;
+        }
+       .gantt-conf {
+            background-color: #e74c3c;
+        }
+       .gantt-deadline {
+            background-color: #f39c12;
+            font-weight: bold;
+        }
+       .gantt-notification {
+            background-color: #2ecc71; /* Green */
+            font-weight: bold;
+            color: white;
+        }
+       .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+       .justification {
+            background-color: #ecf0f1;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+       .justification p {
+            margin: 0;
+        }
+       .legend {
+            margin-bottom: 20px;
+        }
+       .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        /* Styles for Acceptance Rate Bars */
+        .rate-bar-container {
+            width: 100%;
+            min-width: 100px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            height: 20px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        .rate-bar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85em;
+            font-weight: bold;
+            border-radius: 4px 0 0 4px;
+        }
+        .rate-bar.hard { background-color: #e74c3c; } /* Red for <28% */
+        .rate-bar.medium { background-color: #f39c12; } /* Orange for 28-40% */
+        .rate-bar.fair { background-color: #27ae60; } /* Green for >40% */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conference Submission Strategy</h1>
+        <p>This document outlines a strategic plan for submitting our research on the novel Japanese lip-reading grid corpus. It includes key deadlines, conference details, acceptance difficulty, and a justification for why each venue is a strong candidate for publication.</p>
+
+        <h2>At-a-Glance Conference Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Conference</th>
+                    <th>Dates</th>
+                    <th>Location</th>
+                    <th>Deadlines</th>
+                    <th>Notification</th>
+                    <th>Acceptance Rate (Est.)</th>
+                    <th>Website</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>CVPR 2026</strong></td>
+                    <td>Jun 6–12, 2026</td>
+                    <td>Denver, CO</td>
+                    <td>Nov 13, 2025</td>
+                    <td>Feb 28, 2026</td>
+                    <td>
+                        <strong>~24%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar hard" style="width: 24%;"></div></div>
+                    </td>
+                    <td><a href="https://cvpr.thecvf.com/Conferences/2026" target="_blank">cvpr.thecvf.com</a></td>
+                </tr>
+                <tr>
+                    <td><strong>ECCV 2026</strong></td>
+                    <td>Sep 8–13, 2026</td>
+                    <td>Malmö, Sweden</td>
+                    <td>Mar 6, 2026</td>
+                    <td>Jul 10, 2026</td>
+                     <td>
+                        <strong>~27%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar hard" style="width: 27%;"></div></div>
+                    </td>
+                    <td><a href="https://eccv.ecva.net/Conferences/2026" target="_blank">eccv.ecva.net</a></td>
+                </tr>
+                 <tr>
+                    <td><strong>ACL 2026</strong></td>
+                    <td>Jul 2–7, 2026</td>
+                    <td>San Diego, CA</td>
+                    <td>Jan 5, 2026</td>
+                    <td>May 5, 2026</td>
+                    <td>
+                        <strong>~22%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar hard" style="width: 22%;"></div></div>
+                    </td>
+                    <td><a href="https://2026.aclweb.org/" target="_blank">2026.aclweb.org</a></td>
+                </tr>
+                 <tr>
+                    <td><strong>ICLR 2026</strong></td>
+                    <td>Apr 23–27, 2026</td>
+                    <td>Rio de Janeiro</td>
+                    <td>Sep 24, 2025</td>
+                    <td>Jan 20, 2026</td>
+                     <td>
+                        <strong>~26%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar hard" style="width: 26%;"></div></div>
+                    </td>
+                    <td><a href="https://iclr.cc/Conferences/2026" target="_blank">iclr.cc</a></td>
+                </tr>
+                <tr>
+                    <td><strong>LREC 2026</strong></td>
+                    <td>May 11–16, 2026</td>
+                    <td>Mallorca, Spain</td>
+                    <td>Oct 17, 2025</td>
+                    <td>Dec 20, 2025</td>
+                    <td>
+                        <strong>~45%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar fair" style="width: 45%;"></div></div>
+                    </td>
+                    <td><a href="https://lrec2026.info/" target="_blank">lrec2026.info</a></td>
+                </tr>
+                <tr>
+                    <td><strong>FG 2026</strong></td>
+                    <td>May 25–29, 2026</td>
+                    <td>Kyoto, Japan</td>
+                    <td>Oct 2, 2025 (R1)</td>
+                    <td>Nov 15, 2025 (R1)</td>
+                    <td>
+                        <strong>~33%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar medium" style="width: 33%;"></div></div>
+                    </td>
+                    <td><a href="https://fg2026.ieee-biometrics.org/" target="_blank">fg2026.ieee-biometrics.org</a></td>
+                </tr>
+                 <tr>
+                    <td><strong>ICIVP 2026</strong></td>
+                    <td>Nov 18-20, 2026</td>
+                    <td>Kyoto, Japan</td>
+                    <td>May 30, 2026</td>
+                    <td>June 30, 2026</td>
+                    <td>
+                        <strong>~40%</strong>
+                        <div class="rate-bar-container"><div class="rate-bar medium" style="width: 40%;"></div></div>
+                    </td>
+                    <td><a href="https://icivp.org/" target="_blank">icivp.org</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.8em;"><em>*Acceptance rates are estimates based on recent years and can vary. They are provided for directional guidance on conference selectivity.</em></p>
+
+
+
+        <h2>Submission Timeline Gantt Chart (Sep 2025 - Nov 2026)</h2>
+        <div class="legend">
+            <span style="background-color: #f39c12;"></span> Deadline &nbsp;&nbsp;
+            <span style="background-color: #2ecc71;"></span> Notification &nbsp;&nbsp;
+            <span style="background-color: #3498db;"></span> Review/Wait Period &nbsp;&nbsp;
+            <span style="background-color: #e74c3c;"></span> Conference Dates
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Conference</th>
+                    <th>Sep'25</th><th>Oct'25</th><th>Nov'25</th><th>Dec'25</th>
+                    <th>Jan'26</th><th>Feb'26</th><th>Mar'26</th><th>Apr'26</th>
+                    <th>May'26</th><th>Jun'26</th><th>Jul'26</th><th>Aug'26</th>
+                    <th>Sep'26</th><th>Oct'26</th><th>Nov'26</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>ICLR</strong></td>
+                    <td class="gantt-deadline">A/P</td><td colspan="3" class="gantt-bar">Review</td>
+                    <td class="gantt-notification">Note</td><td colspan="2" class="gantt-bar">Prep</td>
+                    <td class="gantt-conf">CONF</td><td colspan="7"></td>
+                </tr>
+                <tr>
+                    <td><strong>LREC</strong></td>
+                    <td></td><td class="gantt-deadline">P</td><td class="gantt-bar">Rev</td>
+                    <td class="gantt-notification">Note</td><td colspan="4" class="gantt-bar">Preparation</td>
+                    <td class="gantt-conf">CONF</td><td colspan="6"></td>
+                </tr>
+                <tr>
+                    <td><strong>CVPR</strong></td>
+                    <td colspan="2"></td><td class="gantt-deadline">A/P</td><td colspan="2" class="gantt-bar">Review</td>
+                    <td class="gantt-notification">Note</td><td colspan="3" class="gantt-bar">Prep</td>
+                    <td class="gantt-conf">CONF</td><td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td><strong>FG</strong></td>
+                    <td></td><td class="gantt-deadline">R1</td><td class="gantt-notification">N1</td><td></td>
+                    <td class="gantt-deadline">R2</td><td class="gantt-bar">Rev</td>
+                    <td class="gantt-notification">N2</td><td class="gantt-bar">Prep</td>
+                    <td class="gantt-conf">CONF</td><td colspan="6"></td>
+                </tr>
+                <tr>
+                    <td><strong>ACL</strong></td>
+                    <td colspan="4"></td><td class="gantt-deadline">P</td><td colspan="3" class="gantt-bar">Review</td>
+                    <td class="gantt-notification">Note</td><td class="gantt-bar">Prep</td>
+                    <td class="gantt-conf">CONF</td><td colspan="4"></td>
+                </tr>
+                <tr>
+                    <td><strong>ECCV</strong></td>
+                    <td colspan="6"></td><td class="gantt-deadline">P</td><td colspan="3" class="gantt-bar">Review</td>
+                    <td class="gantt-notification">Note</td><td class="gantt-bar">Prep</td>
+                    <td class="gantt-conf">CONF</td><td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td><strong>ICIVP</strong></td>
+                    <td colspan="8"></td><td class="gantt-deadline">P</td><td class="gantt-notification">Note</td>
+                    <td colspan="4" class="gantt-bar">Preparation</td><td class="gantt-conf">CONF</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="font-size:0.8em;"><em>A=Abstract, P=Paper, R1/R2=Round 1/2 Deadline, N1/N2=Notification 1/2. Chart is illustrative.</em></p>
+
+        <h2>Conference Justifications</h2>
+
+        <div class="conference-section">
+            <h3>LREC-COLING 2026: Language Resources and Evaluation Conference</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> This is the premier international forum for our exact type of contribution. The conference's core mission is the development, dissemination, and evaluation of language resources. Unlike other venues where a dataset is a secondary contribution, at LREC, our novel Japanese corpus, recording pipeline, and alignment backend are the primary focus and will be judged on their scientific merit and utility to the community. The "Language Resource Development" and "Multimodality" tracks are a perfect fit, making this our highest-probability venue for acceptance and impact within the language technology field.</p>
+            </div>
+        </div>
+
+        <div class="conference-section">
+            <h3>CVPR 2026: Conference on Computer Vision and Pattern Recognition</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> As the top-tier conference in computer vision, CVPR offers unparalleled prestige and visibility. Crucially, it has a dedicated "Datasets and evaluation" track, signaling that the community values high-quality corpus contributions as first-class research. Our work also aligns perfectly with the "Humans: Face, body, pose, gesture, movement" topic. To succeed here, we must frame the paper as a comprehensive benchmark, complete with strong baseline model performance and rigorous analysis of the corpus. This is an ideal venue to establish our dataset as a standard for future Japanese lip-reading research.</p>
+            </div>
+        </div>
+
+        <div class="conference-section">
+            <h3>FG 2026: IEEE International Conference on Automatic Face and Gesture Recognition</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> FG is the premier specialized conference for research in face and gesture recognition, making it a highly targeted and relevant venue. Lip-reading is a core task within this community. Submitting here ensures our work will be reviewed and seen by the leading experts in this specific subfield. The conference's location in Kyoto, Japan, also presents a unique opportunity to engage directly with the local research community that would benefit most from a Japanese-language corpus. The two-round submission system offers valuable flexibility.</p>
+            </div>
+        </div>
+
+        <div class="conference-section">
+             <h3>ICIVP 2026: International Conference on Image and Vision Processing</h3>
+             <div class="justification">
+                 <p><strong>Strategic Justification:</strong> ICIVP offers a focused, international forum for core research in image and vision processing. While not as large as CVPR or ECCV, it provides a valuable platform to present detailed technical work to a dedicated audience. This venue is ideal for highlighting the specifics of your recording pipeline and alignment backend. Its strong track record of being held in Asia, including Japan, makes it an excellent conference for networking with regional experts and institutions that would be primary users of a high-quality Japanese lip-reading corpus.</p>
+             </div>
+         </div>
+
+        <div class="conference-section">
+            <h3>ECCV 2026: European Conference on Computer Vision</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> ECCV is another of the top three global computer vision conferences, on par with CVPR in terms of prestige and impact. It shares a similar scope and also values dataset contributions. The later submission deadline in March 2026 provides a valuable alternative to CVPR, allowing more time for paper refinement and experimentation. The strategic positioning is identical to CVPR: frame the work as a new, challenging benchmark for the computer vision community.</p>
+            </div>
+        </div>
+
+        <div class="conference-section">
+            <h3>ACL 2026: Annual Meeting of the Association for Computational Linguistics</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> As the leading conference in NLP, ACL provides an opportunity to frame our work for a different, highly relevant audience. Here, the paper should be positioned as a contribution to multimodal language understanding—specifically, the creation of a novel parallel corpus (video-to-text) for a "visual language." The "Resources and Evaluation" and "Multimodality and Language Grounding" tracks are directly applicable. Acceptance at ACL would highlight the linguistic value of our corpus and its potential to advance research beyond pure computer vision.</p>
+            </div>
+        </div>
+
+        <div class="conference-section">
+            <h3>ICLR 2026: International Conference on Learning Representations</h3>
+            <div class="justification">
+                <p><strong>Strategic Justification:</strong> ICLR is a top-tier machine learning conference focused on deep learning and representation learning. This is a high-risk, high-reward venue. A submission is only viable if we can strongly emphasize a novel machine learning contribution, such as a new architecture in our alignment backend or a new learning technique for the lip-reading model itself. The dataset alone would be insufficient. However, if we have a significant methodological innovation, acceptance at ICLR would signal its broad applicability to the wider ML community.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
