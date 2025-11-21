@@ -1,203 +1,330 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Suman Shrestha — PhD · AI Researcher</title>
-  <meta name="description" content="Suman Shrestha — PhD candidate & AI researcher working on lip-reading, human activity recognition, and assistive technologies." />
-  <meta property="og:title" content="Suman Shrestha — PhD · AI Researcher" />
-  <meta property="og:description" content="AI researcher specialized in lip-reading, IMU-based activity recognition, and practical assistive systems." />
-  <meta property="og:type" content="website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Suman Shrestha | AI & Robotics Researcher</title>
+  <meta name="description" content="PhD candidate & AI researcher specializing in Lip-reading, IMU/BLE Sensing, and Robot Rehabilitation." />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            deep: '#050A14',
+            glass: 'rgba(255, 255, 255, 0.03)',
+            cyan: '#00f0ff',
+            neon: '#7000ff',
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    :root{--bg:#0b1020;--card:#0f1724;--muted:#9aa4b2}
-    html,body{height:100%}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:linear-gradient(180deg,#05060a 0%,#071026 100%);color:#e6eef8}
-    .glass{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.04)}
-    .accent{background:linear-gradient(90deg,#06b6d4,#7c3aed)}
+    body {
+      background-color: #02040a;
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(112, 0, 255, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.08), transparent 25%);
+      color: #e2e8f0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050A14; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .glow-text {
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+
+    .tech-card:hover {
+      border-color: rgba(0, 240, 255, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px -10px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Typing Cursor */
+    .typing::after {
+      content: '|';
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hidden-lang { display: none; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <!-- Header -->
-  <header class="w-full py-4 px-6 md:px-12 flex items-center justify-between fixed top-0 z-40">
-    <a href="#home" class="flex items-center space-x-3">
-      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-violet-600 flex items-center justify-center text-black font-bold">SS</div>
-      <div class="hidden md:block">
-        <div class="text-sm font-semibold">Suman Shrestha</div>
-        <div class="text-xs text-[var(--muted)]">PhD Candidate · AI Researcher</div>
-      </div>
-    </a>
-    <nav class="hidden md:flex items-center space-x-6 text-sm text-[var(--muted)]">
-      <a href="#about" class="hover:text-white">About</a>
-      <a href="#research" class="hover:text-white">Research</a>
-      <a href="#projects" class="hover:text-white">Projects</a>
-      <a href="#publications" class="hover:text-white">Publications</a>
-      <a href="#contact" class="px-4 py-2 rounded-md accent text-black font-semibold shadow-md">Contact</a>
-    </nav>
-    <button id="mobile-toggle" class="md:hidden text-[var(--muted)]">☰</button>
-  </header>
+<body class="antialiased selection:bg-cyan selection:text-black">
 
-  <main class="flex-1 pt-28">
-    <!-- Hero -->
-    <section id="home" class="max-w-6xl mx-auto px-6 md:px-12 py-12 grid md:grid-cols-2 gap-8 items-center">
-      <div>
-        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Suman Shrestha</h1>
-        <p class="mt-3 text-lg text-[var(--muted)] max-w-xl">PhD candidate & AI researcher building deployable assistive systems. My research spans Japanese lip-reading, sensor-based activity recognition, and camera-driven rehabilitation analytics.</p>
+  <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050A14]/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="text-xl font-bold tracking-tighter font-mono hover:text-cyan transition-colors">
+        &lt;Suman_S /&gt;
+      </a>
 
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a href="#projects" class="px-4 py-2 rounded-md bg-white/6 hover:bg-white/10 text-sm">Selected Projects</a>
-          <a href="#research" class="px-4 py-2 rounded-md bg-white/6 hover:bg-white/10 text-sm">Research</a>
-          <a href="mailto:sthasmn@gmail.com" class="px-4 py-2 rounded-md accent text-black text-sm">Contact</a>
-          <a href="/mnt/data/21fc7b2f-ba0a-4dcb-9b5d-a04350a9de75.html" class="px-4 py-2 rounded-md border border-white/6 text-sm">View old homepage</a>
-        </div>
-
-        <div class="mt-8 grid grid-cols-2 gap-4 max-w-md">
-          <div class="glass p-4 rounded-lg">
-            <div class="text-xs text-[var(--muted)]">Current Roles</div>
-            <div class="font-semibold mt-1">PhD Candidate — Osaka Sangyo University</div>
-            <div class="text-sm text-[var(--muted)]">Researcher — Hyogo Assistive Technology Institute</div>
-          </div>
-          <div class="glass p-4 rounded-lg">
-            <div class="text-xs text-[var(--muted)]">Research Focus</div>
-            <div class="font-semibold mt-1">Lip-reading · IMU & BLE Activity Recognition · Reha Analytics</div>
-          </div>
-        </div>
+      <div class="hidden md:flex space-x-8 text-sm font-mono text-gray-400">
+        <a href="#research" class="hover:text-white transition-colors"><span class="text-cyan">01.</span> Research</a>
+        <a href="#stack" class="hover:text-white transition-colors"><span class="text-cyan">02.</span> Tech Stack</a>
+        <a href="#publications" class="hover:text-white transition-colors"><span class="text-cyan">03.</span> Pubs</a>
       </div>
 
-      <aside class="flex items-center justify-center">
-        <div class="w-full max-w-sm glass rounded-2xl p-6">
-          <img src="https://placehold.co/320x320/0b1220/e6eef8?text=S.S." alt="Suman Shrestha" class="w-32 h-32 rounded-full mx-auto border-4 border-white/6" />
-          <h3 class="text-center mt-4 font-semibold">Suman Shrestha</h3>
-          <p class="text-center text-sm text-[var(--muted)] mt-1">AI researcher · PhD candidate</p>
-          <div class="mt-4 flex justify-center gap-3">
-            <a href="https://github.com/sthasmn" target="_blank" class="text-sm px-3 py-2 rounded-md bg-white/6">GitHub</a>
-            <a href="https://linkedin.com/in/suman-shrestha-248a55265" target="_blank" class="text-sm px-3 py-2 rounded-md bg-white/6">LinkedIn</a>
-          </div>
+      <div class="flex items-center space-x-4">
+        <button id="btn-lang" class="px-3 py-1 text-xs font-mono border border-white/20 rounded hover:bg-white/10 transition-all">
+          JP / EN
+        </button>
+        <a href="mailto:sthasmn@gmail.com" class="px-4 py-2 text-sm font-bold bg-white text-black rounded hover:bg-cyan hover:scale-105 transition-all">
+          Contact
+        </a>
+      </div>
+    </div>
+  </nav>
 
-          <div class="mt-6 border-t border-white/6 pt-4 text-sm text-[var(--muted)]">
-            <div><strong>Languages</strong>: Nepali, English, Japanese, Hindi, +1</div>
-            <div class="mt-2"><strong>Stack</strong>: Python · PyTorch · OpenCV · DALI · CUDA · IMU</div>
-          </div>
-        </div>
-      </aside>
-    </section>
+  <main class="pt-32 pb-20 px-6 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-    <!-- Research -->
-    <section id="research" class="max-w-6xl mx-auto px-6 md:px-12 py-12">
-      <h2 class="text-2xl font-bold">Research & Impact</h2>
-      <p class="mt-3 text-[var(--muted)] max-w-3xl">I focus on creating practical AI that helps people. Below are three pillars that capture the core of my work.</p>
+      <div class="order-2 md:order-1">
+        <div class="inline-block px-3 py-1 mb-4 text-xs font-mono text-cyan bg-cyan/10 rounded-full border border-cyan/20">
+          Based in Hyogo, Japan
+        </div>
 
-      <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <div class="glass p-5 rounded-lg">
-          <div class="text-sm text-[var(--muted)]">1 • Lip-reading (Japanese)</div>
-          <h3 class="mt-2 font-semibold">Dataset & Model Development</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Built large-scale Japanese datasets and trained recognition models for real-world usage. JGRID project — <em>completed</em>.</p>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
+          <span class="block glow-text">Suman</span>
+          <span class="block text-gray-500">Shrestha</span>
+        </h1>
+
+        <div class="h-24 md:h-20"> <p class="text-lg md:text-xl text-gray-400 font-mono typing" id="typing-text"></p>
         </div>
-        <div class="glass p-5 rounded-lg">
-          <div class="text-sm text-[var(--muted)]">2 • Sensor-based Activity Recognition</div>
-          <h3 class="mt-2 font-semibold">IMU · BLE · Edge AI</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Designing lightweight inference pipelines for nursing-care and rehabilitation using IMU and BLE beacons.</p>
+
+        <div data-lang="ja" class="hidden-lang mt-4 text-gray-400 leading-relaxed">
+          兵庫県立福祉のまちづくり研究所の研究者であり、大阪産業大学の博士課程に在籍。
+          AI、センサー、ロボティクスを融合し、実世界の問題解決に取り組んでいます。
         </div>
-        <div class="glass p-5 rounded-lg">
-          <div class="text-sm text-[var(--muted)]">3 • Rehabilitation Analytics</div>
-          <h3 class="mt-2 font-semibold">RGB Camera + Inference AI</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Monocular camera systems with inference AI for objective body-movement measurement in clinical environments.</p>
+
+        <div data-lang="en" class="mt-4 text-gray-400 leading-relaxed">
+          Researcher at Hyogo Prefectural Welfare-Community Development Research Institute & PhD Candidate at Osaka Sangyo University. Bridging the gap between AI theory and clinical application.
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="#research" class="group px-6 py-3 bg-white/5 border border-white/10 hover:border-cyan/50 rounded text-sm font-bold flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-microchip group-hover:text-cyan"></i>
+            View Research
+          </a>
+          <a href="https://github.com/sthasmn" target="_blank" class="px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded text-sm font-bold transition-all">
+            <i class="fa-brands fa-github"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/suman-shrestha-248a55265" target="_blank" class="px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded text-sm font-bold transition-all">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Projects -->
-    <section id="projects" class="max-w-6xl mx-auto px-6 md:px-12 py-12">
-      <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold">Selected Projects</h2>
-        <div class="text-sm text-[var(--muted)]">Full list available on request</div>
-      </div>
+      <div class="order-1 md:order-2 flex justify-center relative">
+        <div class="absolute w-64 h-64 bg-cyan/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
-      <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <!-- JGRID -->
-        <article class="glass p-5 rounded-lg">
-          <div class="text-xs text-[var(--muted)]">JGRID — Corpus Project</div>
-          <h3 class="mt-2 font-semibold">JGRID (Completed)</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Led dataset collection and processing for the JGRID corpus used for Japanese lip-reading research. Deliverables included annotated video, alignments, and standardized training splits for reproducible experiments.</p>
-          <div class="mt-4 flex gap-2">
-            <a href="#" class="px-3 py-2 rounded-md bg-white/6 text-sm">Read summary</a>
-            <a href="/mnt/data/21fc7b2f-ba0a-4dcb-9b5d-a04350a9de75.html" class="px-3 py-2 rounded-md border border-white/6 text-sm">Original site</a>
-          </div>
-        </article>
-
-        <!-- LipNet -->
-        <article class="glass p-5 rounded-lg">
-          <div class="text-xs text-[var(--muted)]">LipNet Training</div>
-          <h3 class="mt-2 font-semibold">Lip-reading model development</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Trained LipNet variants using custom PyTorch datasets, integrated DALI for accelerated data pipelines, and evaluated cross-dataset generalization.</p>
-        </article>
-
-        <!-- IMU pipeline -->
-        <article class="glass p-5 rounded-lg">
-          <div class="text-xs text-[var(--muted)]">IMU & BLE</div>
-          <h3 class="mt-2 font-semibold">Edge-friendly HAR</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">Compressed models running on consumer GPUs and optimized pipelines for 60–100Hz IMU streams used in care facility pilots.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Publications -->
-    <section id="publications" class="max-w-6xl mx-auto px-6 md:px-12 py-12">
-      <h2 class="text-2xl font-bold">Publications & Talks</h2>
-      <ul class="mt-6 space-y-4 text-sm text-[var(--muted)]">
-        <li>
-          <strong>Research on Measurement System of Upper Limb by Using Single Monocular Web Camera and Inference AI</strong><br>
-          S. Shrestha, H. Takami, Y. Honda, M. Irie — i-CREATe 2024
-        </li>
-        <li>
-          Conference presentations: Japanese Society of Prosthetics and Orthotics (2022–2024), Rehabilitation Engineering Conference in Tokyo (2023)
-        </li>
-      </ul>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="max-w-6xl mx-auto px-6 md:px-12 py-12">
-      <div class="glass p-8 rounded-lg flex flex-col md:flex-row items-start gap-6">
-        <div class="flex-1">
-          <h2 class="text-xl font-bold">Let's collaborate</h2>
-          <p class="mt-2 text-[var(--muted)]">If you have a project idea, dataset collaboration, or deployment need, I'm open to research partnerships and industry collaborations.</p>
-
-          <div class="mt-4 space-y-2 text-sm">
-            <div><strong>Email:</strong> <a href="mailto:sthasmn@gmail.com" class="text-white">sthasmn@gmail.com</a></div>
-            <div><strong>Lab:</strong> Osaka Sangyo University</div>
-            <div><strong>Institute:</strong> Hyogo Assistive Technology Institute</div>
-          </div>
-
-          <div class="mt-6 flex gap-3">
-            <a href="mailto:sthasmn@gmail.com" class="px-4 py-2 rounded-md accent text-black font-semibold">Email Me</a>
-            <a href="https://github.com/sthasmn" target="_blank" class="px-4 py-2 rounded-md bg-white/6">GitHub</a>
+        <div class="relative w-72 h-72 md:w-96 md:h-96 glass-panel rounded-2xl p-4 rotate-3 hover:rotate-0 transition-transform duration-500 animate-float">
+          <div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative border border-white/10">
+            <img src="https://placehold.co/400x400/0b1220/e6eef8?text=Suman+S." alt="Profile" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+              <div class="text-xs font-mono text-cyan">System: Online</div>
+              <div class="text-xs font-mono text-gray-400">Loc: Akashi, Hyogo</div>
+            </div>
           </div>
         </div>
-        <div class="w-full md:w-64">
-          <div class="text-sm text-[var(--muted)]">Download</div>
-          <a href="#" class="mt-2 inline-block w-full text-center py-3 rounded-md border border-white/6">Download CV (PDF)</a>
-        </div>
       </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="py-8 text-center text-sm text-[var(--muted)] border-t border-white/6">
-    © <span id="yr"></span> Suman Shrestha — All rights reserved • Built with ❤️
+  <section id="research" class="py-20 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex items-end justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Core Research</h2>
+          <p class="text-gray-500 font-mono text-sm">Focus Areas: Assistive Tech & Sensing</p>
+        </div>
+        <div class="hidden md:block h-px bg-white/10 w-1/3 mb-4"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
+          <div class="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan/20 text-cyan">
+            <i class="fa-solid fa-lips text-xl"></i> <i class="fa-solid fa-language"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Japanese Lip-reading AI</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Developing robust end-to-end multimodal models for Japanese speech recognition from visual cues. Curating custom datasets (Grid Corpus) and leveraging Whisper/LR-ASD.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">PyTorch</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">MFA</span>
+          </div>
+        </div>
+
+        <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
+          <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-500/20 text-purple-400">
+            <i class="fa-brands fa-watchman-monitoring text-xl"></i> <i class="fa-solid fa-person-running"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">HAR & WatchOS</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Human Activity Recognition for nursing care using IMU sensors and BLE positioning. Full-stack development of data collection apps on Apple Watch.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Swift</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">CoreMotion</span>
+          </div>
+        </div>
+
+        <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
+          <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 text-emerald-400">
+            <i class="fa-solid fa-video text-xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Rehab Analytics</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Quantifying rehabilitation progress using monocular camera inference. Creating objective metrics for clinical environments without expensive motion capture.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">OpenCV</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Pose Estimation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" class="py-20 px-6 bg-black/20">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-2xl font-bold mb-8 font-mono"><span class="text-cyan">~/</span> technical_stack</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
+          <i class="fa-brands fa-python text-yellow-400 text-2xl"></i>
+          <div>
+            <div class="font-bold text-sm">Python</div>
+            <div class="text-xs text-gray-500">Primary Lang</div>
+          </div>
+        </div>
+        <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
+          <div class="text-orange-500 text-2xl font-bold">PT</div>
+          <div>
+            <div class="font-bold text-sm">PyTorch</div>
+            <div class="text-xs text-gray-500">Deep Learning</div>
+          </div>
+        </div>
+        <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
+          <i class="fa-brands fa-apple text-gray-200 text-2xl"></i>
+          <div>
+            <div class="font-bold text-sm">WatchOS</div>
+            <div class="text-xs text-gray-500">Swift / SensorLog</div>
+          </div>
+        </div>
+        <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
+          <i class="fa-solid fa-server text-blue-400 text-2xl"></i>
+          <div>
+            <div class="font-bold text-sm">Edge/IoT</div>
+            <div class="text-xs text-gray-500">Raspberry Pi / BLE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-12 border-t border-white/5 text-center">
+    <p class="text-gray-500 text-sm font-mono">
+      &copy; <span id="year"></span> Suman Shrestha. <span class="text-gray-700">Designed by Gemini.</span>
+    </p>
   </footer>
 
   <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
-    // Mobile toggle (simple)
-    const mob = document.getElementById('mobile-toggle');
-    mob.addEventListener('click', ()=> alert('Open mobile nav — replace with your preferred mobile menu.'));
-  </script>
+    // Set Year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-  <!-- NOTES:
-    - This is a single-file HTML (Tailwind CDN). Edit text, links, and the placeholder image as needed.
-    - The original uploaded homepage file is linked here: /mnt/data/21fc7b2f-ba0a-4dcb-9b5d-a04350a9de75.html
-    - To add more project detail, replace the project cards under #projects.
-  -->
+    // Language Toggle Logic
+    let currentLang = 'en';
+    const langBtn = document.getElementById('btn-lang');
+    const enEls = document.querySelectorAll('[data-lang="en"]');
+    const jaEls = document.querySelectorAll('[data-lang="ja"]');
+
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'ja' : 'en';
+      toggleLang();
+    });
+
+    function toggleLang() {
+      if (currentLang === 'ja') {
+        enEls.forEach(el => el.classList.add('hidden-lang'));
+        jaEls.forEach(el => el.classList.remove('hidden-lang'));
+        typeWriterText = ["AI研究者", "博士課程学生", "エンジニア"];
+      } else {
+        jaEls.forEach(el => el.classList.add('hidden-lang'));
+        enEls.forEach(el => el.classList.remove('hidden-lang'));
+        typeWriterText = ["AI Researcher.", "PhD Candidate.", "Full Stack Engineer."];
+      }
+      // Reset typing effect
+      txtIndex = 0;
+      charIndex = 0;
+      isDeleting = false;
+    }
+
+    // Typing Effect
+    const typeEl = document.getElementById('typing-text');
+    let typeWriterText = ["AI Researcher.", "PhD Candidate.", "Full Stack Engineer."];
+    let txtIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+      const currentText = typeWriterText[txtIndex % typeWriterText.length];
+
+      if (isDeleting) {
+        typeEl.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typeEl.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typeSpeed = isDeleting ? 50 : 100;
+
+      if (!isDeleting && charIndex === currentText.length) {
+        typeSpeed = 2000; // Pause at end
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        txtIndex++;
+        typeSpeed = 500;
+      }
+
+      setTimeout(type, typeSpeed);
+    }
+
+    document.addEventListener('DOMContentLoaded', type);
+  </script>
 </body>
 </html>
