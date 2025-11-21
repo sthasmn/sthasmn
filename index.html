@@ -6,8 +6,10 @@
   <title>Suman Shrestha | AI & Robotics Researcher</title>
   <meta name="description" content="PhD candidate & AI researcher specializing in Lip-reading, IMU/BLE Sensing, and Robot Rehabilitation." />
 
+  <!-- Tailwind & Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;600;900&display=swap" rel="stylesheet" />
+  <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <script>
@@ -84,6 +86,7 @@
 </head>
 <body class="antialiased selection:bg-cyan selection:text-black">
 
+  <!-- Navbar -->
   <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050A14]/80 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="text-xl font-bold tracking-tighter font-mono hover:text-cyan transition-colors">
@@ -107,9 +110,11 @@
     </div>
   </nav>
 
+  <!-- Hero Section -->
   <main class="pt-32 pb-20 px-6 relative overflow-hidden">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
+      <!-- Text Content -->
       <div class="order-2 md:order-1">
         <div class="inline-block px-3 py-1 mb-4 text-xs font-mono text-cyan bg-cyan/10 rounded-full border border-cyan/20">
           Based in Hyogo, Japan
@@ -120,7 +125,8 @@
           <span class="block text-gray-500">Shrestha</span>
         </h1>
 
-        <div class="h-24 md:h-20"> <p class="text-lg md:text-xl text-gray-400 font-mono typing" id="typing-text"></p>
+        <div class="h-24 md:h-20"> <!-- Fixed height to prevent layout shift -->
+          <p class="text-lg md:text-xl text-gray-400 font-mono typing" id="typing-text"></p>
         </div>
 
         <div data-lang="ja" class="hidden-lang mt-4 text-gray-400 leading-relaxed">
@@ -133,7 +139,7 @@
         </div>
 
         <div class="mt-8 flex flex-wrap gap-4">
-          <a href="#research" class="group px-6 py-3 bg-white/5 border border-white/10 hover:border-cyan/50 rounded text-sm font-bold flex items-center gap-2 transition-all">
+          <a href="https://researchmap.jp/suman-shrestha" target="_blank" class="group px-6 py-3 bg-white/5 border border-white/10 hover:border-cyan/50 rounded text-sm font-bold flex items-center gap-2 transition-all">
             <i class="fa-solid fa-microchip group-hover:text-cyan"></i>
             View Research
           </a>
@@ -146,7 +152,9 @@
         </div>
       </div>
 
+      <!-- Visual/Avatar -->
       <div class="order-1 md:order-2 flex justify-center relative">
+        <!-- Animated background blob -->
         <div class="absolute w-64 h-64 bg-cyan/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
         <div class="relative w-72 h-72 md:w-96 md:h-96 glass-panel rounded-2xl p-4 rotate-3 hover:rotate-0 transition-transform duration-500 animate-float">
@@ -162,6 +170,7 @@
     </div>
   </main>
 
+  <!-- Research Cards -->
   <section id="research" class="py-20 px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto">
       <div class="flex items-end justify-between mb-12">
@@ -173,9 +182,11 @@
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan/20 text-cyan">
-            <i class="fa-solid fa-lips text-xl"></i> <i class="fa-solid fa-language"></i>
+            <i class="fa-solid fa-comments text-xl"></i>
+            <!-- Combined lip/language idea -->
           </div>
           <h3 class="text-xl font-bold mb-3">Japanese Lip-reading AI</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
@@ -187,9 +198,10 @@
           </div>
         </div>
 
+        <!-- Card 2 -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-500/20 text-purple-400">
-            <i class="fa-brands fa-watchman-monitoring text-xl"></i> <i class="fa-solid fa-person-running"></i>
+            <i class="fa-solid fa-stopwatch text-xl"></i>
           </div>
           <h3 class="text-xl font-bold mb-3">HAR & WatchOS</h3>
           <p class="text-gray-400 text-sm leading-relaxed mb-4">
@@ -201,6 +213,7 @@
           </div>
         </div>
 
+        <!-- Card 3 -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 text-emerald-400">
             <i class="fa-solid fa-video text-xl"></i>
@@ -218,6 +231,7 @@
     </div>
   </section>
 
+  <!-- Technical Stack (Grid) -->
   <section id="stack" class="py-20 px-6 bg-black/20">
     <div class="max-w-7xl mx-auto">
       <h2 class="text-2xl font-bold mb-8 font-mono"><span class="text-cyan">~/</span> technical_stack</h2>
@@ -255,9 +269,13 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="py-12 border-t border-white/5 text-center">
     <p class="text-gray-500 text-sm font-mono">
-      &copy; <span id="year"></span> Suman Shrestha. <span class="text-gray-700">Designed by Gemini.</span>
+      &copy; <span id="year"></span> Suman Shrestha.
+      <span class="block mt-2 text-gray-600 text-xs">
+        Designed by <span class="font-mono text-cyan/80">softmax(QK<sup>T</sup> / √d<sub>k</sub>) V</span>
+      </span>
     </p>
   </footer>
 
