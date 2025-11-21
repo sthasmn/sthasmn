@@ -74,6 +74,32 @@
       box-shadow: 0 10px 40px -10px rgba(0, 240, 255, 0.2);
     }
 
+    .pub-item {
+        border-left: 2px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        padding-left: 1.5rem;
+        padding-bottom: 2rem;
+    }
+    .pub-item::before {
+        content: '';
+        position: absolute;
+        left: -5px;
+        top: 0;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #334155;
+        transition: all 0.3s ease;
+    }
+    .pub-item:hover::before {
+        background: #00f0ff;
+        box-shadow: 0 0 10px #00f0ff;
+    }
+    .pub-item:hover {
+        border-left-color: rgba(0, 240, 255, 0.3);
+    }
+
     /* Typing Cursor */
     .typing::after {
       content: '|';
@@ -89,22 +115,33 @@
   <!-- Navbar -->
   <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-[#050A14]/80 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <!-- Logo -->
       <a href="#" class="text-xl font-bold tracking-tighter font-mono hover:text-cyan transition-colors">
         &lt;Suman_S /&gt;
       </a>
 
       <div class="hidden md:flex space-x-8 text-sm font-mono text-gray-400">
-        <a href="#research" class="hover:text-white transition-colors"><span class="text-cyan">01.</span> Research</a>
-        <a href="#stack" class="hover:text-white transition-colors"><span class="text-cyan">02.</span> Tech Stack</a>
-        <a href="#publications" class="hover:text-white transition-colors"><span class="text-cyan">03.</span> Pubs</a>
+        <a href="#research" class="hover:text-white transition-colors">
+          <span class="text-cyan">01.</span>
+          <span data-lang="en">Research</span><span data-lang="ja" class="hidden-lang">研究内容</span>
+        </a>
+        <a href="#stack" class="hover:text-white transition-colors">
+          <span class="text-cyan">02.</span>
+          <span data-lang="en">Tech Stack</span><span data-lang="ja" class="hidden-lang">技術スタック</span>
+        </a>
+        <a href="#publications" class="hover:text-white transition-colors">
+          <span class="text-cyan">03.</span>
+          <span data-lang="en">Pubs</span><span data-lang="ja" class="hidden-lang">業績</span>
+        </a>
       </div>
 
       <div class="flex items-center space-x-4">
         <button id="btn-lang" class="px-3 py-1 text-xs font-mono border border-white/20 rounded hover:bg-white/10 transition-all">
           JP / EN
         </button>
-        <a href="mailto:sthasmn@gmail.com" class="px-4 py-2 text-sm font-bold bg-white text-black rounded hover:bg-cyan hover:scale-105 transition-all">
-          Contact
+
+        <a href="mailto:sthasmn@gmail.com" class="px-4 py-2 text-xs md:text-sm font-bold bg-white text-black rounded hover:bg-cyan hover:scale-105 transition-all">
+          <span data-lang="en">Contact</span><span data-lang="ja" class="hidden-lang">連絡する</span>
         </a>
       </div>
     </div>
@@ -116,21 +153,18 @@
 
       <!-- Text Content -->
       <div class="order-2 md:order-1">
-        <div class="inline-block px-3 py-1 mb-4 text-xs font-mono text-cyan bg-cyan/10 rounded-full border border-cyan/20">
-          Based in Hyogo, Japan
-        </div>
 
         <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6 leading-tight">
           <span class="block glow-text">Suman</span>
           <span class="block text-gray-500">Shrestha</span>
         </h1>
 
-        <div class="h-24 md:h-20"> <!-- Fixed height to prevent layout shift -->
+        <div class="h-24 md:h-20">
           <p class="text-lg md:text-xl text-gray-400 font-mono typing" id="typing-text"></p>
         </div>
 
         <div data-lang="ja" class="hidden-lang mt-4 text-gray-400 leading-relaxed">
-          兵庫県立福祉のまちづくり研究所の研究者であり、大阪産業大学の博士課程に在籍。
+          兵庫県立福祉のまちづくり研究所の研究員であり、大阪産業大学の博士課程に在籍。
           AI、センサー、ロボティクスを融合し、実世界の問題解決に取り組んでいます。
         </div>
 
@@ -141,7 +175,7 @@
         <div class="mt-8 flex flex-wrap gap-4">
           <a href="https://researchmap.jp/suman-shrestha" target="_blank" class="group px-6 py-3 bg-white/5 border border-white/10 hover:border-cyan/50 rounded text-sm font-bold flex items-center gap-2 transition-all">
             <i class="fa-solid fa-microchip group-hover:text-cyan"></i>
-            View Research
+            <span data-lang="en">View Research</span><span data-lang="ja" class="hidden-lang">研究詳細を見る</span>
           </a>
           <a href="https://github.com/sthasmn" target="_blank" class="px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded text-sm font-bold transition-all">
             <i class="fa-brands fa-github"></i> GitHub
@@ -159,10 +193,10 @@
 
         <div class="relative w-72 h-72 md:w-96 md:h-96 glass-panel rounded-2xl p-4 rotate-3 hover:rotate-0 transition-transform duration-500 animate-float">
           <div class="w-full h-full bg-gray-900 rounded-xl overflow-hidden relative border border-white/10">
-            <img src="https://placehold.co/400x400/0b1220/e6eef8?text=Suman+S." alt="Profile" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+            <!-- Update the src below to match your photo filename -->
+            <img src="suman-shrestha.jpg" alt="Suman Shrestha - AI Researcher" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
               <div class="text-xs font-mono text-cyan">System: Online</div>
-              <div class="text-xs font-mono text-gray-400">Loc: Akashi, Hyogo</div>
             </div>
           </div>
         </div>
@@ -175,56 +209,84 @@
     <div class="max-w-7xl mx-auto">
       <div class="flex items-end justify-between mb-12">
         <div>
-          <h2 class="text-3xl font-bold mb-2">Core Research</h2>
-          <p class="text-gray-500 font-mono text-sm">Focus Areas: Assistive Tech & Sensing</p>
+          <h2 class="text-3xl font-bold mb-2">
+            <span data-lang="en">Core Research</span>
+            <span data-lang="ja" class="hidden-lang">主な研究テーマ</span>
+          </h2>
+          <p class="text-gray-500 font-mono text-sm">
+            <span data-lang="en">Focus Areas: Assistive Tech & Sensing</span>
+            <span data-lang="ja" class="hidden-lang">重点領域: 支援技術 & センシング</span>
+          </p>
         </div>
         <div class="hidden md:block h-px bg-white/10 w-1/3 mb-4"></div>
       </div>
 
       <div class="grid md:grid-cols-3 gap-6">
-        <!-- Card 1 -->
+        <!-- Card 1: Lip-reading -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-cyan/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan/20 text-cyan">
             <i class="fa-solid fa-comments text-xl"></i>
-            <!-- Combined lip/language idea -->
           </div>
-          <h3 class="text-xl font-bold mb-3">Japanese Lip-reading AI</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+          <h3 class="text-xl font-bold mb-3">
+            <span data-lang="en">Japanese Lip-reading AI</span>
+            <span data-lang="ja" class="hidden-lang">日本語読唇術AI</span>
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4" data-lang="en">
             Developing robust end-to-end multimodal models for Japanese speech recognition from visual cues. Curating custom datasets (Grid Corpus) and leveraging Whisper/LR-ASD.
           </p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 hidden-lang" data-lang="ja">
+            視覚情報から日本語音声を認識するための、堅牢なエンドツーエンド・マルチモーダルモデルを開発。Grid Corpusを用いた独自データセットの構築や、Whisper/LR-ASDの活用を行っています。
+          </p>
           <div class="flex flex-wrap gap-2">
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">PyTorch</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">MFA</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">AI/ML</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">CV</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">NLP</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">ASSISTECH</span>
           </div>
         </div>
 
-        <!-- Card 2 -->
+        <!-- Card 2: HAR -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-500/20 text-purple-400">
             <i class="fa-solid fa-stopwatch text-xl"></i>
           </div>
-          <h3 class="text-xl font-bold mb-3">HAR & WatchOS</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+          <h3 class="text-xl font-bold mb-3">
+            <span data-lang="en">HAR & WatchOS</span>
+            <span data-lang="ja" class="hidden-lang">行動認識 & WatchOS</span>
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4" data-lang="en">
             Human Activity Recognition for nursing care using IMU sensors and BLE positioning. Full-stack development of data collection apps on Apple Watch.
+          </p>
+           <p class="text-gray-400 text-sm leading-relaxed mb-4 hidden-lang" data-lang="ja">
+            IMUセンサーとBLE測位を活用した介護現場向けの行動認識（HAR）。Apple Watchを用いたデータ収集アプリのフルスタック開発も実施。
           </p>
           <div class="flex flex-wrap gap-2">
             <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Swift</span>
             <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">CoreMotion</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Indoor Positioning</span>
           </div>
         </div>
 
-        <!-- Card 3 -->
+        <!-- Card 3: Rehab Analytics -->
         <div class="glass-panel p-8 rounded-xl tech-card transition-all duration-300 group">
           <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-emerald-500/20 text-emerald-400">
             <i class="fa-solid fa-video text-xl"></i>
           </div>
-          <h3 class="text-xl font-bold mb-3">Rehab Analytics</h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+          <h3 class="text-xl font-bold mb-3">
+            <span data-lang="en">Rehab Analytics</span>
+            <span data-lang="ja" class="hidden-lang">リハビリテーション解析</span>
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4" data-lang="en">
             Quantifying rehabilitation progress using monocular camera inference. Creating objective metrics for clinical environments without expensive motion capture.
           </p>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4 hidden-lang" data-lang="ja">
+            単眼カメラによる推論を用いてリハビリの進捗を定量化。高価なモーションキャプチャを使用せず、臨床現場で使用可能な客観的指標を作成しています。
+          </p>
           <div class="flex flex-wrap gap-2">
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">OpenCV</span>
-            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Pose Estimation</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">UpperLimbs</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Inference AI</span>
+            <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Motion Parameter</span>
+             <span class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 text-gray-300">Rehabilitation</span>
           </div>
         </div>
       </div>
@@ -234,21 +296,27 @@
   <!-- Technical Stack (Grid) -->
   <section id="stack" class="py-20 px-6 bg-black/20">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8 font-mono"><span class="text-cyan">~/</span> technical_stack</h2>
+      <h2 class="text-2xl font-bold mb-8 font-mono">
+        <span class="text-cyan">~/</span>
+        <span data-lang="en">technical_stack</span>
+        <span data-lang="ja" class="hidden-lang">技術スタック</span>
+      </h2>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
           <i class="fa-brands fa-python text-yellow-400 text-2xl"></i>
           <div>
             <div class="font-bold text-sm">Python</div>
-            <div class="text-xs text-gray-500">Primary Lang</div>
+            <div class="text-xs text-gray-500" data-lang="en">Primary Lang</div>
+            <div class="text-xs text-gray-500 hidden-lang" data-lang="ja">主要言語</div>
           </div>
         </div>
         <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
           <div class="text-orange-500 text-2xl font-bold">PT</div>
           <div>
             <div class="font-bold text-sm">PyTorch</div>
-            <div class="text-xs text-gray-500">Deep Learning</div>
+            <div class="text-xs text-gray-500" data-lang="en">Deep Learning</div>
+             <div class="text-xs text-gray-500 hidden-lang" data-lang="ja">深層学習</div>
           </div>
         </div>
         <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
@@ -261,11 +329,158 @@
         <div class="p-4 border border-white/5 rounded bg-white/5 flex items-center gap-3 hover:bg-white/10 transition-colors">
           <i class="fa-solid fa-server text-blue-400 text-2xl"></i>
           <div>
-            <div class="font-bold text-sm">Edge/IoT</div>
-            <div class="text-xs text-gray-500">Raspberry Pi / BLE</div>
+            <div class="font-bold text-sm">IoT / Edge</div>
+            <div class="text-xs text-gray-500">Raspberry Pi / C++</div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Publications Section -->
+  <section id="publications" class="py-20 px-6 border-t border-white/5">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold mb-10 flex items-center gap-3">
+        <i class="fa-solid fa-book-open text-cyan"></i>
+        <span data-lang="en">Research Output</span>
+        <span data-lang="ja" class="hidden-lang">業績一覧</span>
+      </h2>
+
+      <!-- Papers -->
+      <div class="mb-12">
+        <h3 class="text-xl font-mono text-gray-400 mb-6 border-b border-white/10 pb-2">
+            <span class="text-cyan">01.</span> Publications (Peer-Reviewed)
+        </h3>
+
+        <!-- Paper 1 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">2024</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">Research on Measurement System of Upper Limb by Using Single Monocular Web Camera and Inference AI</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            <span class="text-gray-300">Suman Shrestha</span>, Hibiki Takami, Yuichiro Honda, Mitsuru Irie
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            i‑CREATe 1–4, 2024
+          </div>
+        </div>
+      </div>
+
+      <!-- Presentations -->
+      <div>
+        <h3 class="text-xl font-mono text-gray-400 mb-6 border-b border-white/10 pb-2">
+            <span class="text-cyan">02.</span> Presentations / Oral Talks
+        </h3>
+
+        <!-- Talk 1 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Mar 2025</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">日本語読唇術AIのための学習セット自動生成</h4>
+          <div class="text-sm text-gray-400 mt-1">
+             シュレスタ スマン, 戸田晴貴, 入江満, 陳隆明
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">Life Support Society 34th Frontier Lecture</span>
+            <span data-lang="ja" class="hidden-lang">ライフサポート学会 第34回フロンティア講演会</span>
+          </div>
+        </div>
+
+        <!-- Talk 2 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Dec 2024</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">ジェスチャ分類を用いた高齢者向け指体操評価システムの開発</h4>
+          <div class="text-sm text-gray-400 mt-1">
+             立川 正真, シュレスタ スマン, 開發 学人, 戸田 晴貴
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">SICE SI2024</span>
+            <span data-lang="ja" class="hidden-lang">第25回計測自動制御学会 システムインテグレーション部門講演会 (SI2024)</span>
+          </div>
+        </div>
+
+        <!-- Talk 3 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Dec 2024</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">リハビリテーション現場における深度カメラを用いた上肢運動計測システムの妥当性検証</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            開發 学人, シュレスタ スマン, 立川 正真, 戸田 晴貴
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">SICE SI2024</span>
+            <span data-lang="ja" class="hidden-lang">第25回計測自動制御学会 システムインテグレーション部門講演会 (SI2024)</span>
+          </div>
+        </div>
+
+        <!-- Talk 4 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Nov 2024</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">単眼Webカメラと推論AIを用いた上肢動作の３次元測定精度の検討</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            SHRESTHA SUMAN, 開發学人, 戸田晴貴, 本田雄一郎, 入江満
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">40th JPO Annual Meeting</span>
+            <span data-lang="ja" class="hidden-lang">第40回日本義肢装具学会学術大会</span>
+          </div>
+        </div>
+
+        <!-- Talk 5 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Oct 2023</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">単眼Web カメラと推論AIを用いたマーカーレス 3次元上肢動作測定の検討 (2)</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            SHRESTHA SUMAN, 入江満, 高見響, 本田雄一郎
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">39th JPO Annual Meeting</span>
+            <span data-lang="ja" class="hidden-lang">第39回日本義肢装具学会学術大会</span>
+          </div>
+        </div>
+
+        <!-- Talk 6 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Aug 2023</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">Web カメラと推論 AI を用いた上肢動作の検証</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            SHRESTHA SUMAN, 入江満, 本田雄一郎
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">37th Rehab Engineering Conference</span>
+            <span data-lang="ja" class="hidden-lang">第37回リハ工学カンファレンス in 東京</span>
+          </div>
+        </div>
+
+        <!-- Talk 7 -->
+        <div class="pub-item">
+          <div class="text-gray-500 text-xs font-mono mb-1">Oct 2022</div>
+          <h4 class="text-lg font-semibold text-white leading-snug">単眼Web カメラと推論AIを用いたマーカーレス 3次元上肢動作測定の検討</h4>
+          <div class="text-sm text-gray-400 mt-1">
+            SHRESTHA SUMAN, 入江満, 本田雄一郎
+          </div>
+          <div class="text-xs text-cyan/80 font-mono mt-2">
+            <span data-lang="en">38th JPO Annual Meeting</span>
+            <span data-lang="ja" class="hidden-lang">第38回日本義肢装具学会学術大会</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- External Link Block -->
+      <div class="mt-12 p-6 rounded-xl bg-gradient-to-r from-cyan/10 to-transparent border border-cyan/20 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+              <h4 class="font-bold text-cyan">
+                  <span data-lang="en">View Complete Bibliography</span>
+                  <span data-lang="ja" class="hidden-lang">研究業績一覧を見る</span>
+              </h4>
+              <p class="text-xs text-gray-400">
+                  <span data-lang="en">Full list of papers, citations, and conference proceedings available on ResearchMap.</span>
+                  <span data-lang="ja" class="hidden-lang">論文、引用、会議録の完全なリストはResearchMapでご覧いただけます。</span>
+              </p>
+          </div>
+          <a href="https://researchmap.jp/suman-shrestha" target="_blank" class="px-4 py-2 bg-cyan text-black font-bold rounded text-sm hover:bg-white transition-colors">
+              ResearchMap <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+          </a>
+      </div>
+
     </div>
   </section>
 
@@ -289,6 +504,21 @@
     const enEls = document.querySelectorAll('[data-lang="en"]');
     const jaEls = document.querySelectorAll('[data-lang="ja"]');
 
+    // Select typing element globally
+    const typeEl = document.getElementById('typing-text');
+
+    // Typing Data
+    const typeData = {
+      en: ["AI Researcher.", "PhD Candidate.", "Full Stack Engineer."],
+      ja: ["AI研究者", "博士課程", "エンジニア"]
+    };
+
+    // Typing State
+    let txtIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeTimeout; // To clear timeout on language switch
+
     langBtn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'ja' : 'en';
       toggleLang();
@@ -298,27 +528,23 @@
       if (currentLang === 'ja') {
         enEls.forEach(el => el.classList.add('hidden-lang'));
         jaEls.forEach(el => el.classList.remove('hidden-lang'));
-        typeWriterText = ["AI研究者", "博士課程学生", "エンジニア"];
       } else {
         jaEls.forEach(el => el.classList.add('hidden-lang'));
         enEls.forEach(el => el.classList.remove('hidden-lang'));
-        typeWriterText = ["AI Researcher.", "PhD Candidate.", "Full Stack Engineer."];
       }
-      // Reset typing effect
+
+      // Reset Typing Effect immediately
+      clearTimeout(typeTimeout);
       txtIndex = 0;
       charIndex = 0;
       isDeleting = false;
+      typeEl.textContent = '';
+      type();
     }
 
-    // Typing Effect
-    const typeEl = document.getElementById('typing-text');
-    let typeWriterText = ["AI Researcher.", "PhD Candidate.", "Full Stack Engineer."];
-    let txtIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
     function type() {
-      const currentText = typeWriterText[txtIndex % typeWriterText.length];
+      const currentList = typeData[currentLang];
+      const currentText = currentList[txtIndex % currentList.length];
 
       if (isDeleting) {
         typeEl.textContent = currentText.substring(0, charIndex - 1);
@@ -339,7 +565,7 @@
         typeSpeed = 500;
       }
 
-      setTimeout(type, typeSpeed);
+      typeTimeout = setTimeout(type, typeSpeed);
     }
 
     document.addEventListener('DOMContentLoaded', type);
