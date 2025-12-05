@@ -38,6 +38,31 @@
             background-size: 20px 20px;
             background-color: white;
         }
+        .manga-panel {
+            border: 2px solid #000;
+            padding: 16px;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+        .speaker {
+            font-weight: bold;
+        }
+        .stage-direction {
+            font-style: italic;
+            color: #555;
+        }
+        .dialogue {
+            margin: 8px 0 16px 0;
+            padding-left: 12px;
+            border-left: 3px solid #000;
+        }
+        .section-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 30px;
+            border-bottom: 3px solid #000;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -142,6 +167,9 @@
                                 <div class="text-red-400 text-xs font-bold uppercase">秘密の材料</div>
                                 <div class="text-xl font-bold text-red-700">燃える闘魂</div>
                             </div>
+                            <div class="mt-4 text-xs italic text-slate-500 border-t pt-2">
+                                設定: 「サンタさんがこたつで爆睡して起きないから！」
+                            </div>
                         </div>
                     </div>
 
@@ -155,23 +183,94 @@
                             <div class="space-y-4">
                                 <p class="text-slate-700 font-bold text-lg border-b border-yellow-200 pb-2">お題：サンタの激辛・目覚ましカレー</p>
 
-                                <div class="text-slate-700 space-y-3 italic">
-                                    <p>「審査員の方々！実は先ほど、サンタさんがこたつで爆睡してしまう大事件が発生しました。」</p>
-                                    <p>「我々は『唐辛子』や『スパイス』でカレーを作りましたが、効果なし！逆に体がポカポカして、サンタさんは『あ～、いい湯だな～』と寝言を言う始末...」</p>
-                                    <p>「トナカイもパジャマに着替え始めたその時！うちのリーダーがポケットから<b>『秘密の材料』</b>を取り出したのです！」</p>
-                                    <p>「そう、<b>『燃える闘魂』</b>です！！」</p>
-                                    <p>「これを鍋に投入した瞬間、サンタさんは『ホゥホゥホゥオラァ！！』と雄叫びを上げ、マッハ10で夜空へ消えていきました！」</p>
-                                    <p class="font-bold not-italic text-red-600">「今年のプレゼントが少し焦げているのは、そのせいです！メリークリスマス！」</p>
+                                <div class="manga-panel">
+                                    <div class="stage-direction">【舞台：プレゼン大会・スポットライトが登壇者を照らしている】</div>
+
+                                    <div class="speaker">登壇者:</div>
+                                    <div class="dialogue">
+                                        「審査員の皆様、聞いてください。今年のクリスマスは...中止寸前でした。」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「実は配達出発の1時間前、サンタさんが<strong>『こたつ』の魔力</strong>に負けてしまったのです。
+                                        『寒い...動きたくない...トナカイも有給とりたいって言ってる...』
+                                        と、こたつの中でみかんを食べながらストライキに入りました。」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「我々は焦りました！体を温めるために『唐辛子』『特製スパイス』、スタミナ満点の<strong>『お肉』</strong>で最高のカレーを作りました。」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「しかし、カレーが美味しすぎてサンタさんが『あぁ〜整うわぁ〜』と言って逆に熟睡！！
+                                        （会場を見渡して）絶体絶命です！」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「叩き起こすしかない…そう思った瞬間！
+                                        チームリーダーが震える手で<strong>『秘密の材料』</strong>を取り出しました。」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「それは…<strong>『燃える闘魂』</strong>でした！！！」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「鍋に投入すると赤いオーラが立ち上り、サンタさんは目を見開き
+                                        <strong>『ホゥ！ホゥ！ホゥオラァァァ！！』</strong>と叫びながらソリなしで空へ！」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「GPSによると現在マッハ10で飛行中です。
+                                        多少プレゼントを煙突に叩きつけているようですが…
+                                        とりあえずクリスマスは守られました！」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「以上が我々の料理です！ メリークリスマス！！」
+                                    </div>
                                 </div>
-                            </div>
+
+
+                                <div class="section-title">質疑応答</div>
+
+                                <div class="manga-panel">
+                                    <div class="stage-direction">【シーン：審査員席・3名の審査員が椅子に座って前のめりで質問】</div>
+
+                                    <div class="speaker">審査員A:</div>
+                                    <div class="dialogue">
+                                        「素晴らしいプレゼンでした。状況は理解しました。
+                                        ただ一つ質問があります。」
+                                    </div>
+
+                                    <div class="dialogue">
+                                        「マッハ10で飛んだサンタさんですが…
+                                        トナカイたちは今どこで何をしているんですか？」
+                                    </div>
+
+                                    <div class="speaker">登壇者（回答）:</div>
+                                    <div class="dialogue">
+                                        「はい、トナカイたちはついていけず…
+                                        現在タクシーで必死に追いかけています。」
+                                    </div>
+
+                                    <div class="speaker">審査員B:</div>
+                                    <div class="dialogue">
+                                        「もう一点。リーダーのポケットには普段から『闘魂』が入っているんですか？
+                                        危険物取り扱い免許は？」
+                                    </div>
+
+                                    <div class="speaker">登壇者（回答）:</div>
+                                    <div class="dialogue">
+                                        「はい、リーダーは常にポケットに『夢』『希望』『闘魂』…
+                                        そして『昨日のレシート』を入れています。」
+                                    </div>
+                                </div>
+
+
                         </div>
 
-                        <!-- 審査員からの質問例 -->
-                        <div class="bg-slate-800 text-white p-5 rounded-xl border border-slate-700 shadow-md relative mt-2">
-                            <div class="absolute -top-3 -left-3 bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-sm">審査員からのツッコミ</div>
-                            <p class="font-bold text-yellow-400 mb-2 text-lg"><i class="fa-solid fa-gavel mr-2"></i>Q. 素晴らしい。で、そのリーダーのポケットには、普段から何が入っているんですか？</p>
-                            <p class="text-sm text-slate-400 italic">（回答例：「夢と希望と、あと昨日のレシートです」）</p>
-                        </div>
+
                     </div>
                 </div>
             </section>
