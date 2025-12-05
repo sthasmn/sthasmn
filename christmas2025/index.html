@@ -1,46 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santa's Secret Ingredient - Christmas Game Plan</title>
+    <title>サンタの秘密の材料 - クリスマスゲーム</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', 'Noto Sans JP', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            color: #1e293b;
         }
-        /* Language Toggle Logic */
-        .lang-btn.active {
-            background-color: #dc2626; /* Red-600 */
-            color: white;
-            border-color: #dc2626;
-        }
-        .lang-jp { display: none; }
-        body.show-jp .lang-en { display: none; }
-        body.show-jp .lang-jp { display: block; }
 
-        /* Print Styles */
+        /* 印刷設定 */
         @media print {
             header, footer, .no-print { display: none !important; }
             body { background-color: white; -webkit-print-color-adjust: exact; }
             .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
             .break-before-page { page-break-before: always; }
             .break-inside-avoid { break-inside: avoid; }
-            /* Ensure colors print */
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
 
-        /* Custom Pattern Background for Recipe Card */
+        /* パターン背景（index_old.htmlのデザインを維持） */
         .recipe-bg {
             background-image: radial-gradient(#fee2e2 1px, transparent 1px);
             background-size: 20px 20px;
             background-color: white;
         }
-        /* Ingredient Card Pattern */
         .ingredient-bg {
             background-image: linear-gradient(45deg, #f0fdf4 25%, transparent 25%, transparent 50%, #f0fdf4 50%, #f0fdf4 75%, transparent 75%, transparent);
             background-size: 20px 20px;
@@ -48,26 +38,24 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50">
 
-    <!-- Header -->
+    <!-- ヘッダー -->
     <header class="bg-white shadow-md sticky top-0 z-30 border-b-4 border-green-600 no-print">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <i class="fa-solid fa-candy-cane text-red-600 text-2xl"></i>
                 <h1 class="text-lg md:text-xl font-bold text-slate-800 leading-tight">
-                    <span class="lang-en">Santa's Secret Ingredient</span>
-                    <span class="lang-jp">サンタの秘密の材料</span>
+                    サンタの秘密の材料 <span class="text-sm font-normal text-slate-500 ml-2">100名版</span>
                 </h1>
             </div>
-            <div class="flex space-x-2">
-                <button id="btn-en" class="lang-btn active text-sm font-bold border-2 border-slate-200 text-slate-500 rounded-full px-4 py-1 transition-all duration-200 hover:bg-slate-100">EN</button>
-                <button id="btn-jp" class="lang-btn text-sm font-bold border-2 border-slate-200 text-slate-500 rounded-full px-4 py-1 transition-all duration-200 hover:bg-slate-100">JP</button>
-            </div>
+            <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded-full font-bold hover:bg-slate-700 transition text-sm">
+                <i class="fa-solid fa-print mr-2"></i>印刷する
+            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- ヒーローセクション（index_old.htmlのデザインを維持） -->
     <div class="bg-red-700 text-white py-12 px-4 text-center relative overflow-hidden no-print">
         <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
             <i class="fa-regular fa-snowflake absolute top-4 left-10 text-4xl"></i>
@@ -75,119 +63,93 @@
             <i class="fa-solid fa-gift absolute top-1/2 left-1/2 text-9xl transform -translate-x-1/2 -translate-y-1/2"></i>
         </div>
         <div class="relative z-10 container mx-auto">
-            <h2 class="text-3xl md:text-5xl font-bold mb-2 lang-en">The Ultimate Christmas Game</h2>
-            <h2 class="text-3xl md:text-5xl font-bold mb-2 lang-jp">究極のクリスマスゲーム</h2>
-            <p class="text-red-100 text-lg lang-en">1 Table = 1 Team. Open the Envelope. Start Trading!</p>
-            <p class="text-red-100 text-lg lang-jp">1テーブル＝1チーム。封筒を開けて、交換開始！</p>
+            <h2 class="text-3xl md:text-5xl font-bold mb-2">究極のクリスマスゲーム</h2>
+            <p class="text-red-100 text-lg">1テーブル＝1チーム。封筒を開けて、交換開始！</p>
         </div>
     </div>
 
     <main class="container mx-auto p-4 md:p-8 max-w-6xl">
 
-        <!-- ==================== GUIDE CONTENT (Bilingual) ==================== -->
-        <div class="space-y-12">
+        <!-- ==================== ガイド・説明（index_old.htmlの内容を日本語化して維持） ==================== -->
+        <div class="space-y-12 mb-12">
 
-            <!-- How to Play -->
+            <!-- 遊び方ガイド -->
             <section class="no-print">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-8 w-2 bg-red-600 rounded-full"></div>
-                    <h3 class="text-2xl font-bold text-slate-800 lang-en">How to Play</h3>
-                    <h3 class="text-2xl font-bold text-slate-800 lang-jp">遊び方ガイド</h3>
+                    <h3 class="text-2xl font-bold text-slate-800">遊び方ガイド</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 bg-red-100 w-12 h-12 rounded-full flex items-center justify-center text-red-600 font-bold">1</div>
                         <i class="fa-solid fa-ticket text-3xl text-red-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 lang-en">Arrival</h4>
-                        <p class="text-sm text-slate-600 lang-en">Guests receive 1 random <b>Ingredient Card</b>.</p>
-                        <h4 class="font-bold text-lg mb-1 lang-jp">受付</h4>
-                        <p class="text-sm text-slate-600 lang-jp">到着時に<b>「材料カード」</b>を1枚受け取ります。</p>
+                        <h4 class="font-bold text-lg mb-1">受付</h4>
+                        <p class="text-sm text-slate-600">到着時に<b>「材料カード」</b>を1枚受け取ります。</p>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 bg-orange-100 w-12 h-12 rounded-full flex items-center justify-center text-orange-600 font-bold">2</div>
                         <i class="fa-solid fa-envelope-open-text text-3xl text-orange-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 lang-en">The Reveal</h4>
-                        <p class="text-sm text-slate-600 lang-en">Open the <b>Envelope</b> to see your Team Recipe.</p>
-                        <h4 class="font-bold text-lg mb-1 lang-jp">レシピ解禁</h4>
-                        <p class="text-sm text-slate-600 lang-jp">テーブルの<b>「封筒」</b>を開け、レシピを確認。</p>
+                        <h4 class="font-bold text-lg mb-1">レシピ解禁</h4>
+                        <p class="text-sm text-slate-600">テーブルの<b>「封筒」</b>を開け、レシピを確認。</p>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center text-yellow-600 font-bold">3</div>
                         <i class="fa-solid fa-users-gear text-3xl text-yellow-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 lang-en">Inventory</h4>
-                        <p class="text-sm text-slate-600 lang-en">Check what you have vs. what you need.</p>
-                        <h4 class="font-bold text-lg mb-1 lang-jp">在庫確認</h4>
-                        <p class="text-sm text-slate-600 lang-jp">チームの手持ち材料を見せ合います。</p>
+                        <h4 class="font-bold text-lg mb-1">在庫確認</h4>
+                        <p class="text-sm text-slate-600">チームの手持ち材料を見せ合います。</p>
                     </div>
                     <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 font-bold">4</div>
                         <i class="fa-solid fa-right-left text-3xl text-green-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 lang-en">Trade</h4>
-                        <p class="text-sm text-slate-600 lang-en">Trade unwanted items with other tables.</p>
-                        <h4 class="font-bold text-lg mb-1 lang-jp">交換タイム</h4>
-                        <p class="text-sm text-slate-600 lang-jp">他のテーブルと交渉して材料を集めます。</p>
+                        <h4 class="font-bold text-lg mb-1">交換タイム</h4>
+                        <p class="text-sm text-slate-600">他のテーブルと交渉して材料を集めます。</p>
                     </div>
                     <div class="bg-slate-800 text-white p-5 rounded-xl shadow-sm relative overflow-hidden">
                         <i class="fa-solid fa-star text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 text-yellow-400 lang-en">Win!</h4>
-                        <p class="text-sm text-gray-300 lang-en">Shout <b>"Merry Christmas!"</b> & Present.</p>
-                        <h4 class="font-bold text-lg mb-1 text-yellow-400 lang-jp">勝利！</h4>
-                        <p class="text-sm text-gray-300 lang-jp"><b>「メリークリスマス！」</b>と叫びプレゼン。</p>
+                        <h4 class="font-bold text-lg mb-1 text-yellow-400">勝利！</h4>
+                        <p class="text-sm text-gray-300"><b>「メリークリスマス！」</b>と叫びプレゼン。</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Card Designs & Presentation Script (Example) -->
+            <!-- カード例とプレゼン台本 -->
             <section class="no-print">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-8 w-2 bg-blue-600 rounded-full"></div>
-                    <h3 class="text-2xl font-bold text-slate-800 lang-en">Card Example & Presentation</h3>
-                    <h3 class="text-2xl font-bold text-slate-800 lang-jp">カード例とプレゼン台本</h3>
+                    <h3 class="text-2xl font-bold text-slate-800">カード例とプレゼン台本</h3>
                 </div>
                 <div class="grid lg:grid-cols-2 gap-8">
-                    <!-- Recipe Card Example -->
+                    <!-- レシピカード例 -->
                     <div>
-                        <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider lang-en">Recipe Card (English Side)</span>
-                        <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider lang-jp">レシピカード（英語面）</span>
+                        <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider">レシピカード（例）</span>
                         <div class="bg-white p-8 border-4 border-double border-red-200 rounded-xl shadow-lg text-center recipe-bg relative mt-2">
                             <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm">TOP SECRET</div>
-                            <h5 class="font-bold text-3xl text-red-700 font-serif mt-4">Rudolph's Rocket Fuel</h5>
+                            <h5 class="font-bold text-3xl text-red-700 font-serif mt-4">ルドルフのロケット燃料</h5>
                             <div class="w-16 h-1 bg-red-200 mx-auto my-4 rounded-full"></div>
-                            <!-- CORRECTED: Now shows 4 ingredients + 1 Secret -->
+
                             <div class="grid grid-cols-2 gap-4 text-left text-sm mb-6 font-semibold">
-                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-star text-yellow-400 mr-2"></i>Starlight Sprinkles</div>
-                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-moon text-gray-400 mr-2"></i>Cocoa Comets</div>
-                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-cloud text-blue-300 mr-2"></i>Milky Way Milk</div>
-                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-snowflake text-cyan-400 mr-2"></i>Sugar Snowflakes</div>
+                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-star text-yellow-400 mr-2"></i>スターライト・スプリンクル</div>
+                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-moon text-gray-400 mr-2"></i>ココア・コメット</div>
+                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-cloud text-blue-300 mr-2"></i>天の川ミルク</div>
+                                <div class="bg-slate-50 p-2 rounded"><i class="fa-solid fa-snowflake text-cyan-400 mr-2"></i>砂糖の雪の結晶</div>
                             </div>
                             <div class="bg-red-50 border border-red-100 p-4 rounded-lg">
-                                <div class="text-red-400 text-xs font-bold uppercase">Secret Ingredient</div>
-                                <div class="text-xl font-bold text-red-700">A Dash of Courage</div>
+                                <div class="text-red-400 text-xs font-bold uppercase">最後の仕上げ</div>
+                                <div class="text-xl font-bold text-red-700">ほんの少しの勇気</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- FUNNY PRESENTATION SCRIPT -->
+                    <!-- プレゼン台本例 -->
                     <div class="flex flex-col justify-center">
                         <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded shadow-sm">
                             <h4 class="font-bold text-yellow-800 text-xl mb-4">
-                                <span class="lang-en"><i class="fa-solid fa-microphone-lines mr-2"></i>Funny Presentation Example</span>
-                                <span class="lang-jp"><i class="fa-solid fa-microphone-lines mr-2"></i>面白いプレゼン（台本例）</span>
+                                <i class="fa-solid fa-microphone-lines mr-2"></i>面白いプレゼン（台本例）
                             </h4>
-
-                            <!-- English Script -->
-                            <div class="lang-en space-y-3">
-                                <p class="text-slate-700 italic">"Judges! We made <b>Rudolph's Rocket Fuel</b> because we had a BIG problem."</p>
-                                <p class="text-slate-700">"Santa loaded too many PS5s onto the sleigh this year. It was way too heavy! The reindeer refused to move. They were lazy!"</p>
-                                <p class="text-slate-700">"We tried giving them the cocoa... nothing happened. But then... we added the <b>Secret Ingredient: A DASH OF COURAGE!</b>"</p>
-                                <p class="text-slate-700 font-bold">"Suddenly, Rudolph pulled so hard he broke the sound barrier! BOOM! Merry Christmas!"</p>
-                            </div>
-
-                            <!-- Japanese Script -->
-                            <div class="lang-jp space-y-3">
+                            <div class="space-y-3">
                                 <p class="text-slate-700 italic">「審査員の皆さん！私たちが<b>『ルドルフのロケット燃料』</b>を作ったのには、深いワケがあります。」</p>
                                 <p class="text-slate-700">「今年のサンタのソリは、子供たちのPS5を積みすぎて超重量オーバーでした。トナカイたちは『重すぎて無理！』とストライキを起こしたのです。」</p>
-                                <p class="text-slate-700">「私たちは特製ココアを飲ませましたが...彼らは動きません。そこで！秘密の材料<b>『ほんの少しの勇気』</b>を投入しました！」</p>
+                                <p class="text-slate-700">「私たちは特製ココアを飲ませましたが...彼らは動きません。そこで！最後の材料<b>『ほんの少しの勇気』</b>を投入しました！」</p>
                                 <p class="text-slate-700 font-bold">「その瞬間、ルドルフは自分がジェット機だと思い込み、音速の壁を突破して飛び立ちました！メリークリスマス！」</p>
                             </div>
                         </div>
@@ -196,17 +158,17 @@
             </section>
         </div>
 
-        <!-- ==================== PRINT SECTION ==================== -->
-
-        <!-- Part 1: RECIPE CARDS FRONT (Japanese) -->
-        <section class="break-before-page mt-12">
+        <!-- ==================== 印刷セクション 1: レシピカード (10チーム分) ==================== -->
+        <section class="break-before-page">
             <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-red-700">Print Part 1: Recipe Card Fronts (Japanese)</h3>
-                <p class="text-slate-600">Recipe Cards (Envelopes) - Front Side / レシピカード表面（日本語）</p>
+                <h3 class="text-3xl font-bold text-red-700">Print Part 1: Recipe Cards</h3>
+                <p class="text-slate-600">各テーブルに1枚置いてください。チームはここに書かれた5つの材料を集めます。<br>※「秘密かどうか教えない」ため、特別枠も通常の材料の一つとして表示しています。</p>
             </div>
 
+            <!-- 10チーム分のグリッド -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Cards 1-20 JP (Same as previous turn) -->
+
+                <!-- Team 1 -->
                 <div class="bg-white p-6 border-4 border-double border-red-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #1</div>
                     <h5 class="font-bold text-2xl text-red-700 font-serif mt-2">ルドルフのロケット燃料</h5>
@@ -214,13 +176,15 @@
                         <div>• スターライト・スプリンクル</div><div>• ココア・コメット</div>
                         <div>• 天の川ミルク</div><div>• 砂糖の雪の結晶</div>
                     </div>
+                    <!-- 秘密の材料枠（フォーマットは維持しつつ、秘密とは書かない） -->
                     <div class="bg-red-50 border border-red-100 p-2 rounded-lg">
-                        <div class="text-red-400 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-red-400 text-[10px] font-bold uppercase">最後の仕上げ</div>
                         <div class="font-bold text-red-700 text-lg">ほんの少しの勇気</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: 空を飛ぶ練習をするトナカイを演じてください！</div>
                 </div>
 
+                <!-- Team 2 -->
                 <div class="bg-white p-6 border-4 border-double border-green-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #2</div>
                     <h5 class="font-bold text-2xl text-green-700 font-serif mt-2">グリンチのジンジャーブレッド</h5>
@@ -229,15 +193,13 @@
                         <div>• フー村のスパイス</div><div>• グリンチアイシング</div>
                     </div>
                     <div class="bg-green-50 border border-green-100 p-2 rounded-lg">
-                        <div class="text-green-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-green-600 text-[10px] font-bold uppercase">隠し味</div>
                         <div class="font-bold text-green-800 text-lg">一つまみの優しさ</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: グリンチの心が大きく育つ様子を見せて！</div>
                 </div>
 
-                                <!-- Note: For brevity in this file generation, I'm including the first 2 as examples of the 4+1 structure.
-                                     In the actual print, you would repeat this pattern for all 20 recipes. -->
-                                 <!-- 3 -->
+                <!-- Team 3 -->
                 <div class="bg-white p-6 border-4 border-double border-blue-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #3</div>
                     <h5 class="font-bold text-2xl text-blue-700 font-serif mt-2">フロスティのかき氷</h5>
@@ -246,13 +208,13 @@
                         <div>• つららのクランチ</div><div>• ブルーベリーのボタン</div>
                     </div>
                     <div class="bg-blue-50 border border-blue-100 p-2 rounded-lg">
-                        <div class="text-blue-500 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-blue-500 text-[10px] font-bold uppercase">魔法のエッセンス</div>
                         <div class="font-bold text-blue-700 text-lg">生命のひらめき</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: 雪だるまに命を吹き込み、踊らせよう！</div>
                 </div>
 
-                <!-- 4 -->
+                <!-- Team 4 -->
                 <div class="bg-white p-6 border-4 border-double border-yellow-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #4</div>
                     <h5 class="font-bold text-2xl text-yellow-700 font-serif mt-2">エルフのエナジーバー</h5>
@@ -261,43 +223,43 @@
                         <div>• トフィーの工具ビット</div><div>• ナッツとボルトMIX</div>
                     </div>
                     <div class="bg-yellow-50 border border-yellow-100 p-2 rounded-lg">
-                        <div class="text-yellow-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-yellow-600 text-[10px] font-bold uppercase">必要なスキル</div>
                         <div class="font-bold text-yellow-800 text-lg">一滴の集中力</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: 超高速でおもちゃを作るエルフを演じて！</div>
                 </div>
 
-                <!-- 5 -->
+                <!-- Team 5 -->
                 <div class="bg-white p-6 border-4 border-double border-orange-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-orange-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #5</div>
-                    <h5 class="font-bold text-2xl text-orange-700 font-serif mt-2">クラウス夫人のアップルクランブル</h5>
+                    <h5 class="font-bold text-2xl text-orange-700 font-serif mt-2">クラウス夫人のクランブル</h5>
                     <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
                         <div>• 天使のオーツトッピング</div><div>• シナモンの太陽</div>
                         <div>• ブラウンシュガーの砂</div><div>• イエティのバター</div>
                     </div>
                     <div class="bg-orange-50 border border-orange-100 p-2 rounded-lg">
-                        <div class="text-orange-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-orange-600 text-[10px] font-bold uppercase">愛情たっぷりの</div>
                         <div class="font-bold text-orange-800 text-lg">スプーン一杯の温もり</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: 凍えたみんなをハグで温めよう！</div>
                 </div>
 
-                <!-- 6 -->
+                <!-- Team 6 -->
                 <div class="bg-white p-6 border-4 border-double border-cyan-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-cyan-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #6</div>
-                    <h5 class="font-bold text-2xl text-cyan-700 font-serif mt-2">ジャックフロストのミントパティ</h5>
+                    <h5 class="font-bold text-2xl text-cyan-700 font-serif mt-2">ジャックのミントパティ</h5>
                     <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
                         <div>• ペパーミントの結晶</div><div>• 氷河の水</div>
                         <div>• ダークチョコの塊</div><div>• 雪の結晶の砂糖</div>
                     </div>
                     <div class="bg-cyan-50 border border-cyan-100 p-2 rounded-lg">
-                        <div class="text-cyan-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-cyan-600 text-[10px] font-bold uppercase">こっそり入れる</div>
                         <div class="font-bold text-cyan-800 text-lg">秘密のささやき</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: ささやき声だけで面白い秘密を話して！</div>
                 </div>
 
-                <!-- 7 -->
+                <!-- Team 7 -->
                 <div class="bg-white p-6 border-4 border-double border-purple-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #7</div>
                     <h5 class="font-bold text-2xl text-purple-700 font-serif mt-2">くるみ割り人形の喜び</h5>
@@ -306,28 +268,28 @@
                         <div>• 踊るスパイスミックス</div><div>• クルミ兵士のクランブル</div>
                     </div>
                     <div class="bg-purple-50 border border-purple-100 p-2 rounded-lg">
-                        <div class="text-purple-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-purple-600 text-[10px] font-bold uppercase">音楽を添えて</div>
                         <div class="font-bold text-purple-800 text-lg">一節のメロディ</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: ドタバタなバレエを踊ってみて！</div>
                 </div>
 
-                <!-- 8 -->
+                <!-- Team 8 -->
                 <div class="bg-white p-6 border-4 border-double border-slate-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #8</div>
-                    <h5 class="font-bold text-2xl text-slate-700 font-serif mt-2">ポーラーエクスプレスのチョコバーク</h5>
+                    <h5 class="font-bold text-2xl text-slate-700 font-serif mt-2">急行列車のチョコバーク</h5>
                     <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
                         <div>• 北極のホワイトチョコ</div><div>• ペパーミントのレール</div>
                         <div>• ダークチョコトンネル</div><div>• 食べられる銀のベル</div>
                     </div>
                     <div class="bg-slate-100 border border-slate-200 p-2 rounded-lg">
-                        <div class="text-slate-500 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-slate-500 text-[10px] font-bold uppercase">大切なもの</div>
                         <div class="font-bold text-slate-800 text-lg">不思議に思う心</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: 人間列車を作って切符を配ろう！</div>
                 </div>
 
-                <!-- 9 -->
+                <!-- Team 9 -->
                 <div class="bg-white p-6 border-4 border-double border-pink-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #9</div>
                     <h5 class="font-bold text-2xl text-pink-700 font-serif mt-2">聖歌隊のコーディアル</h5>
@@ -336,13 +298,13 @@
                         <div>• レモンゼストトレブル</div><div>• ジンジャーのベース音</div>
                     </div>
                     <div class="bg-pink-50 border border-pink-100 p-2 rounded-lg">
-                        <div class="text-pink-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-pink-600 text-[10px] font-bold uppercase">響き渡る</div>
                         <div class="font-bold text-pink-800 text-lg">歌の一節</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: クリスマスソングを完璧に口パクして！</div>
                 </div>
 
-                <!-- 10 -->
+                <!-- Team 10 -->
                 <div class="bg-white p-6 border-4 border-double border-amber-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-amber-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #10</div>
                     <h5 class="font-bold text-2xl text-amber-700 font-serif mt-2">ベツレヘムのショートブレッド</h5>
@@ -351,829 +313,168 @@
                         <div>• バニラのエッセンス</div><div>• レモンきらめきグレーズ</div>
                     </div>
                     <div class="bg-amber-50 border border-amber-100 p-2 rounded-lg">
-                        <div class="text-amber-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
+                        <div class="text-amber-600 text-[10px] font-bold uppercase">輝くもの</div>
                         <div class="font-bold text-amber-800 text-lg">一筋の希望</div>
                     </div>
                     <div class="text-xs italic text-slate-500">ミッション: グループの明るい未来を予言しよう！</div>
                 </div>
 
-                <!-- 11 -->
-                <div class="bg-white p-6 border-4 border-double border-stone-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #11</div>
-                    <h5 class="font-bold text-2xl text-stone-700 font-serif mt-2">煙突のスス・ブラウニー</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• ダークカカオの粉塵</div><div>• レンガ色のベルベット</div>
-                        <div>• 雲のマシュマロ</div><div>• 屋根瓦チョコ</div>
-                    </div>
-                    <div class="bg-stone-100 border border-stone-200 p-2 rounded-lg">
-                        <div class="text-stone-500 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-stone-800 text-lg">爆笑の渦</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 煙突に詰まったサンタを笑い飛ばして助けよう！</div>
-                </div>
-
-                <!-- 12 -->
-                <div class="bg-white p-6 border-4 border-double border-orange-800 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-orange-800 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #12</div>
-                    <h5 class="font-bold text-2xl text-orange-900 font-serif mt-2">飛行訓練トレイルミックス</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• 角プレッツェル</div><div>• 魔法の苔</div>
-                        <div>• コイン人参</div><div>• 高高度ナッツ</div>
-                    </div>
-                    <div class="bg-orange-50 border border-orange-200 p-2 rounded-lg">
-                        <div class="text-orange-800 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-orange-900 text-lg">信じて飛ぶ勇気</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: トナカイになりきって大ジャンプ！</div>
-                </div>
-
-                <!-- 13 -->
-                <div class="bg-white p-6 border-4 border-double border-indigo-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #13</div>
-                    <h5 class="font-bold text-2xl text-indigo-700 font-serif mt-2">オーロラゼリー</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• ネオンシロップ</div><div>• 星明かりのゼラチン</div>
-                        <div>• 磁気ベリージュース</div><div>• 太陽風シュガー</div>
-                    </div>
-                    <div class="bg-indigo-50 border border-indigo-100 p-2 rounded-lg">
-                        <div class="text-indigo-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-indigo-800 text-lg">美しさへの感動</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: スマホの光でライトショーを作ろう！</div>
-                </div>
-
-                <!-- 14 -->
-                <div class="bg-white p-6 border-4 border-double border-lime-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lime-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #14</div>
-                    <h5 class="font-bold text-2xl text-lime-700 font-serif mt-2">「ふん、くだらん」グミ</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• 不機嫌なブドウ</div><div>• 酸っぱいレモン</div>
-                        <div>• 苦いライムの皮</div><div>• 硬い心のキャンディ</div>
-                    </div>
-                    <div class="bg-lime-50 border border-lime-100 p-2 rounded-lg">
-                        <div class="text-lime-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-lime-800 text-lg">心変わり</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 酸っぱい顔を最高の笑顔に変えて！</div>
-                </div>
-
-                <!-- 15 -->
-                <div class="bg-white p-6 border-4 border-double border-teal-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #15</div>
-                    <h5 class="font-bold text-2xl text-teal-700 font-serif mt-2">きよしこの夜ティー</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• 月光のカモミール</div><div>• 静寂の雪片</div>
-                        <div>• 夢見るラベンダー</div><div>• 穏やかな雲</div>
-                    </div>
-                    <div class="bg-teal-50 border border-teal-100 p-2 rounded-lg">
-                        <div class="text-teal-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-teal-800 text-lg">平和なひととき</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 全員で動きを止めて静寂を作ろう！</div>
-                </div>
-
-                <!-- 16 -->
-                <div class="bg-white p-6 border-4 border-double border-yellow-600 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-700 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #16</div>
-                    <h5 class="font-bold text-2xl text-yellow-800 font-serif mt-2">工房の歯車クッキー</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• リズムライスパフ</div><div>• ドラムビートチョコ</div>
-                        <div>• ぜんまいキャラメル</div><div>• 金の潤滑バター</div>
-                    </div>
-                    <div class="bg-yellow-50 border border-yellow-200 p-2 rounded-lg">
-                        <div class="text-yellow-700 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-yellow-900 text-lg">命の鼓動</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: ロボットが人間になる様子を演じて！</div>
-                </div>
-
-                <!-- 17 -->
-                <div class="bg-white p-6 border-4 border-double border-red-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #17</div>
-                    <h5 class="font-bold text-2xl text-red-600 font-serif mt-2">ヤドリギのカップケーキ</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• キス・ベリー</div><div>• 常緑のミント</div>
-                        <div>• 赤面ローズフロスティング</div><div>• ラブレター・スプリンクル</div>
-                    </div>
-                    <div class="bg-red-50 border border-red-200 p-2 rounded-lg">
-                        <div class="text-red-500 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-red-600 text-lg">恋の予感</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 全員に投げキッスを送ろう！</div>
-                </div>
-
-                <!-- 18 -->
-                <div class="bg-white p-6 border-4 border-double border-sky-300 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-sky-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #18</div>
-                    <h5 class="font-bold text-2xl text-sky-700 font-serif mt-2">ブリザード・スムージー</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• 暴風の氷</div><div>• ツンドラベリー</div>
-                        <div>• 凍傷ミント</div><div>• 大雪ヨーグルト</div>
-                    </div>
-                    <div class="bg-sky-50 border border-sky-100 p-2 rounded-lg">
-                        <div class="text-sky-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-sky-800 text-lg">耐え抜く強さ</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 猛吹雪に負けずに前進しよう！</div>
-                </div>
-
-                <!-- 19 -->
-                <div class="bg-white p-6 border-4 border-double border-emerald-300 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #19</div>
-                    <h5 class="font-bold text-2xl text-emerald-700 font-serif mt-2">エルフサイズのドーナツ</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• 極小スプリンクル</div><div>• ミニチュア小麦粉袋</div>
-                        <div>• マイクロシュガー</div><div>• 小さな笑い声グレーズ</div>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded-lg">
-                        <div class="text-emerald-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-emerald-800 text-lg">細部へのこだわり</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 甲高い声で小人のように振る舞って！</div>
-                </div>
-
-                <!-- 20 -->
-                <div class="bg-white p-6 border-4 border-double border-gray-600 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">チームレシピ #20</div>
-                    <h5 class="font-bold text-2xl text-gray-800 font-serif mt-2">クランプスの石炭トリュフ</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• ブラックカカオ</div><div>• 悪い子リストの紙</div>
-                        <div>• 煙突の灰シュガー</div><div>• ダークソウル・コーヒー</div>
-                    </div>
-                    <div class="bg-gray-100 border border-gray-200 p-2 rounded-lg">
-                        <div class="text-gray-600 text-[10px] font-bold uppercase">必要な秘密の材料</div>
-                        <div class="font-bold text-gray-900 text-lg">セカンドチャンス</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">ミッション: 悪い子のフリをした後、いい子になると誓おう！</div>
-                </div>
             </div>
         </section>
 
-        <!-- Part 2: RECIPE CARDS BACK (English) -->
+        <!-- ==================== 印刷セクション 2: 材料カード表面 (合計100枚) ==================== -->
         <section class="break-before-page mt-12">
-             <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-red-700">Print Part 2: Recipe Card Backs (English)</h3>
-                <p class="text-slate-600">Recipe Cards (Envelopes) - Back Side / レシピカード裏面（英語）</p>
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-green-700">Print Part 2: Ingredient Cards</h3>
+                <p class="text-slate-600">合計100枚。全て同じデザインで統一しています。「秘密」かどうかの区別はありません。<br>（最初の10枚がユニーク材料、残りの90枚が通常の材料です）</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 border-4 border-double border-red-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #1</div>
-                    <h5 class="font-bold text-2xl text-red-700 font-serif mt-2">Rudolph's Rocket Fuel</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Starlight Sprinkles</div><div>• Cocoa Comets</div>
-                        <div>• Milky Way Milk</div><div>• Sugar Snowflakes</div>
-                    </div>
-                    <div class="bg-red-50 border border-red-100 p-2 rounded-lg">
-                        <div class="text-red-400 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-red-700 text-lg">A Dash of Courage</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Act out a reindeer learning to fly!</div>
-                </div>
-                <!-- Card 2 -->
-                <div class="bg-white p-6 border-4 border-double border-green-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #2</div>
-                    <h5 class="font-bold text-2xl text-green-700 font-serif mt-2">The Grinch's Gingerbread</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Mount Crumpit Flour</div><div>• Max's Molasses</div>
-                        <div>• Who-Hash Spices</div><div>• Grinch-Green Icing</div>
-                    </div>
-                    <div class="bg-green-50 border border-green-100 p-2 rounded-lg">
-                        <div class="text-green-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-green-800 text-lg">A Pinch of Kindness</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Show the Grinch's heart growing!</div>
-                </div>
-                 <!-- 3 -->
-                <div class="bg-white p-6 border-4 border-double border-blue-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #3</div>
-                    <h5 class="font-bold text-2xl text-blue-700 font-serif mt-2">Frosty's Snow Cones</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Freshly Fallen Snow</div><div>• Winter Wind Syrup</div>
-                        <div>• Icicle Crunchies</div><div>• Blueberry Buttons</div>
-                    </div>
-                    <div class="bg-blue-50 border border-blue-100 p-2 rounded-lg">
-                        <div class="text-blue-500 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-blue-700 text-lg">A Spark of Life</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Bring a human snowman to life!</div>
-                </div>
 
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+
+                <!-- 1. ユニーク材料（10種×1枚） -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-fire text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">ほんの少しの勇気</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-heart text-3xl text-green-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">一つまみの優しさ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-bolt text-3xl text-blue-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">生命のひらめき</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-eye text-3xl text-yellow-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">一滴の集中力</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mug-hot text-3xl text-orange-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">スプーン一杯の温もり</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-user-secret text-3xl text-cyan-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">秘密のささやき</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-music text-3xl text-purple-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">一節のメロディ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wand-magic-sparkles text-3xl text-slate-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">不思議に思う心</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-microphone text-3xl text-pink-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">歌の一節</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-sun text-3xl text-amber-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">一筋の希望</h6></div>
+
+                <!-- 2. 普通の材料（30種×3枚 = 90枚） -->
+
+                <!-- 1 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-star text-3xl text-yellow-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">スターライト・スプリンクル</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-star text-3xl text-yellow-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">スターライト・スプリンクル</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-star text-3xl text-yellow-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">スターライト・スプリンクル</h6></div>
+                <!-- 2 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">ココア・コメット</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">ココア・コメット</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">ココア・コメット</h6></div>
+                <!-- 3 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cloud text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">天の川ミルク</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cloud text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">天の川ミルク</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cloud text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">天の川ミルク</h6></div>
                 <!-- 4 -->
-                <div class="bg-white p-6 border-4 border-double border-yellow-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #4</div>
-                    <h5 class="font-bold text-2xl text-yellow-700 font-serif mt-2">Elves' Energy Bars</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Workshop Oats</div><div>• Candy Cane Pellets</div>
-                        <div>• Toffee Tool Bits</div><div>• Nut & Bolt Mix</div>
-                    </div>
-                    <div class="bg-yellow-50 border border-yellow-100 p-2 rounded-lg">
-                        <div class="text-yellow-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-yellow-800 text-lg">A Drop of Focus</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Build toys at super speed!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-snowflake text-3xl text-cyan-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">砂糖の雪の結晶</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-snowflake text-3xl text-cyan-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">砂糖の雪の結晶</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-snowflake text-3xl text-cyan-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">砂糖の雪の結晶</h6></div>
                 <!-- 5 -->
-                <div class="bg-white p-6 border-4 border-double border-orange-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-orange-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #5</div>
-                    <h5 class="font-bold text-2xl text-orange-700 font-serif mt-2">Mrs. Claus's Crumble</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Angel's Oat Topping</div><div>• Cinnamon Sunshine</div>
-                        <div>• Brown Sugar Sand</div><div>• Yeti Butter</div>
-                    </div>
-                    <div class="bg-orange-50 border border-orange-100 p-2 rounded-lg">
-                        <div class="text-orange-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-orange-800 text-lg">A Spoonful of Warmth</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Warm up a frozen group with a hug!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mountain text-3xl text-green-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">クランピット山の小麦粉</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mountain text-3xl text-green-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">クランピット山の小麦粉</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mountain text-3xl text-green-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">クランピット山の小麦粉</h6></div>
                 <!-- 6 -->
-                <div class="bg-white p-6 border-4 border-double border-cyan-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-cyan-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #6</div>
-                    <h5 class="font-bold text-2xl text-cyan-700 font-serif mt-2">Jack Frost's Mint Patties</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Peppermint Crystals</div><div>• Glacier Water</div>
-                        <div>• Dark Choco Chunks</div><div>• Snowflake Sugar</div>
-                    </div>
-                    <div class="bg-cyan-50 border border-cyan-100 p-2 rounded-lg">
-                        <div class="text-cyan-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-cyan-800 text-lg">A Whisper of a Secret</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Tell funny gossip in whispers!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-jar text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">マックスの糖蜜</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-jar text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">マックスの糖蜜</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-jar text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">マックスの糖蜜</h6></div>
                 <!-- 7 -->
-                <div class="bg-white p-6 border-4 border-double border-purple-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #7</div>
-                    <h5 class="font-bold text-2xl text-purple-700 font-serif mt-2">Nutcracker's Delight</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Sugar Plum Puree</div><div>• Land of Sweets Sugar</div>
-                        <div>• Dancing Spice Mix</div><div>• Walnut Soldier Crumbs</div>
-                    </div>
-                    <div class="bg-purple-50 border border-purple-100 p-2 rounded-lg">
-                        <div class="text-purple-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-purple-800 text-lg">A Note of a Melody</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Perform a clumsy ballet dance!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mortar-pestle text-3xl text-red-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">フー村のスパイス</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mortar-pestle text-3xl text-red-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">フー村のスパイス</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mortar-pestle text-3xl text-red-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">フー村のスパイス</h6></div>
                 <!-- 8 -->
-                <div class="bg-white p-6 border-4 border-double border-slate-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-slate-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #8</div>
-                    <h5 class="font-bold text-2xl text-slate-700 font-serif mt-2">Polar Express Bark</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• North Pole White Choco</div><div>• Peppermint Rails</div>
-                        <div>• Dark Choco Tunnels</div><div>• Edible Silver Bells</div>
-                    </div>
-                    <div class="bg-slate-100 border border-slate-200 p-2 rounded-lg">
-                        <div class="text-slate-500 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-slate-800 text-lg">A Sense of Wonder</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Form a human train and hand out tickets!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-spray-can text-3xl text-green-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">グリンチアイシング</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-spray-can text-3xl text-green-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">グリンチアイシング</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-spray-can text-3xl text-green-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">グリンチアイシング</h6></div>
                 <!-- 9 -->
-                <div class="bg-white p-6 border-4 border-double border-pink-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #9</div>
-                    <h5 class="font-bold text-2xl text-pink-700 font-serif mt-2">Chorus Cordials</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Cherry Juice</div><div>• Honey Harmonies</div>
-                        <div>• Lemon Zest Trebles</div><div>• Ginger Bass Notes</div>
-                    </div>
-                    <div class="bg-pink-50 border border-pink-100 p-2 rounded-lg">
-                        <div class="text-pink-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-pink-800 text-lg">A Verse of a Song</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Lip-sync perfectly to a Christmas hit!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">降りたての新雪</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">降りたての新雪</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">降りたての新雪</h6></div>
                 <!-- 10 -->
-                <div class="bg-white p-6 border-4 border-double border-amber-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-amber-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #10</div>
-                    <h5 class="font-bold text-2xl text-amber-700 font-serif mt-2">Bethlehem Shortbread</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Stardust Flour</div><div>• Golden Butter Rays</div>
-                        <div>• Vanilla Bean Essence</div><div>• Lemon Twinkle Glaze</div>
-                    </div>
-                    <div class="bg-amber-50 border border-amber-100 p-2 rounded-lg">
-                        <div class="text-amber-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-amber-800 text-lg">A Glimmer of Hope</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Predict a bright future for the group!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wind text-3xl text-slate-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">冬風シロップ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wind text-3xl text-slate-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">冬風シロップ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wind text-3xl text-slate-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">冬風シロップ</h6></div>
                 <!-- 11 -->
-                <div class="bg-white p-6 border-4 border-double border-stone-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-stone-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #11</div>
-                    <h5 class="font-bold text-2xl text-stone-700 font-serif mt-2">Chimney Soot Brownies</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Dark Cocoa Dust</div><div>• Brick-Red Velvet</div>
-                        <div>• Cloud Marshmallows</div><div>• Roof Shingle Choco</div>
-                    </div>
-                    <div class="bg-stone-100 border border-stone-200 p-2 rounded-lg">
-                        <div class="text-stone-500 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-stone-800 text-lg">A Burst of Laughter</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Santa gets stuck, then laughs free!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-icicles text-3xl text-cyan-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">つららのクランチ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-icicles text-3xl text-cyan-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">つららのクランチ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-icicles text-3xl text-cyan-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">つららのクランチ</h6></div>
                 <!-- 12 -->
-                <div class="bg-white p-6 border-4 border-double border-orange-800 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-orange-800 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #12</div>
-                    <h5 class="font-bold text-2xl text-orange-900 font-serif mt-2">Flight Training Mix</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Antler Pretzels</div><div>• Magic Moss</div>
-                        <div>• Carrot Coins</div><div>• High-Altitude Nuts</div>
-                    </div>
-                    <div class="bg-orange-50 border border-orange-200 p-2 rounded-lg">
-                        <div class="text-orange-800 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-orange-900 text-lg">A Leap of Faith</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Reindeer take a big jump together!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-circle-dot text-3xl text-blue-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブルーベリーのボタン</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-circle-dot text-3xl text-blue-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブルーベリーのボタン</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-circle-dot text-3xl text-blue-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブルーベリーのボタン</h6></div>
                 <!-- 13 -->
-                <div class="bg-white p-6 border-4 border-double border-indigo-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #13</div>
-                    <h5 class="font-bold text-2xl text-indigo-700 font-serif mt-2">Northern Lights Jelly</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Neon Syrup</div><div>• Starlight Gelatin</div>
-                        <div>• Magnetic Berry Juice</div><div>• Solar Wind Sugar</div>
-                    </div>
-                    <div class="bg-indigo-50 border border-indigo-100 p-2 rounded-lg">
-                        <div class="text-indigo-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-indigo-800 text-lg">A Vision of Beauty</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Create a light show with phones!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wheat-awn text-3xl text-yellow-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">仕事場のオーツ麦</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wheat-awn text-3xl text-yellow-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">仕事場のオーツ麦</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-wheat-awn text-3xl text-yellow-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">仕事場のオーツ麦</h6></div>
                 <!-- 14 -->
-                <div class="bg-white p-6 border-4 border-double border-lime-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lime-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #14</div>
-                    <h5 class="font-bold text-2xl text-lime-700 font-serif mt-2">Bah Humbug Gummies</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Grumpy Grapes</div><div>• Sour Lemon Drops</div>
-                        <div>• Bitter Lime Zest</div><div>• Hard Heart Candy</div>
-                    </div>
-                    <div class="bg-lime-50 border border-lime-100 p-2 rounded-lg">
-                        <div class="text-lime-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-lime-800 text-lg">A Change of Heart</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Sour faces turn into huge smiles!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">キャンディケイン粒</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">キャンディケイン粒</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">キャンディケイン粒</h6></div>
                 <!-- 15 -->
-                <div class="bg-white p-6 border-4 border-double border-teal-200 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-teal-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #15</div>
-                    <h5 class="font-bold text-2xl text-teal-700 font-serif mt-2">Silent Night Tea</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Moonlight Chamomile</div><div>• Silent Snowflakes</div>
-                        <div>• Dreamy Lavender</div><div>• Calm Clouds</div>
-                    </div>
-                    <div class="bg-teal-50 border border-teal-100 p-2 rounded-lg">
-                        <div class="text-teal-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-teal-800 text-lg">A Moment of Peace</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Freeze frame in a peaceful pose!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-hammer text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">トフィーの工具ビット</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-hammer text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">トフィーの工具ビット</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-hammer text-3xl text-amber-700 mb-2"></i><h6 class="font-bold text-sm leading-tight">トフィーの工具ビット</h6></div>
                 <!-- 16 -->
-                <div class="bg-white p-6 border-4 border-double border-yellow-600 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-700 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #16</div>
-                    <h5 class="font-bold text-2xl text-yellow-800 font-serif mt-2">Workshop Gear Cookies</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Rhythm Rice Crispies</div><div>• Drumbeat Chocolate</div>
-                        <div>• Clockwork Caramel</div><div>• Golden Greased Butter</div>
-                    </div>
-                    <div class="bg-yellow-50 border border-yellow-200 p-2 rounded-lg">
-                        <div class="text-yellow-700 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-yellow-900 text-lg">The Beat of a Heart</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Robots turn into humans!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-screwdriver-wrench text-3xl text-slate-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">ナッツとボルトMIX</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-screwdriver-wrench text-3xl text-slate-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">ナッツとボルトMIX</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-screwdriver-wrench text-3xl text-slate-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">ナッツとボルトMIX</h6></div>
                 <!-- 17 -->
-                <div class="bg-white p-6 border-4 border-double border-red-400 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #17</div>
-                    <h5 class="font-bold text-2xl text-red-600 font-serif mt-2">Mistletoe Cupcakes</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Kissing Berries</div><div>• Evergreen Mint</div>
-                        <div>• Blushing Rose Frosting</div><div>• Love Letter Sprinkles</div>
-                    </div>
-                    <div class="bg-red-50 border border-red-200 p-2 rounded-lg">
-                        <div class="text-red-500 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-red-600 text-lg">A Spark of Romance</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Blow kisses to everyone!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-bowl-rice text-3xl text-yellow-200 mb-2"></i><h6 class="font-bold text-sm leading-tight">天使のオーツトッピング</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-bowl-rice text-3xl text-yellow-200 mb-2"></i><h6 class="font-bold text-sm leading-tight">天使のオーツトッピング</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-bowl-rice text-3xl text-yellow-200 mb-2"></i><h6 class="font-bold text-sm leading-tight">天使のオーツトッピング</h6></div>
                 <!-- 18 -->
-                <div class="bg-white p-6 border-4 border-double border-sky-300 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-sky-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #18</div>
-                    <h5 class="font-bold text-2xl text-sky-700 font-serif mt-2">Blizzard Smoothie</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Howling Wind Ice</div><div>• Tundra Berries</div>
-                        <div>• Frostbite Mint</div><div>• Deep Snow Yogurt</div>
-                    </div>
-                    <div class="bg-sky-50 border border-sky-100 p-2 rounded-lg">
-                        <div class="text-sky-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-sky-800 text-lg">The Strength to Endure</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Fight against the wind, then win!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-sun text-3xl text-orange-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">シナモンの太陽</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-sun text-3xl text-orange-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">シナモンの太陽</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-sun text-3xl text-orange-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">シナモンの太陽</h6></div>
                 <!-- 19 -->
-                <div class="bg-white p-6 border-4 border-double border-emerald-300 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #19</div>
-                    <h5 class="font-bold text-2xl text-emerald-700 font-serif mt-2">Elf-Sized Donuts</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Tiny Sprinkles</div><div>• Miniature Flour</div>
-                        <div>• Micro-Sugar</div><div>• Little Laughs Glaze</div>
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded-lg">
-                        <div class="text-emerald-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-emerald-800 text-lg">Attention to Detail</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Act like tiny people with high voices!</div>
-                </div>
-
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mound text-3xl text-amber-900 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブラウンシュガーの砂</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mound text-3xl text-amber-900 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブラウンシュガーの砂</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-mound text-3xl text-amber-900 mb-2"></i><h6 class="font-bold text-sm leading-tight">ブラウンシュガーの砂</h6></div>
                 <!-- 20 -->
-                <div class="bg-white p-6 border-4 border-double border-gray-600 rounded-xl text-center recipe-bg relative break-inside-avoid h-80 flex flex-col justify-between">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-800 text-white px-4 py-1 rounded-full text-xs font-bold shadow-sm uppercase">Team Recipe #20</div>
-                    <h5 class="font-bold text-2xl text-gray-800 font-serif mt-2">Krampus's Coal Truffles</h5>
-                    <div class="grid grid-cols-2 gap-2 text-left text-xs font-semibold text-slate-700">
-                        <div>• Black Cocoa</div><div>• Naughty List Paper</div>
-                        <div>• Chimney Ash Sugar</div><div>• Dark Soul Coffee</div>
-                    </div>
-                    <div class="bg-gray-100 border border-gray-200 p-2 rounded-lg">
-                        <div class="text-gray-600 text-[10px] font-bold uppercase">Secret Ingredient</div>
-                        <div class="font-bold text-gray-900 text-lg">A Second Chance</div>
-                    </div>
-                    <div class="text-xs italic text-slate-500">Mission: Be naughty, then promise to be good!</div>
-                </div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cube text-3xl text-yellow-100 mb-2"></i><h6 class="font-bold text-sm leading-tight">イエティのバター</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cube text-3xl text-yellow-100 mb-2"></i><h6 class="font-bold text-sm leading-tight">イエティのバター</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cube text-3xl text-yellow-100 mb-2"></i><h6 class="font-bold text-sm leading-tight">イエティのバター</h6></div>
+                <!-- 21 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-leaf text-3xl text-green-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントの結晶</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-leaf text-3xl text-green-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントの結晶</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-leaf text-3xl text-green-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントの結晶</h6></div>
+                <!-- 22 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-water text-3xl text-blue-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">氷河の水</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-water text-3xl text-blue-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">氷河の水</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-water text-3xl text-blue-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">氷河の水</h6></div>
+                <!-- 23 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cubes text-3xl text-stone-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ダークチョコの塊</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cubes text-3xl text-stone-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ダークチョコの塊</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cubes text-3xl text-stone-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">ダークチョコの塊</h6></div>
+                <!-- 24 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-200 bg-blue-100 rounded-full p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">雪の結晶の砂糖</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-200 bg-blue-100 rounded-full p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">雪の結晶の砂糖</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-regular fa-snowflake text-3xl text-blue-200 bg-blue-100 rounded-full p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">雪の結晶の砂糖</h6></div>
+                <!-- 25 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-blender text-3xl text-purple-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">シュガープラムピューレ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-blender text-3xl text-purple-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">シュガープラムピューレ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-blender text-3xl text-purple-400 mb-2"></i><h6 class="font-bold text-sm leading-tight">シュガープラムピューレ</h6></div>
+                <!-- 26 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-pink-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">お菓子の国の砂糖</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-pink-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">お菓子の国の砂糖</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-candy-cane text-3xl text-pink-300 mb-2"></i><h6 class="font-bold text-sm leading-tight">お菓子の国の砂糖</h6></div>
+                <!-- 27 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-pepper-hot text-3xl text-red-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">踊るスパイスミックス</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-pepper-hot text-3xl text-red-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">踊るスパイスミックス</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-pepper-hot text-3xl text-red-600 mb-2"></i><h6 class="font-bold text-sm leading-tight">踊るスパイスミックス</h6></div>
+                <!-- 28 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie-bite text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">クルミ兵士のクランブル</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie-bite text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">クルミ兵士のクランブル</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-cookie-bite text-3xl text-amber-800 mb-2"></i><h6 class="font-bold text-sm leading-tight">クルミ兵士のクランブル</h6></div>
+                <!-- 29 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-square text-3xl text-slate-100 bg-slate-400 rounded p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">北極のホワイトチョコ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-square text-3xl text-slate-100 bg-slate-400 rounded p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">北極のホワイトチョコ</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-square text-3xl text-slate-100 bg-slate-400 rounded p-1 mb-2"></i><h6 class="font-bold text-sm leading-tight">北極のホワイトチョコ</h6></div>
+                <!-- 30 -->
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-ruler-horizontal text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントのレール</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-ruler-horizontal text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントのレール</h6></div>
+                <div class="bg-white p-2 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg h-40 flex flex-col items-center justify-center break-inside-avoid"><i class="fa-solid fa-ruler-horizontal text-3xl text-red-500 mb-2"></i><h6 class="font-bold text-sm leading-tight">ペパーミントのレール</h6></div>
+
             </div>
         </section>
-
-        <!-- Part 3: INGREDIENT CARDS FRONT (Japanese) -->
-        <section class="break-before-page mt-12">
-     <div class="text-center mb-8">
-        <h3 class="text-3xl font-bold text-green-700">Print Part 3: Ingredient Cards Front (Japanese)</h3>
-        <p class="text-slate-600">Total: 100 Cards (20 Secret + 80 Regular). Print this side first.<br>合計100枚（秘密20枚＋通常80枚）。まずこの面を印刷してください。</p>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-        <!-- === 20 SECRET INGREDIENTS === -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-fire text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ほんの少しの勇気</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart text-4xl text-pink-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">一つまみの優しさ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bolt text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">生命のひらめき</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-eye text-4xl text-blue-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">一滴の集中力</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mug-hot text-4xl text-orange-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">スプーン一杯の温もり</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-user-secret text-4xl text-slate-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">秘密のささやき</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-music text-4xl text-purple-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">一節のメロディ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wand-magic-sparkles text-4xl text-indigo-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">不思議に思う心</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-microphone text-4xl text-pink-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">歌の一節</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-sun text-4xl text-amber-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">一筋の希望</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-laugh-squint text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">爆笑の渦</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-person-falling text-4xl text-orange-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">信じて飛ぶ勇気</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-eye-low-vision text-4xl text-indigo-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">美しさへの感動</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-rotate text-4xl text-lime-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">心変わり</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-dove text-4xl text-teal-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">平和なひととき</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart-pulse text-4xl text-yellow-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">命の鼓動</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lips text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">恋の予感</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-dumbbell text-4xl text-sky-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">耐え抜く強さ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-magnifying-glass-plus text-4xl text-emerald-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">細部へのこだわり</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-rotate-left text-4xl text-gray-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">セカンドチャンス</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- === 80 REGULAR INGREDIENTS (4 per Recipe x 20 Recipes) === -->
-
-        <!-- Recipe 1 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">スターライト・スプリンクル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cookie text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ココア・コメット</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cow text-4xl text-slate-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">天の川ミルク</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-snowflake text-4xl text-cyan-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">砂糖の雪の結晶</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 2 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mountain text-4xl text-green-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">クランピット山の小麦粉</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-jar text-4xl text-amber-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">マックスの糖蜜</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mortar-pestle text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">フー村のスパイス</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-spray-can text-4xl text-green-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">グリンチアイシング</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 3 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-blue-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">降りたての新雪</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-slate-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">冬風シロップ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-icicles text-4xl text-cyan-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">つららのクランチ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-circle-dot text-4xl text-blue-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ブルーベリーのボタン</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 4 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wheat-awn text-4xl text-yellow-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">仕事場のオーツ麦</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-candy-cane text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">キャンディケイン粒</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-hammer text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">トフィーの工具ビット</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-screwdriver-wrench text-4xl text-slate-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ナッツとボルトMIX</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 5 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bowl-rice text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">天使のオーツトッピング</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-sun text-4xl text-orange-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">シナモンの太陽</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mound text-4xl text-amber-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ブラウンシュガーの砂</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cube text-4xl text-yellow-100 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">イエティのバター</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 6 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-leaf text-4xl text-green-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ペパーミントの結晶</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-water text-4xl text-blue-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">氷河の水</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cubes text-4xl text-stone-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ダークチョコの塊</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-white bg-blue-200 rounded-full p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">雪の結晶の砂糖</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 7 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-blender text-4xl text-purple-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">シュガープラムピューレ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-candy-cane text-4xl text-pink-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">お菓子の国の砂糖</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-pepper-hot text-4xl text-red-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">踊るスパイスミックス</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cookie-bite text-4xl text-amber-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">クルミ兵士のクランブル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 8 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-square text-4xl text-slate-100 bg-slate-300 rounded mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">北極のホワイトチョコ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-ruler-horizontal text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ペパーミントのレール</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-archway text-4xl text-stone-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ダークチョコトンネル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bell text-4xl text-slate-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">食べられる銀のベル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 9 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wine-glass text-4xl text-red-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">チェリージュース</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-jar text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">蜂蜜のハーモニー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-yellow-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">レモンゼストトレブル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-root-variable text-4xl text-amber-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ジンジャーのベース音</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 10 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star-of-life text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">星屑の小麦粉</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-grip-lines-vertical text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">黄金バターの光線</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-droplet text-4xl text-stone-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">バニラのエッセンス</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wand-sparkles text-4xl text-yellow-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">レモンきらめきグレーズ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 11 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-stone-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ダークカカオの粉塵</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-square text-4xl text-red-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">レンガ色のベルベット</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-white bg-blue-100 rounded-full p-2 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">雲のマシュマロ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-house-chimney text-4xl text-stone-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">屋根瓦チョコ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 12 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-pretzel text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">角プレッツェル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-seedling text-4xl text-green-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">魔法の苔</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-coins text-4xl text-orange-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">コイン人参</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mountain text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">高高度ナッツ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 13 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bottle-droplet text-4xl text-lime-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ネオンシロップ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star-half-stroke text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">星明かりのゼラチン</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-magnet text-4xl text-red-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">磁気ベリージュース</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-orange-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">太陽風シュガー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 14 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-grapes text-4xl text-purple-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">不機嫌なブドウ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">酸っぱいレモン</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-green-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">苦いライムの皮</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart-crack text-4xl text-stone-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">硬い心のキャンディ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 15 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-moon text-4xl text-yellow-100 mb-3 bg-slate-800 rounded-full p-1"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">月光のカモミール</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-slate-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">静寂の雪片</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-plant-wilt text-4xl text-purple-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">夢見るラベンダー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-blue-50 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">穏やかな雲</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 16 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-music text-4xl text-amber-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">リズムライスパフ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-drum text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ドラムビートチョコ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-clock text-4xl text-yellow-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ぜんまいキャラメル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-oil-can text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">金の潤滑バター</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 17 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-kiss-wink-heart text-4xl text-pink-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">キス・ベリー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-tree text-4xl text-green-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">常緑のミント</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-flushed text-4xl text-red-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">赤面ローズフロスティング</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-envelope-open-text text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ラブレター・スプリンクル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 18 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-slate-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">暴風の氷</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-snowflake text-4xl text-blue-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ツンドラベリー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-temperature-arrow-down text-4xl text-cyan-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">凍傷ミント</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-spoon text-4xl text-white bg-blue-300 rounded-full p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">大雪ヨーグルト</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 19 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-braille text-4xl text-pink-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">極小スプリンクル</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bag-shopping text-4xl text-amber-100 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ミニチュア小麦粉袋</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cube text-4xl text-white bg-slate-200 rounded p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">マイクロシュガー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-laugh-beam text-4xl text-emerald-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">小さな笑い声グレーズ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 20 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bacterium text-4xl text-stone-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ブラックカカオ</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-file-circle-xmark text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">悪い子リストの紙</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-fire-burner text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">煙突の灰シュガー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mug-hot text-4xl text-black mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">ダークソウル・コーヒー</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-    </div>
-</section>
-
-        <!-- Part 4: INGREDIENT CARDS BACK (English) -->
-        <section class="break-before-page mt-12">
-     <div class="text-center mb-8">
-        <h3 class="text-3xl font-bold text-green-700">Print Part 4: Ingredient Cards Back (English)</h3>
-        <p class="text-slate-600">Total: 100 Cards (20 Secret + 80 Regular). Print on back of Part 3.<br>合計100枚。Part 3の裏面に印刷してください。</p>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-
-        <!-- === 20 SECRET INGREDIENTS === -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-fire text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Dash of Courage</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart text-4xl text-pink-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Pinch of Kindness</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bolt text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Spark of Life</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-eye text-4xl text-blue-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Drop of Focus</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mug-hot text-4xl text-orange-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Spoonful of Warmth</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-user-secret text-4xl text-slate-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Whisper of a Secret</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-music text-4xl text-purple-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Note of a Melody</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wand-magic-sparkles text-4xl text-indigo-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Sense of Wonder</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-microphone text-4xl text-pink-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Verse of a Song</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-sun text-4xl text-amber-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Glimmer of Hope</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-laugh-squint text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Burst of Laughter</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-person-falling text-4xl text-orange-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Leap of Faith</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-eye-low-vision text-4xl text-indigo-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Vision of Beauty</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-rotate text-4xl text-lime-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Change of Heart</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-dove text-4xl text-teal-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Moment of Peace</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart-pulse text-4xl text-yellow-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">The Beat of a Heart</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lips text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Spark of Romance</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-dumbbell text-4xl text-sky-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">The Strength to Endure</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-magnifying-glass-plus text-4xl text-emerald-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Attention to Detail</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-rotate-left text-4xl text-gray-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">A Second Chance</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- === 80 REGULAR INGREDIENTS (4 per Recipe x 20 Recipes) === -->
-
-        <!-- Recipe 1 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Starlight Sprinkles</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cookie text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Cocoa Comets</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cow text-4xl text-slate-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Milky Way Milk</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-snowflake text-4xl text-cyan-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Sugar Snowflakes</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 2 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mountain text-4xl text-green-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Mount Crumpit Flour</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-jar text-4xl text-amber-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Max's Molasses</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mortar-pestle text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Who-Hash Spices</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-spray-can text-4xl text-green-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Grinch-Green Icing</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 3 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-blue-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Freshly Fallen Snow</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-slate-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Winter Wind Syrup</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-icicles text-4xl text-cyan-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Icicle Crunchies</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-circle-dot text-4xl text-blue-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Blueberry Buttons</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 4 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wheat-awn text-4xl text-yellow-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Workshop Oats</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-candy-cane text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Candy Cane Pellets</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-hammer text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Toffee Tool Bits</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-screwdriver-wrench text-4xl text-slate-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Nut & Bolt Mix</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 5 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bowl-rice text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Angel's Oat Topping</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-sun text-4xl text-orange-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Cinnamon Sunshine</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mound text-4xl text-amber-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Brown Sugar Sand</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cube text-4xl text-yellow-100 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Yeti Butter</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 6 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-leaf text-4xl text-green-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Peppermint Crystals</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-water text-4xl text-blue-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Glacier Water</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cubes text-4xl text-stone-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dark Choco Chunks</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-white bg-blue-200 rounded-full p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Snowflake Sugar</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 7 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-blender text-4xl text-purple-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Sugar Plum Puree</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-candy-cane text-4xl text-pink-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Land of Sweets Sugar</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-pepper-hot text-4xl text-red-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dancing Spice Mix</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cookie-bite text-4xl text-amber-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Walnut Soldier Crumbs</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 8 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-square text-4xl text-slate-100 bg-slate-300 rounded mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">North Pole White Choco</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-ruler-horizontal text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Peppermint Stick Rails</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-archway text-4xl text-stone-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dark Choco Tunnels</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bell text-4xl text-slate-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Edible Silver Bells</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 9 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wine-glass text-4xl text-red-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Cherry Juice</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-jar text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Honey Harmonies</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-yellow-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Lemon Zest Trebles</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-root-variable text-4xl text-amber-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Ginger Bass Notes</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 10 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star-of-life text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Stardust Flour</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-grip-lines-vertical text-4xl text-yellow-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Golden Butter Rays</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-droplet text-4xl text-stone-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Vanilla Bean Essence</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wand-sparkles text-4xl text-yellow-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Lemon Twinkle Glaze</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 11 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-stone-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dark Cocoa Dust</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-square text-4xl text-red-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Brick-Red Velvet</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-white bg-blue-100 rounded-full p-2 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Cloud Marshmallows</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-house-chimney text-4xl text-stone-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Roof Shingle Choco</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 12 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-pretzel text-4xl text-amber-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Antler Pretzels</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-seedling text-4xl text-green-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Magic Moss</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-coins text-4xl text-orange-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Carrot Coins</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mountain text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">High-Altitude Nuts</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 13 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bottle-droplet text-4xl text-lime-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Neon Syrup</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-star-half-stroke text-4xl text-yellow-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Starlight Gelatin</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-magnet text-4xl text-red-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Magnetic Berry Juice</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-orange-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Solar Wind Sugar</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 14 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-grapes text-4xl text-purple-800 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Grumpy Grapes</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Sour Lemon Drops</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-lemon text-4xl text-green-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Bitter Lime Zest</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-heart-crack text-4xl text-stone-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Hard Heart Candy</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 15 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-moon text-4xl text-yellow-100 mb-3 bg-slate-800 rounded-full p-1"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Moonlight Chamomile</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-regular fa-snowflake text-4xl text-slate-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Silent Snowflakes</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-plant-wilt text-4xl text-purple-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dreamy Lavender</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cloud text-4xl text-blue-50 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Calm Clouds</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 16 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-music text-4xl text-amber-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Rhythm Rice Crispies</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-drum text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Drumbeat Chocolate</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-clock text-4xl text-yellow-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Clockwork Caramel</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-oil-can text-4xl text-yellow-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Golden Greased Butter</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 17 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-kiss-wink-heart text-4xl text-pink-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Kissing Berries</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-tree text-4xl text-green-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Evergreen Mint</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-flushed text-4xl text-red-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Blushing Rose Frosting</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-envelope-open-text text-4xl text-red-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Love Letter Sprinkles</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 18 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-wind text-4xl text-slate-300 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Howling Wind Ice</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-snowflake text-4xl text-blue-200 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Tundra Berries</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-temperature-arrow-down text-4xl text-cyan-600 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Frostbite Mint</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-spoon text-4xl text-white bg-blue-300 rounded-full p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Deep Snow Yogurt</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 19 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-braille text-4xl text-pink-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Tiny Sprinkles</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bag-shopping text-4xl text-amber-100 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Miniature Flour</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-cube text-4xl text-white bg-slate-200 rounded p-1 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Micro-Sugar</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-face-laugh-beam text-4xl text-emerald-400 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Little Laughs Glaze</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-
-        <!-- Recipe 20 -->
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-bacterium text-4xl text-stone-900 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Black Cocoa</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-file-circle-xmark text-4xl text-red-700 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Naughty List Paper</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-fire-burner text-4xl text-stone-500 mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Chimney Ash Sugar</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-        <div class="bg-white p-4 border-2 border-dashed border-slate-300 rounded-lg text-center ingredient-bg break-inside-avoid flex flex-col items-center justify-center h-48"><i class="fa-solid fa-mug-hot text-4xl text-black mb-3"></i><h6 class="font-bold text-slate-800 text-lg leading-tight">Dark Soul Coffee</h6><p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest">Ingredient Card</p></div>
-    </div>
-</section>
 
     </main>
 
     <footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-12 no-print">
-        <p class="lang-en mb-2">Game Concept & Plan. Let's make this a Christmas to remember!</p>
-        <p class="lang-jp mb-2">ゲームコンセプト＆プラン。記憶に残るクリスマスにしましょう！</p>
-        <p class="text-xs opacity-50">
-            <span class="lang-en">Invented by: Suman Shrestha</span>
-            <span class="lang-jp">ゲーム考案者：Suman Shrestha</span>
-        </p>
+        <p class="mb-2 font-bold">最高のクリスマスになりますように！</p>
+        <p class="text-xs opacity-50">Invented by: Suman Shrestha</p>
     </footer>
-
-    <script>
-        // JavaScript for Language Toggle
-        const btnEn = document.getElementById('btn-en');
-        const btnJp = document.getElementById('btn-jp');
-        const body = document.body;
-
-        function setLanguage(lang) {
-            if (lang === 'jp') {
-                body.classList.add('show-jp');
-                btnJp.classList.add('active');
-                btnJp.classList.replace('text-slate-500', 'text-white');
-                btnJp.classList.remove('hover:bg-slate-100');
-
-                btnEn.classList.remove('active');
-                btnEn.classList.replace('text-white', 'text-slate-500');
-                btnEn.classList.add('hover:bg-slate-100');
-
-                document.documentElement.lang = 'ja';
-            } else {
-                body.classList.remove('show-jp');
-                btnEn.classList.add('active');
-                btnEn.classList.replace('text-slate-500', 'text-white');
-                btnEn.classList.remove('hover:bg-slate-100');
-
-                btnJp.classList.remove('active');
-                btnJp.classList.replace('text-white', 'text-slate-500');
-                btnJp.classList.add('hover:bg-slate-100');
-
-                document.documentElement.lang = 'en';
-            }
-        }
-
-        btnEn.addEventListener('click', () => setLanguage('en'));
-        btnJp.addEventListener('click', () => setLanguage('jp'));
-
-        // Set initial state
-        setLanguage('en');
-    </script>
 
 </body>
 </html>
