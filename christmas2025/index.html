@@ -74,13 +74,13 @@
                 <i class="fa-solid fa-candy-cane text-red-600 text-2xl"></i>
                 <h1 class="text-lg md:text-xl font-bold text-slate-800 leading-tight">
                     Santa's Secret Ingredient
-                    <span class="text-sm font-normal text-slate-500 ml-2">100名・料理対決編</span>
+                    <span class="text-sm font-normal text-slate-500 ml-2">関西米山学友会</span>
                 </h1>
             </div>
             <div class="flex space-x-2">
-                <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded-full font-bold hover:bg-slate-700 transition text-sm">
-                    <i class="fa-solid fa-print mr-2"></i> 印刷する
-                </button>
+<!--                <button onclick="window.print()" class="bg-slate-800 text-white px-4 py-2 rounded-full font-bold hover:bg-slate-700 transition text-sm">-->
+<!--                    <i class="fa-solid fa-print mr-2"></i> 印刷する-->
+<!--                </button>-->
             </div>
         </div>
     </header>
@@ -104,42 +104,89 @@
         <div class="space-y-12">
 
             <!-- 遊び方ガイド -->
-            <section class="no-print">
-                <div class="flex items-center gap-3 mb-6">
-                    <div class="h-8 w-2 bg-red-600 rounded-full"></div>
-                    <h3 class="text-2xl font-bold text-slate-800">遊び方ガイド</h3>
+            <section class="no-print space-y-8">
+
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="h-8 w-2 bg-red-600 rounded-full"></div>
+                        <h3 class="text-2xl font-bold text-slate-800">遊び方ガイド（手順）</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 bg-red-100 w-12 h-12 rounded-full flex items-center justify-center text-red-600 font-bold">1</div>
+                            <i class="fa-solid fa-ticket text-3xl text-red-500 mb-3"></i>
+                            <h4 class="font-bold text-lg mb-1">受付</h4>
+                            <p class="text-sm text-slate-600">到着時に<b>「材料カード」</b>を1枚受け取ります。これがあなたの初期装備です。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 bg-orange-100 w-12 h-12 rounded-full flex items-center justify-center text-orange-600 font-bold">2</div>
+                            <i class="fa-solid fa-envelope-open-text text-3xl text-orange-500 mb-3"></i>
+                            <h4 class="font-bold text-lg mb-1">レシピ解禁</h4>
+                            <p class="text-sm text-slate-600">テーブルの<b>「封筒」</b>を一斉に開封。チームで作るべき担当料理を確認します。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center text-yellow-600 font-bold">3</div>
+                            <i class="fa-solid fa-users-gear text-3xl text-yellow-500 mb-3"></i>
+                            <h4 class="font-bold text-lg mb-1">在庫確認</h4>
+                            <p class="text-sm text-slate-600">チームメンバーの手持ち材料を見せ合います。何が足りないか作戦会議！</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 font-bold">4</div>
+                            <i class="fa-solid fa-right-left text-3xl text-green-500 mb-3"></i>
+                            <h4 class="font-bold text-lg mb-1">交換タイム</h4>
+                            <p class="text-sm text-slate-600">他のテーブルと交渉して材料を交換。必要な食材<b>5つ</b>を揃えます。</p>
+                        </div>
+                        <div class="bg-slate-800 text-white p-5 rounded-xl shadow-sm relative overflow-hidden ring-4 ring-yellow-400/30">
+                            <div class="absolute -right-4 -top-4 bg-yellow-400 w-12 h-12 rounded-full flex items-center justify-center text-slate-900 font-bold">5</div>
+                            <i class="fa-solid fa-flag-checkered text-3xl text-yellow-400 mb-3"></i>
+                            <h4 class="font-bold text-lg mb-1 text-yellow-400">完成＆宣言</h4>
+                            <p class="text-sm text-gray-300">
+                                揃ったらスタッフに<b>「メリークリスマス！」</b>と叫んでください。
+                                <br><span class="text-yellow-200 text-xs mt-1 block">※着順で「順位点」が確定します。その後プレゼン準備へ。</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 bg-red-100 w-12 h-12 rounded-full flex items-center justify-center text-red-600 font-bold">1</div>
-                        <i class="fa-solid fa-ticket text-3xl text-red-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1">受付</h4>
-                        <p class="text-sm text-slate-600">到着時に<b>「材料カード」</b>を1枚受け取ります。</p>
+
+                <div class="bg-red-50 rounded-2xl p-6 border-2 border-red-100">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fa-solid fa-trophy text-2xl text-red-600"></i>
+                        <h3 class="text-xl font-bold text-slate-800">勝利へのカギ（合計100点満点）</h3>
                     </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 bg-orange-100 w-12 h-12 rounded-full flex items-center justify-center text-orange-600 font-bold">2</div>
-                        <i class="fa-solid fa-envelope-open-text text-3xl text-orange-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1">レシピ解禁</h4>
-                        <p class="text-sm text-slate-600">テーブルの<b>「封筒」</b>を開け、チームの担当料理を確認。</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 bg-yellow-100 w-12 h-12 rounded-full flex items-center justify-center text-yellow-600 font-bold">3</div>
-                        <i class="fa-solid fa-users-gear text-3xl text-yellow-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1">在庫確認</h4>
-                        <p class="text-sm text-slate-600">チームの手持ち材料を見せ合います。</p>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 relative overflow-hidden">
-                        <div class="absolute -right-4 -top-4 bg-green-100 w-12 h-12 rounded-full flex items-center justify-center text-green-600 font-bold">4</div>
-                        <i class="fa-solid fa-right-left text-3xl text-green-500 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1">交換タイム</h4>
-                        <p class="text-sm text-slate-600">他のテーブルと交渉して、必要な食材を5つ集めます。</p>
-                    </div>
-                    <div class="bg-slate-800 text-white p-5 rounded-xl shadow-sm relative overflow-hidden">
-                        <i class="fa-solid fa-star text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="font-bold text-lg mb-1 text-yellow-400">勝利！</h4>
-                        <p class="text-sm text-gray-300">全ての材料揃ったら、<b>「メリークリスマス！」</b>と叫び、プレゼンの準備。</p>
+                    <p class="text-sm text-slate-600 mb-4">
+                        勝利するには<b>「スピード」</b>と<b>「面白いプレゼン力」</b>の両方が必要です。
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-700">① 料理完成スピード</span>
+                                <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-bold">最大50点</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-2">スタッフに「メリークリスマス！」と宣言した着順で点数が決まります。</p>
+                            <ul class="text-sm text-slate-700 space-y-1">
+                                <li><i class="fa-solid fa-crown text-yellow-500 mr-2"></i><b>1位：50点</b></li>
+                                <li><i class="fa-solid fa-medal text-slate-400 mr-2"></i><b>2位：45点</b></li>
+                                <li><i class="fa-solid fa-medal text-amber-700 mr-2"></i><b>3位：40点</b> <span class="text-xs text-slate-400">（以降5点ずつダウン）</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-slate-700">② プレゼン審査</span>
+                                <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-sm font-bold">最大50点</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-2">材料が揃った後、チームごとに料理のアピールを行います。</p>
+                            <div class="bg-slate-50 p-3 rounded text-sm text-slate-700">
+                                <p class="mb-1"><b><i class="fa-solid fa-user-tie mr-2"></i>審査員が採点します！</b></p>
+                                <p class="text-xs text-slate-500">
+                                    「面白さ」「ストーリー性」「チームワーク」などをアピールして、審査員の心を掴んでください！
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </section>
 
             <!-- カード例とプレゼン台本 -->
@@ -275,7 +322,7 @@
                 </div>
             </section>
         </div>
-
+<div>
 <!--        &lt;!&ndash; ==================== 印刷セクション ==================== &ndash;&gt;-->
 
 <!--        &lt;!&ndash; Part 1: レシピカード (10チーム分) &ndash;&gt;-->
@@ -635,7 +682,7 @@
 
 <!--    </div>-->
 <!--</section>-->
-
+</div>
     </main>
 
     <footer class="bg-slate-900 text-slate-400 text-center py-8 px-4 mt-12 no-print">
