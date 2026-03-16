@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lipreading AI Development Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .flow-arrow {
+            animation: pulse-arrow 2s infinite;
+        }
+
+        @keyframes pulse-arrow {
+            0% { transform: translateX(0); opacity: 0.5; }
+            50% { transform: translateX(10px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 0.5; }
+        }
+
+        /* Switch Toggle */
+        .switch-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch-toggle input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #3b82f6; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: "EN"; color: #0f172a; font-size: 10px; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            height: 26px; width: 26px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #ec4899; }
+        input:checked + .slider:before {
+            transform: translateX(26px); content: "JP";
+        }
+
+        /* Custom Reveal Animation */
+        @keyframes fadeInUpCustom {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-reveal {
+            animation: fadeInUpCustom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Interactive Card States */
+        .interactive-card {
+            cursor: pointer;
+        }
+        .interactive-card:active {
+            transform: scale(0.98);
+        }
+        .interactive-card.revealed {
+            cursor: default;
+        }
+        .interactive-card.revealed:active {
+            transform: translateY(-5px);
+        }
+
+        /* Modal Scrollbar */
+        #modalContainer::-webkit-scrollbar {
+            width: 8px;
+        }
+        #modalContainer::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 4px;
+        }
+        #modalContainer::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.5);
+            border-radius: 4px;
+        }
+        #modalContainer::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.8);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white relative">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 glass-card rounded-none border-x-0 border-t-0 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text font-bold text-2xl tracking-tighter">
+                HYOGO ASSISTECH
+            </div>
+            <div class="hidden md:block h-6 w-px bg-slate-600"></div>
+            <div class="hidden md:block font-semibold text-slate-300">
+                100年、あるこう RoboWELL®
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-sm font-semibold text-slate-400">Language</span>
+            <label class="switch-toggle">
+                <!-- Checked by default for JP -->
+                <input type="checkbox" id="langSwitch" onchange="toggleLanguage()" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
+
+        <!-- Header Section -->
+        <header class="text-center my-12" data-aos="fade-up">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 lang-text"
+                data-en="Streaming Lip-reading AI Development"
+                data-jp="読唇術技術を用いた言語化の開発">
+                読唇術技術を用いた言語化の開発
+            </h1>
+            <p class="text-slate-400 max-w-3xl mx-auto text-lg lang-text"
+               data-en="Transitioning from constrained datasets to real-time, variable-length streaming communication for daily living."
+               data-jp="制約のあるデータセットから、日常生活におけるリアルタイムかつ長さが可変なストリーミングコミュニケーションへの移行。">
+                制約のあるデータセットから、日常生活におけるリアルタイムかつ長さが可変なストリーミングコミュニケーションへの移行。
+            </p>
+        </header>
+
+        <!-- Project Roadmap Status -->
+        <section class="mb-20" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-8 text-center lang-text" data-en="Project Roadmap Status" data-jp="プロジェクト・ロードマップ状況">プロジェクト・ロードマップ状況</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Done (Card 1) -->
+                <div id="card1" class="glass-card p-6 border-t-4 border-green-500 relative overflow-hidden interactive-card hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] transition-all duration-300" onclick="revealStep(2)">
+                    <button onclick="openModal('card1', event)" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-2 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600" title="Expand Details">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                    <div class="absolute -right-4 -bottom-4 text-green-500/10"><i class="fa-solid fa-check-double text-8xl"></i></div>
+                    <div class="flex items-center gap-3 mb-4 text-green-400">
+                        <i class="fa-solid fa-check-circle text-2xl"></i>
+                        <h3 class="text-xl font-bold lang-text" data-en="1. What We Have Done" data-jp="1. 完了したこと">1. 完了したこと</h3>
+                    </div>
+                    <p class="text-slate-300 font-semibold mb-2 lang-text" data-en="JGRID Dataset Completed" data-jp="JGRIDデータセットの完成">JGRIDデータセットの完成</p>
+                    <p class="text-slate-400 text-sm lang-text" data-en="Successfully created a good dataset for Japanese lipreading and tested initial models on it." data-jp="日本語の読唇術に適したデータセットを構築し、初期モデルのテストに成功しました。">日本語の読唇術に適したデータセットを構築し、初期モデルのテストに成功しました。</p>
+
+                    <!-- Click Hint -->
+                    <div id="hint1" class="mt-6 pt-4 border-t border-slate-700/50 text-center text-green-400 text-xs font-bold animate-pulse">
+                        <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                    </div>
+                </div>
+
+                <!-- Problem (Card 2) - Hidden initially -->
+                <div id="card2" class="glass-card p-6 border-t-4 border-yellow-500 relative overflow-hidden hidden opacity-0 interactive-card hover:shadow-[0_0_20px_rgba(234,179,8,0.3)] transition-all duration-300" onclick="revealStep(3)">
+                    <button onclick="openModal('card2', event)" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-2 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600" title="Expand Details">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                    <div class="absolute -right-4 -bottom-4 text-yellow-500/10"><i class="fa-solid fa-triangle-exclamation text-8xl"></i></div>
+                    <div class="flex items-center gap-3 mb-4 text-yellow-400">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl"></i>
+                        <h3 class="text-xl font-bold lang-text" data-en="2. The Challenge (Now On)" data-jp="2. 現在の課題">2. 現在の課題</h3>
+                    </div>
+                    <p class="text-slate-300 font-semibold mb-2 lang-text" data-en="LipNet Limitation: Fixed Length" data-jp="LipNetの限界: 固定長">LipNetの限界: 固定長</p>
+                    <p class="text-slate-400 text-sm lang-text" data-en="Current LipNet models require fixed-length video input, making them unsuitable for real-time streaming communication." data-jp="現在のLipNetモデルは固定長の動画入力が必要なため、リアルタイムのストリーミング通信には不向きです。">現在のLipNetモデルは固定長の動画入力が必要なため、リアルタイムのストリーミング通信には不向きです。</p>
+
+                    <!-- Click Hint -->
+                    <div id="hint2" class="mt-6 pt-4 border-t border-slate-700/50 text-center text-yellow-400 text-xs font-bold animate-pulse">
+                        <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                    </div>
+                </div>
+
+                <!-- Necessary (Card 3) - Hidden initially -->
+                <div id="card3" class="glass-card p-6 border-t-4 border-blue-500 relative overflow-hidden hidden opacity-0 interactive-card hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300" onclick="revealStep(4)">
+                    <button onclick="openModal('card3', event)" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-2 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600" title="Expand Details">
+                        <i class="fa-solid fa-expand"></i>
+                    </button>
+                    <div class="absolute -right-4 -bottom-4 text-blue-500/10"><i class="fa-solid fa-forward-fast text-8xl"></i></div>
+                    <div class="flex items-center gap-3 mb-4 text-blue-400">
+                        <i class="fa-solid fa-bullseye text-2xl"></i>
+                        <h3 class="text-xl font-bold lang-text" data-en="3. What is Necessary" data-jp="3. 今後必要なこと">3. 今後必要なこと</h3>
+                    </div>
+                    <p class="text-slate-300 font-semibold mb-2 lang-text" data-en="Transition to Vision Transformer (ViT)" data-jp="Vision Transformer (ViT)への移行">Vision Transformer (ViT)への移行</p>
+                    <p class="text-slate-400 text-sm lang-text" data-en="Develop ViT for variable-length streaming. Execute 3 core tracks simultaneously within this year." data-jp="可変長ストリーミングに対応するViTを開発。今年中に3つのコアトラックを同時進行で実行します。">可変長ストリーミングに対応するViTを開発。今年中に3つのコアトラックを同時進行で実行します。</p>
+
+                    <!-- Click Hint -->
+                    <div id="hint3" class="mt-6 pt-4 border-t border-slate-700/50 text-center text-blue-400 text-xs font-bold animate-pulse">
+                        <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal Main Roadmap" data-jp="クリックしてロードマップを表示">クリックしてロードマップを表示</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN CONTENT CONTAINER (Hidden until Card 3 is clicked) -->
+        <div id="mainContent" class="hidden opacity-0">
+
+            <!-- Core Concept Integration -->
+            <section class="mb-20">
+                <div class="glass-card p-6 md:p-10" data-aos="zoom-in">
+                    <h2 class="text-xl font-bold mb-8 text-center text-blue-400 lang-text"
+                        data-en="Core Concept: Transfer Learning to Assistive Tech"
+                        data-jp="コアコンセプト：支援技術への転移学習">
+                        コアコンセプト：支援技術への転移学習
+                    </h2>
+                    <div class="flex flex-col lg:flex-row items-center justify-center gap-6">
+                        <div class="flex-1 bg-slate-800/50 p-6 rounded-xl border border-slate-700 w-full text-center hover:border-blue-500/50 transition-colors">
+                            <div class="flex items-center justify-center gap-4 mb-4">
+                                <i class="fa-solid fa-users text-3xl text-blue-500"></i><i class="fa-solid fa-arrow-right text-slate-500"></i><i class="fa-solid fa-brain text-4xl text-purple-500"></i>
+                            </div>
+                            <h3 class="font-bold mb-2 lang-text" data-en="Learn Japanese Mouth Movements" data-jp="日本語の口の動きを学習">日本語の口の動きを学習</h3>
+                            <p class="text-sm text-slate-400 lang-text" data-en="General Japanese Speakers -> Lip-reading AI" data-jp="日本語話者 → 読唇術 AI">日本語話者 → 読唇術 AI</p>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="text-xs font-bold text-pink-500 mb-1 lang-text" data-en="Transfer Learning" data-jp="転移学習">転移学習</span>
+                            <i class="fa-solid fa-arrow-right text-3xl text-pink-500 flow-arrow lg:block hidden"></i>
+                            <i class="fa-solid fa-arrow-down text-3xl text-pink-500 flow-arrow block lg:hidden my-4"></i>
+                        </div>
+                        <div class="flex-1 bg-slate-800/50 p-6 rounded-xl border border-slate-700 w-full text-center hover:border-pink-500/50 transition-colors">
+                            <div class="flex items-center justify-center gap-4 mb-4">
+                                <i class="fa-solid fa-wheelchair text-3xl text-pink-400"></i><i class="fa-solid fa-arrow-right text-slate-500"></i><i class="fa-solid fa-microchip text-4xl text-blue-400"></i>
+                            </div>
+                            <h3 class="font-bold mb-2 lang-text" data-en="AI for People with Disabilities" data-jp="障がい者向け読唇術AI">障がい者向け読唇術AI</h3>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Convert to Voice, Control Appliances, Vocal Training" data-jp="音声変換、家電制御、発声訓練">音声変換、家電制御、発声訓練</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Simultaneous Tracks (The 3 Main Steps) with TRUE SCALE Vertical Timeline -->
+            <section class="mb-24">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl font-bold mb-4 lang-text" data-en="2026 Simultaneous Execution Plan" data-jp="2026年 同時進行実行計画">2026年 同時進行実行計画</h2>
+                    <p class="text-slate-400 lang-text" data-en="Milestones will be developed in parallel mapped accurately to their operational duration." data-jp="各マイルストーンは、実際の運用期間に正確にマッピングされ、並行して開発されます。">各マイルストーンは、実際の運用期間に正確にマッピングされ、並行して開発されます。</p>
+                </div>
+
+                <!-- True Scale Grid Container -->
+                <div class="flex flex-col lg:grid lg:grid-cols-[80px_1fr_1fr_1fr] lg:grid-rows-[repeat(15,minmax(120px,auto))] gap-6 lg:gap-4 relative">
+
+                    <!-- TIMELINE AXIS (Col 1, Rows 1-15) Desktop Only -->
+                    <!-- Continuous Vertical Line -->
+                    <div class="hidden lg:block lg:row-start-[1] lg:row-end-[16] lg:col-start-[1] relative">
+                        <div class="absolute right-[9px] top-4 bottom-0 w-0.5 bg-slate-700/80 rounded"></div>
+                    </div>
+
+                    <!-- Month Markers -->
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[1] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/1</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[2] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/2</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[3] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-blue-400">2026/3</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)] z-10 animate-pulse"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[4] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/4</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[5] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-purple-400">2026/5</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)] z-10 animate-pulse"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[6] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/6</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[7] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-pink-400">2026/7</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-pink-500 shadow-[0_0_10px_rgba(236,72,153,0.8)] z-10 animate-pulse"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[8] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-emerald-400">2026/8</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-emerald-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[9] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/9</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[10] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-indigo-400">2026/10</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-indigo-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[11] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/11</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[12] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2026/12</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[13] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-yellow-400">2027/1</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.8)] z-10 animate-pulse"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[14] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2027/2</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+                    <div class="hidden lg:flex justify-end pr-[20px] lg:row-start-[15] lg:col-start-[1] relative h-full pt-4">
+                        <div class="text-xs font-bold text-slate-500">2027/3</div>
+                        <div class="absolute right-[5px] top-[18px] w-2.5 h-2.5 rounded-full bg-slate-500 z-10"></div>
+                    </div>
+
+                    <!-- ==================== TRACK 1 ==================== -->
+                    <!-- Header -->
+                    <div class="lg:col-start-[2] lg:row-start-[2] bg-blue-900/40 border border-blue-500/30 p-4 rounded-xl text-center shadow-[0_0_15px_rgba(59,130,246,0.2)] flex items-center justify-center">
+                        <h3 class="font-bold text-blue-400 text-xl lang-text" data-en="Track 1: Model Accuracy" data-jp="トラック1: モデルと精度">トラック1: モデルと精度</h3>
+                    </div>
+
+                    <!-- T1 Step 1: Mar-Apr (Row 3-4) -->
+                    <div id="t1-s1" class="lg:col-start-[2] lg:row-start-[3] lg:row-end-[5] glass-card p-5 border-l-4 border-blue-500 relative group hover:border-l-8 transition-all interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('t1-s2', 't1-s1', 't1-h1')">
+                        <div>
+                            <button onclick="openModal('t1-s1', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="1. ViT & Curriculum Learning" data-jp="1. ViT & カリキュラム学習">1. ViT & カリキュラム学習</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-blue-500/30 text-xs font-mono text-blue-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/3 - 2026/4</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Build Vision Transformer (ViT). Train initially on CTC decoder." data-jp="Vision Transformer (ViT) の構築。初期はCTCデコーダで学習。">Vision Transformer (ViT) の構築。初期はCTCデコーダで学習。</p>
+                        </div>
+                        <div id="t1-h1" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-blue-400 text-[10px] font-bold animate-pulse">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T1 Step 2: May-Jul (Row 5-7) -->
+                    <div id="t1-s2" class="lg:col-start-[2] lg:row-start-[5] lg:row-end-[8] glass-card p-5 border-l-4 border-blue-500 relative group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('t1-s3', 't1-s2', 't1-h2')">
+                        <div>
+                            <button onclick="openModal('t1-s2', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="2. LLM Bridge & LoRA" data-jp="2. LLM統合とLoRA">2. LLM統合とLoRA</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-blue-500/30 text-xs font-mono text-blue-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/5 - 2026/7</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Apply LoRA to bridge visual encoder with the small LLM." data-jp="視覚エンコーダと小型LLMを繋ぐためにLoRAを適用。">視覚エンコーダと小型LLMを繋ぐためにLoRAを適用。</p>
+                        </div>
+                        <div id="t1-h2" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-blue-400 text-[10px] font-bold animate-pulse">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T1 Step 3: Aug-Sep (Row 8-9) -->
+                    <div id="t1-s3" class="lg:col-start-[2] lg:row-start-[8] lg:row-end-[10] glass-card p-5 border-l-4 border-blue-500 relative overflow-hidden group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('deploy', 't1-s3', 't1-h3')">
+                        <div class="relative z-10">
+                            <button onclick="openModal('t1-s3', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">03</span>
+                            <i class="fa-solid fa-fingerprint absolute right-0 top-1/2 text-5xl text-blue-500/10 transition-transform group-hover:scale-110 -translate-y-1/2"></i>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="3. Person Specific Adaptation" data-jp="3. 個人特化型アダプテーション">3. 個人特化型アダプテーション</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-blue-500/30 text-xs font-mono text-blue-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/8 - 2026/9</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Unfreeze ViT encoder layers + LoRA fine-tuning for specific patient." data-jp="ViTエンコーダの凍結解除と特定の患者向けのLoRA微調整。">ViTエンコーダの凍結解除と特定の患者向けのLoRA微調整。</p>
+                        </div>
+                        <div id="t1-h3" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-yellow-400 text-[10px] font-bold animate-pulse relative z-10">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal Deployment" data-jp="クリックして展開を表示">クリックして展開を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T1 Thread to Deployment (Row 10-12) -->
+                    <div id="t1-thread" class="hidden lg:flex justify-center opacity-0 transition-opacity duration-700 h-full lg:col-start-[2] lg:row-start-[10] lg:row-end-[13]">
+                        <div class="w-1 h-full bg-gradient-to-b from-blue-500 to-transparent"></div>
+                    </div>
+
+
+                    <!-- ==================== TRACK 2 ==================== -->
+                    <!-- Header -->
+                    <div class="lg:col-start-[3] lg:row-start-[2] bg-purple-900/40 border border-purple-500/30 p-4 rounded-xl text-center shadow-[0_0_15px_rgba(168,85,247,0.2)] flex items-center justify-center">
+                        <h3 class="font-bold text-purple-400 text-xl lang-text" data-en="Track 2: Application" data-jp="トラック2: アプリ開発">トラック2: アプリ開発</h3>
+                    </div>
+
+                    <!-- T2 Step 1: Mar-Apr (Row 3-4) -->
+                    <div id="t2-s1" class="lg:col-start-[3] lg:row-start-[3] lg:row-end-[5] glass-card p-5 border-l-4 border-purple-500 relative group hover:border-l-8 transition-all interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('t2-s2', 't2-s1', 't2-h1')">
+                        <div>
+                            <button onclick="openModal('t2-s1', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="1. iOS & Edge Testing" data-jp="1. iOSとエッジのテスト">1. iOSとエッジのテスト</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-purple-500/30 text-xs font-mono text-purple-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/3 - 2026/4</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Test standalone models on iOS and single-board computers." data-jp="iOSとシングルボードコンピュータで単体モデルをテスト。">iOSとシングルボードコンピュータで単体モデルをテスト。</p>
+                        </div>
+                        <div id="t2-h1" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-purple-400 text-[10px] font-bold animate-pulse">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T2 Step 2: May-Jul (Row 5-7) -->
+                    <div id="t2-s2" class="lg:col-start-[3] lg:row-start-[5] lg:row-end-[8] glass-card p-5 border-l-4 border-purple-500 relative group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('t2-s3', 't2-s2', 't2-h2')">
+                        <div>
+                            <button onclick="openModal('t2-s2', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="2. Jetson Hybrid Demo" data-jp="2. Jetsonハイブリッドデモ">2. Jetsonハイブリッドデモ</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-purple-500/30 text-xs font-mono text-purple-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/5 - 2026/7</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Deploy the combined bridged model onto Jetson hardware." data-jp="統合モデルをJetsonハードウェアに展開し性能検証。">統合モデルをJetsonハードウェアに展開し性能検証。</p>
+                        </div>
+                        <div id="t2-h2" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-purple-400 text-[10px] font-bold animate-pulse">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T2 Step 3: Aug-Oct (Row 8-10) -->
+                    <div id="t2-s3" class="lg:col-start-[3] lg:row-start-[8] lg:row-end-[11] glass-card p-5 border-l-4 border-purple-500 relative overflow-hidden group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('deploy', 't2-s3', 't2-h3')">
+                        <div class="relative z-10">
+                            <button onclick="openModal('t2-s3', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">03</span>
+                            <i class="fa-solid fa-hat-cowboy absolute right-0 top-1/2 text-5xl text-purple-500/10 transition-transform group-hover:scale-110 -translate-y-1/2"></i>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="3. Hardware Integration" data-jp="3. ハードウェア実装">3. ハードウェア実装</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-purple-500/30 text-xs font-mono text-purple-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/8 - 2026/10</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Develop physical prototype: Cap + Camera connected to device." data-jp="物理プロトタイプの開発: 帽子 + カメラと計算機の接続。">物理プロトタイプの開発: 帽子 + カメラと計算機の接続。</p>
+                        </div>
+                        <div id="t2-h3" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-yellow-400 text-[10px] font-bold animate-pulse relative z-10">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal Deployment" data-jp="クリックして展開を表示">クリックして展開を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T2 Thread to Deployment (Row 11-12) -->
+                    <div id="t2-thread" class="hidden lg:flex justify-center opacity-0 transition-opacity duration-700 h-full lg:col-start-[3] lg:row-start-[11] lg:row-end-[13]">
+                        <div class="w-1 h-full bg-gradient-to-b from-purple-500 to-transparent"></div>
+                    </div>
+
+
+                    <!-- ==================== TRACK 3 ==================== -->
+                    <!-- Header -->
+                    <div class="lg:col-start-[4] lg:row-start-[2] bg-pink-900/40 border border-pink-500/30 p-4 rounded-xl text-center shadow-[0_0_15px_rgba(236,72,153,0.2)] flex items-center justify-center">
+                        <h3 class="font-bold text-pink-400 text-xl lang-text" data-en="Track 3: End User Test" data-jp="トラック3: エンドユーザーテスト">トラック3: エンドユーザーテスト</h3>
+                    </div>
+
+                    <!-- T3 Step 0 & 1 Wrapper: May-Jun (Row 5-6) -->
+                    <div class="lg:col-start-[4] lg:row-start-[5] lg:row-end-[7] flex flex-col gap-4">
+                        <!-- T3 Step 0 (Ethical) -->
+                        <div id="t3-s0" class="glass-card p-4 border-l-4 border-pink-500 relative group hover:border-l-8 transition-all interactive-card flex-1 flex flex-col justify-between" onclick="revealTrackStep('t3-s1', 't3-s0', 't3-h0')">
+                            <div>
+                                <button onclick="openModal('t3-s0', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                                <span class="absolute right-3 top-8 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">00</span>
+                                <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="0. Ethical Board App." data-jp="0. 倫理委員会の申請">0. 倫理委員会の申請</h4>
+                                <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-pink-500/30 text-[10px] font-mono text-pink-300 mb-2 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/5</div>
+                                <p class="text-xs text-slate-400 lang-text" data-en="Submit for human-subject research approval." data-jp="人間を対象とした研究の承認を得るため提出。">人間を対象とした研究の承認を得るため提出。</p>
+                            </div>
+                            <div id="t3-h0" class="mt-2 pt-2 border-t border-slate-700/50 text-center text-pink-400 text-[10px] font-bold animate-pulse">
+                                <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                            </div>
+                        </div>
+
+                        <!-- T3 Step 1 (Med Appt) -->
+                        <div id="t3-s1" class="glass-card p-4 border-l-4 border-pink-500 relative group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex-1 flex flex-col justify-between" onclick="revealTrackStep('t3-s2', 't3-s1', 't3-h1')">
+                            <div>
+                                <button onclick="openModal('t3-s1', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                                <span class="absolute right-3 top-8 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
+                                <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="1. Medical Appts." data-jp="1. 医療機関アポイント">1. 医療機関アポイント</h4>
+                                <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-pink-500/30 text-[10px] font-mono text-pink-300 mb-2 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/5 - 2026/6</div>
+                                <p class="text-xs text-slate-400 lang-text" data-en="Engage with targeted Hospitals." data-jp="病院や対象者へのアプローチ。">病院や対象者へのアプローチ。</p>
+                            </div>
+                            <div id="t3-h1" class="mt-2 pt-2 border-t border-slate-700/50 text-center text-pink-400 text-[10px] font-bold animate-pulse">
+                                <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- T3 Step 2: Jul-Sep (Row 7-9) -->
+                    <div id="t3-s2" class="lg:col-start-[4] lg:row-start-[7] lg:row-end-[10] glass-card p-5 border-l-4 border-pink-500 relative group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('t3-s3', 't3-s2', 't3-h2')">
+                        <div>
+                            <button onclick="openModal('t3-s2', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="2. Clinical Evaluation" data-jp="2. 臨床評価">2. 臨床評価</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-pink-500/30 text-xs font-mono text-pink-300 mb-3 shadow-sm"><i class="fa-regular fa-calendar mr-1"></i> 2026/7 - 2026/9</div>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Evaluate patient experience. Incorporate Eye Tracking validation." data-jp="患者の体験を評価。視線計測を取り入れ検証。">患者の体験を評価。視線計測を取り入れ検証。</p>
+                        </div>
+                        <div id="t3-h2" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-pink-400 text-[10px] font-bold animate-pulse">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal next step" data-jp="クリックして次を表示">クリックして次を表示</span>
+                        </div>
+                    </div>
+
+                    <!-- T3 Step 3: Oct-Dec (Row 10-12) -->
+                    <div id="t3-s3" class="lg:col-start-[4] lg:row-start-[10] lg:row-end-[13] glass-card p-5 border-l-4 border-pink-500 relative overflow-hidden group hover:border-l-8 transition-all hidden opacity-0 interactive-card flex flex-col lg:h-full justify-between" onclick="revealTrackStep('deploy', 't3-s3', 't3-h3')">
+                        <div class="relative z-10">
+                            <button onclick="openModal('t3-s3', event)" class="absolute top-2 right-2 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600 text-xs" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <span class="absolute right-3 top-10 text-slate-600 font-bold opacity-30 group-hover:opacity-100 transition-opacity z-10">03</span>
+                            <i class="fa-solid fa-user-check absolute right-0 top-1/2 text-5xl text-pink-500/10 transition-transform group-hover:scale-110 -translate-y-1/2"></i>
+                            <h4 class="font-bold mb-2 pr-6 text-white lang-text" data-en="3. Persona Refinement" data-jp="3. ペルソナの絞り込み">3. ペルソナの絞り込み</h4>
+                            <div class="inline-block px-2 py-1 bg-slate-800 rounded border border-pink-500/30 text-xs font-mono text-pink-300 mb-3 shadow-sm relative z-10"><i class="fa-regular fa-calendar mr-1"></i> 2026/10 - 2026/12</div>
+                            <p class="text-sm text-slate-400 relative z-10 lang-text" data-en="Squeeze target persona based on data and adapt system." data-jp="データに基づいてターゲットペルソナを絞り込みシステムを適応。">データに基づいてターゲットペルソナを絞り込みシステムを適応。</p>
+                        </div>
+                        <div id="t3-h3" class="mt-4 pt-3 border-t border-slate-700/50 text-center text-yellow-400 text-[10px] font-bold animate-pulse relative z-10">
+                            <i class="fa-solid fa-hand-pointer mr-2"></i><span class="lang-text" data-en="Click to reveal Deployment" data-jp="クリックして展開を表示">クリックして展開を表示</span>
+                        </div>
+                    </div>
+
+
+                    <!-- ==================== DEPLOYMENT ==================== -->
+                    <!-- Unified Deployment Card (Row 13-15) -->
+                    <div id="deploy" class="lg:col-start-[2] lg:col-end-[5] lg:row-start-[13] lg:row-end-[16] hidden opacity-0 transition-all duration-700">
+                        <div class="glass-card h-full p-6 md:p-10 border-t-8 border-yellow-400 text-center relative overflow-hidden group hover:shadow-[0_0_30px_rgba(250,204,21,0.2)] transition-all bg-gradient-to-b from-yellow-900/20 to-transparent flex flex-col justify-center items-center">
+                            <button onclick="openModal('deploy', event)" class="absolute top-4 right-4 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-2 rounded-full transition-all z-20 hover:scale-110 shadow-lg border border-slate-600" title="Expand Details"><i class="fa-solid fa-expand"></i></button>
+                            <i class="fa-solid fa-rocket absolute left-4 bottom-4 text-[10rem] text-yellow-500/5 group-hover:-translate-y-4 group-hover:translate-x-4 transition-transform duration-500"></i>
+
+                            <div class="inline-block px-4 py-1 bg-yellow-900/50 rounded-full border border-yellow-500/50 text-sm font-bold text-yellow-300 mb-4 shadow-sm relative z-10"><i class="fa-regular fa-calendar-check mr-2"></i>2027/1</div>
+
+                            <h3 class="text-3xl font-bold mb-4 text-white relative z-10 lang-text" data-en="Unified Deployment" data-jp="統合・本展開">統合・本展開</h3>
+                            <p class="text-slate-300 max-w-3xl mx-auto relative z-10 lang-text leading-relaxed" data-en="Merging the finalized ViT/LLM Model, Hardware Application, and targeted Persona clinical findings into the official real-world assistive rollout." data-jp="完成したViT/LLMモデル、ハードウェアアプリ、およびターゲットペルソナの臨床所見を統合し、実社会向け支援技術として公式にロールアウトします。">完成したViT/LLMモデル、ハードウェアアプリ、およびターゲットペルソナの臨床所見を統合し、実社会向け支援技術として公式にロールアウトします。</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Patent Strategy -->
+            <section class="mb-20" data-aos="fade-up">
+                <div class="glass-card p-8 border-t-4 border-yellow-500 relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 text-yellow-500/10"><i class="fa-solid fa-certificate text-[12rem]"></i></div>
+                    <h2 class="text-3xl font-bold mb-4 text-center text-white relative z-10 lang-text" data-en="Patent Strategy: Integrated Solution" data-jp="特許戦略：統合ソリューション">特許戦略：統合ソリューション</h2>
+                    <p class="text-slate-400 text-center mb-10 max-w-2xl mx-auto relative z-10 lang-text" data-en="Our patent covers the novel integration of specialized AI training pipelines with specific physical hardware form factors optimized for lipreading." data-jp="私たちの特許は、読唇術に最適化された特定の物理的ハードウェアと、特化したAI学習パイプラインの新規な統合を対象としています。">私たちの特許は、読唇術に最適化された特定の物理的ハードウェアと、特化したAI学習パイプラインの新規な統合を対象としています。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-yellow-400/50 transition-colors">
+                            <div class="text-yellow-400 mb-3"><i class="fa-solid fa-brain text-3xl"></i></div>
+                            <h4 class="font-bold text-white mb-2 lang-text" data-en="1. Training Strategy" data-jp="1. 学習戦略">1. 学習戦略</h4>
+                            <p class="text-sm text-slate-400 lang-text" data-en="The end-user pipeline: using curriculum learning for ViT, stripping the CTC decoder, bridging to an LLM (Qwen1.5), and utilizing LoRA for person-specific mouth movement adaptation." data-jp="エンドユーザー向けパイプライン：ViTのカリキュラム学習、CTCデコーダの削除、LLM（Qwen1.5）への統合、個人特有の口の動きに適応するLoRAの活用。">エンドユーザー向けパイプライン：ViTのカリキュラム学習、CTCデコーダの削除、LLM（Qwen1.5）への統合、個人特有の口の動きに適応するLoRAの活用。</p>
+                        </div>
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-yellow-400/50 transition-colors">
+                            <div class="text-yellow-400 mb-3"><i class="fa-brands fa-redhat text-3xl"></i></div>
+                            <h4 class="font-bold text-white mb-2 lang-text" data-en="2. Camera on Cap" data-jp="2. 帽子搭載型カメラ">2. 帽子搭載型カメラ</h4>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Wearable form factor integrating a camera onto the brim of a cap. This ensures a stable, unobtrusive angle to capture conversation partners' lip movements effortlessly during daily interactions." data-jp="帽子のつばにカメラを統合したウェアラブルデバイス。日常のコミュニケーションにおいて、相手の唇の動きを自然かつ安定した角度で捉えることができます。">帽子のつばにカメラを統合したウェアラブルデバイス。日常のコミュニケーションにおいて、相手の唇の動きを自然かつ安定した角度で捉えることができます。</p>
+                        </div>
+                        <div class="bg-slate-800/80 p-6 rounded-xl border border-slate-600 hover:border-yellow-400/50 transition-colors">
+                            <div class="text-yellow-400 mb-3"><i class="fa-solid fa-microphone text-3xl"></i></div>
+                            <h4 class="font-bold text-white mb-2 lang-text" data-en="3. Camera on Mic Tip" data-jp="3. マイク先端搭載型カメラ">3. マイク先端搭載型カメラ</h4>
+                            <p class="text-sm text-slate-400 lang-text" data-en="Integration of a camera at the tip of a handheld microphone. When pointing the mic to speak, the camera perfectly aligns with the lips, allowing simultaneous, high-quality audio-visual capture." data-jp="手持ちマイクの先端にカメラを内蔵。マイクを口元に向ける動作と連動し、音声と唇の動きの高品質な同時キャプチャを自動的に実現する設計。">手持ちマイクの先端にカメラを内蔵。マイクを口元に向ける動作と連動し、音声と唇の動きの高品質な同時キャプチャを自動的に実現する設計。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conference Planning & Gantt Chart -->
+            <section class="mb-10" data-aos="fade-up">
+                <div class="glass-card p-6 md:p-8 border-t-4 border-emerald-500">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-white lang-text" data-en="Conference Planning & Timeline" data-jp="学会発表・論文スケジュール">学会発表・論文スケジュール</h2>
+
+                    <!-- Gantt Chart Wrapper -->
+                    <div class="overflow-x-auto pb-4">
+                        <div class="min-w-[800px]">
+
+                            <!-- Month Headers -->
+                            <div class="grid grid-cols-13 gap-1 mb-4 text-center text-xs font-bold text-slate-500 border-b border-slate-700 pb-2" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                                <div>Mar '26</div><div>Apr</div><div>May</div><div>Jun</div><div>Jul</div><div>Aug</div><div>Sep</div><div>Oct</div><div>Nov</div><div>Dec</div><div>Jan '27</div><div>Feb</div><div>Mar</div>
+                            </div>
+
+                            <!-- JSME LIFE 2026 -->
+                            <div class="mb-6 relative group">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="font-bold text-emerald-400 text-sm">
+                                        <a href="https://www.jsme.or.jp/conference/life2026/" target="_blank" class="hover:underline">JSME LIFE 2026 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-xs">
+                                        <span class="text-slate-400">Sub: ~May 31, 2026</span>
+                                        <span class="text-slate-400 border-l border-slate-600 pl-3">Conf: Sep 2026</span>
+                                        <span id="life-countdown" class="bg-red-500/20 text-red-400 px-2 py-1 rounded border border-red-500/30 font-bold min-w-[90px] text-center">-- Days Left</span>
+                                    </div>
+                                </div>
+                                <!-- Bar -->
+                                <div class="grid gap-1 h-8 bg-slate-800/50 rounded overflow-hidden" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                                    <div class="bg-emerald-500/30 border border-emerald-500/50 rounded flex items-center justify-center text-[10px] text-emerald-200" style="grid-column: 1 / 4;" title="Preparation">Prep Phase</div>
+                                    <div class="bg-emerald-500 rounded flex items-center justify-center text-[10px] text-white shadow-[0_0_10px_rgba(16,185,129,0.5)]" style="grid-column: 7 / 8;" title="Conference">Conf</div>
+                                </div>
+                            </div>
+
+                            <!-- ACM ISS 2026 -->
+                            <div class="mb-6 relative group">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="font-bold text-blue-400 text-sm">
+                                        <a href="https://iss.acm.org/2026/" target="_blank" class="hover:underline">ACM ISS 2026 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-xs">
+                                        <span class="text-slate-400">Sub: Jul 22, 2026</span>
+                                        <span class="text-slate-400 border-l border-slate-600 pl-3">Conf: Nov 2026</span>
+                                        <span id="iss-countdown" class="bg-red-500/20 text-red-400 px-2 py-1 rounded border border-red-500/30 font-bold min-w-[90px] text-center">-- Days Left</span>
+                                    </div>
+                                </div>
+                                <!-- Bar -->
+                                <div class="grid gap-1 h-8 bg-slate-800/50 rounded overflow-hidden" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                                    <div class="bg-blue-500/30 border border-blue-500/50 rounded flex items-center justify-center text-[10px] text-blue-200" style="grid-column: 1 / 6;" title="Preparation">Prep Phase</div>
+                                    <div class="bg-blue-500 rounded flex items-center justify-center text-[10px] text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]" style="grid-column: 9 / 10;" title="Conference">Conf</div>
+                                </div>
+                            </div>
+
+                            <!-- ACM TEI 2027 -->
+                            <div class="mb-2 relative group">
+                                <div class="flex items-center justify-between mb-1">
+                                    <div class="font-bold text-purple-400 text-sm">
+                                        <a href="https://tei.acm.org/2027/" target="_blank" class="hover:underline">ACM TEI 2027 <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i></a>
+                                    </div>
+                                    <div class="flex items-center gap-3 text-xs">
+                                        <span class="text-slate-400">Sub: ~Aug 15, 2026</span>
+                                        <span class="text-slate-400 border-l border-slate-600 pl-3">Conf: Feb 2027</span>
+                                        <span id="tei-countdown" class="bg-red-500/20 text-red-400 px-2 py-1 rounded border border-red-500/30 font-bold min-w-[90px] text-center">-- Days Left</span>
+                                    </div>
+                                </div>
+                                <!-- Bar -->
+                                <div class="grid gap-1 h-8 bg-slate-800/50 rounded overflow-hidden" style="grid-template-columns: repeat(13, minmax(0, 1fr));">
+                                    <div class="bg-purple-500/30 border border-purple-500/50 rounded flex items-center justify-center text-[10px] text-purple-200" style="grid-column: 1 / 7;" title="Preparation">Prep Phase</div>
+                                    <div class="bg-purple-500 rounded flex items-center justify-center text-[10px] text-white shadow-[0_0_10px_rgba(168,85,247,0.5)]" style="grid-column: 12 / 13;" title="Conference">Conf</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <p class="text-[10px] text-slate-500 italic lang-text" data-en="* Note: Estimated deadlines used where official dates are pending announcements." data-jp="※注：公式発表前の日程については予想される提出期限を使用しています。">※注：公式発表前の日程については予想される提出期限を使用しています。</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Details Modal Overlay (New Canvas) -->
+        <div id="detailsModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300" onclick="closeModal()">
+            <div id="modalContainer" class="glass-card w-full max-w-3xl max-h-[85vh] overflow-y-auto m-4 p-8 border-t-4 transform scale-95 transition-transform duration-300 shadow-2xl relative" onclick="event.stopPropagation()">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-pink-500 bg-slate-800/80 hover:bg-slate-700 w-10 h-10 rounded-full flex items-center justify-center transition-all z-20 hover:scale-110 shadow-lg border border-slate-600">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+                <h2 id="modalTitle" class="text-2xl md:text-3xl font-bold mb-6 text-white pr-10 border-b border-slate-700/50 pb-4"></h2>
+
+                <!-- English Content -->
+                <div id="modalContentEn" class="text-slate-300"></div>
+                <!-- Japanese Content -->
+                <div id="modalContentJp" class="text-slate-300 hidden"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
+        <p>&copy; 2026-2027 Robot Rehabilitation Center, HYOGO ASSISTECH. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize Scroll Animations
+        AOS.init({
+            duration: 800,
+            once: false,
+            offset: 100,
+        });
+
+        // Click to Reveal Logic
+        function revealStep(step) {
+            if (step === 2) {
+                const card2 = document.getElementById('card2');
+                const card1 = document.getElementById('card1');
+                const hint1 = document.getElementById('hint1');
+
+                card2.classList.remove('hidden');
+                void card2.offsetWidth;
+                card2.classList.remove('opacity-0');
+                card2.classList.add('animate-reveal');
+
+                hint1.classList.add('hidden');
+                card1.classList.remove('interactive-card');
+                card1.classList.add('revealed');
+                card1.onclick = null;
+
+            } else if (step === 3) {
+                const card3 = document.getElementById('card3');
+                const card2 = document.getElementById('card2');
+                const hint2 = document.getElementById('hint2');
+
+                card3.classList.remove('hidden');
+                void card3.offsetWidth;
+                card3.classList.remove('opacity-0');
+                card3.classList.add('animate-reveal');
+
+                hint2.classList.add('hidden');
+                card2.classList.remove('interactive-card');
+                card2.classList.add('revealed');
+                card2.onclick = null;
+
+            } else if (step === 4) {
+                const mainContent = document.getElementById('mainContent');
+                const card3 = document.getElementById('card3');
+                const hint3 = document.getElementById('hint3');
+
+                mainContent.classList.remove('hidden');
+                void mainContent.offsetWidth;
+                mainContent.classList.remove('opacity-0');
+                mainContent.classList.add('animate-reveal');
+
+                hint3.classList.add('hidden');
+                card3.classList.remove('interactive-card');
+                card3.classList.add('revealed');
+                card3.onclick = null;
+
+                setTimeout(() => {
+                    AOS.refresh();
+                    window.scrollBy({ top: 300, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        // Logic for revealing individual track steps
+        function revealTrackStep(targetCardId, currentCardId, hintId) {
+            const currentCard = document.getElementById(currentCardId);
+            const targetCard = document.getElementById(targetCardId);
+            const hint = document.getElementById(hintId);
+
+            if (targetCardId === 'deploy' && targetCard) {
+                targetCard.classList.remove('hidden');
+                void targetCard.offsetWidth;
+                targetCard.classList.remove('opacity-0');
+                targetCard.classList.add('animate-reveal');
+
+                // Reveal connecting threads
+                document.getElementById('t1-thread').classList.remove('opacity-0');
+                document.getElementById('t2-thread').classList.remove('opacity-0');
+
+            } else if (targetCard) {
+                targetCard.classList.remove('hidden');
+                void targetCard.offsetWidth;
+                targetCard.classList.remove('opacity-0');
+                targetCard.classList.add('animate-reveal');
+            }
+
+            if (hint) hint.classList.add('hidden');
+
+            if (currentCard) {
+                currentCard.classList.remove('interactive-card');
+                currentCard.classList.add('revealed');
+                currentCard.onclick = null;
+            }
+        }
+
+        // Language Toggle Logic
+        let currentLang = 'jp'; // Set default to Japanese
+
+        // COMPREHENSIVE MODAL DATA STORE
+        const modalData = {
+            'card1': {
+                titleEn: "1. What We Have Done - In Detail",
+                titleJp: "1. 完了したこと - 詳細情報",
+                borderClass: "border-green-500",
+                contentEn: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4 hover:border-blue-500/50 transition-colors">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-database"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">JGRID Development</h4>
+                                <p class="text-slate-300 leading-relaxed">We successfully developed the JGRID dataset featuring <strong>13 distinct speakers</strong> and over <strong>11,000 sentences</strong>. Currently, these consist of constrained sentence structures tailored for baseline lipreading models.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4 hover:border-green-500/50 transition-colors">
+                            <div class="text-green-400 text-3xl mt-1"><i class="fa-solid fa-check-double"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Cross-Dataset Validation</h4>
+                                <p class="text-slate-300 leading-relaxed">We performed rigorous cross-dataset validation to verify if our dataset is parallel to the established English GRID dataset. <strong>We were highly successful on this part</strong>, proving the structural viability of JGRID.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 border-l-4 border-l-yellow-500 flex items-start gap-4">
+                            <div class="text-yellow-400 text-3xl mt-1"><i class="fa-solid fa-compress"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">The Frame-Length Limitation</h4>
+                                <p class="text-slate-300 leading-relaxed">For practical, real-life applications, the system must dynamically process both short and long videos. However, while training our models using LipNet, we encountered a severe bottleneck: we were forced to squeeze all video lengths to exactly <strong>75 frames</strong>.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 border-l-4 border-l-blue-500 flex items-start gap-4">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-forward-fast"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Pivot to Vision Transformer</h4>
+                                <p class="text-slate-300 leading-relaxed">To overcome LipNet's fixed-length constraints and enable true, variable-length streaming capabilities, we have officially moved our core architecture away from LipNet and onto <strong>Vision Transformer (ViT)</strong> models.</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4 hover:border-blue-500/50 transition-colors">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-database"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">JGRIDの開発</h4>
+                                <p class="text-slate-300 leading-relaxed"><strong>13人の話者</strong>と<strong>11,000以上の文章</strong>を含むJGRIDデータセットの開発に成功しました。現在は、ベースラインの読唇術モデルに合わせた制約のある文章構造となっています。</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4 hover:border-green-500/50 transition-colors">
+                            <div class="text-green-400 text-3xl mt-1"><i class="fa-solid fa-check-double"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">クロスデータセット検証</h4>
+                                <p class="text-slate-300 leading-relaxed">我々のデータセットが既存の英語GRIDデータセットと並行して使用できるかを検証するため、厳密なクロスデータセット検証を実施しました。<strong>この検証は大きな成功を収め</strong>、JGRIDの構造的妥当性を証明しました。</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 border-l-4 border-l-yellow-500 flex items-start gap-4">
+                            <div class="text-yellow-400 text-3xl mt-1"><i class="fa-solid fa-compress"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">フレーム長の制限という壁</h4>
+                                <p class="text-slate-300 leading-relaxed">実生活での応用のために、システムは短い動画と長い動画の両方を動的に処理する必要があります。しかし、LipNetを使用してモデルをトレーニングした際、すべての動画の長さを一律<strong>75フレームに強制的に圧縮</strong>しなければならないという深刻なボトルネックに直面しました。</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 border-l-4 border-l-blue-500 flex items-start gap-4">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-forward-fast"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Vision Transformerへの移行</h4>
+                                <p class="text-slate-300 leading-relaxed">LipNetの固定長の制約を克服し、真の意味での可変長ストリーミング機能を実現するために、私たちはコアアーキテクチャをLipNetから<strong>Vision Transformer（ViT）</strong>モデルへと正式に移行しました。</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'card2': {
+                titleEn: "2. The Challenge (Now On) - In Detail",
+                titleJp: "2. 現在の課題 - 詳細情報",
+                borderClass: "border-yellow-500",
+                contentEn: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-red-400 text-3xl mt-1"><i class="fa-solid fa-ban"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">The LipNet Limitation</h4>
+                                <p class="text-slate-300 leading-relaxed">Traditional architectures like LipNet rely heavily on 3D Convolutional Neural Networks (3D CNNs). This architecture inherently assumes a <strong>fixed temporal length</strong> for video inputs (e.g., exactly 3 seconds or 75 frames). If a user speaks shorter or longer than this strict window, the network completely fails to decode the sequence properly.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-yellow-400 text-3xl mt-1"><i class="fa-solid fa-water"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Why Streaming Fails</h4>
+                                <p class="text-slate-300 leading-relaxed">Daily communication is rarely constrained to a fixed 3-second window. People pause, hesitate, use short words ("Yes"), or speak long paragraphs. Because LipNet cannot handle dynamic padding or streaming effectively, <strong>it is fundamentally not suited for real-time assistive technology</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-red-400 text-3xl mt-1"><i class="fa-solid fa-ban"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">LipNetの限界</h4>
+                                <p class="text-slate-300 leading-relaxed">LipNetのような従来のアーキテクチャは、3D畳み込みニューラルネットワーク（3D CNN）に大きく依存しています。この構造は本質的に、動画入力に<strong>固定の時間長</strong>（例：正確に3秒や75フレーム）を要求します。ユーザーがこの厳密な枠よりも短く、あるいは長く発話した場合、ネットワークはシーケンスを適切にデコードできなくなります。</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-yellow-400 text-3xl mt-1"><i class="fa-solid fa-water"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">ストリーミングにおける致命的な欠点</h4>
+                                <p class="text-slate-300 leading-relaxed">日常のコミュニケーションが固定された3秒の枠に収まることは稀です。人は途切れたり、短い単語（「はい」など）を使ったり、長い文章を話したりします。LipNetは動的なパディングやストリーミングを効果的に処理できないため、<strong>根本的にリアルタイムの支援技術には適していません。</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            'card3': {
+                titleEn: "3. What is Necessary - In Detail",
+                titleJp: "3. 今後必要なこと - 詳細情報",
+                borderClass: "border-blue-500",
+                contentEn: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-eye"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Transition to Vision Transformer (ViT)</h4>
+                                <p class="text-slate-300 leading-relaxed">We must build an attention-based Vision Transformer model. Unlike LipNet, ViT uses self-attention mechanisms that can dynamically weigh inputs across different points in time, seamlessly handling <strong>variable-length video streams</strong>.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-purple-400 text-3xl mt-1"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Simultaneous 3-Track Execution</h4>
+                                <p class="text-slate-300 leading-relaxed">To bring this to reality within the year, we must parallelize our efforts into three strict tracks: <strong>1. Model Architecture & Accuracy</strong> (ViT + LLM), <strong>2. Application & Hardware</strong> (iOS/Jetson deployments), and <strong>3. End-User Testing</strong> (Clinical trials with targeted personas).</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-6">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-blue-400 text-3xl mt-1"><i class="fa-solid fa-eye"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">Vision Transformer (ViT) への移行</h4>
+                                <p class="text-slate-300 leading-relaxed">アテンションベースのVision Transformerモデルを構築する必要があります。LipNetとは異なり、ViTは異なる時点の入力に動的に重み付けを行う自己アテンション機構（Self-Attention）を使用するため、<strong>可変長の動画ストリーム</strong>をシームレスに処理できます。</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/60 p-5 rounded-lg border border-slate-600 flex items-start gap-4">
+                            <div class="text-purple-400 text-3xl mt-1"><i class="fa-solid fa-layer-group"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">3トラック同時進行の実行</h4>
+                                <p class="text-slate-300 leading-relaxed">これを年内に実現させるため、私たちは3つの厳格なトラックを並行して進めなければなりません。<strong>1. モデル構造と精度</strong>（ViT + LLM）、<strong>2. アプリとハードウェア</strong>（iOS / Jetsonデプロイ）、そして <strong>3. エンドユーザーテスト</strong>（ターゲットを絞ったペルソナでの臨床試験）です。</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            't1-s1': {
+                titleEn: "Model: ViT & Curriculum Learning",
+                titleJp: "モデル: ViT & カリキュラム学習",
+                borderClass: "border-blue-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">To handle streaming effectively, we reconstruct our visual processing pipeline entirely.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Architecture:</strong> The pipeline consists of a specific Tokenizer mapping lip frames to tokens, processed through a deep ViT Encoder.</li>
+                            <li><strong>CTC Decoder:</strong> Initially, we utilize a Connectionist Temporal Classification (CTC) decoder. This allows the network to predict phonemes without requiring perfect frame-to-character alignment.</li>
+                            <li><strong>Curriculum Learning Strategy:</strong> Instead of feeding complex sentences immediately, we slowly increase difficulty. We train on:
+                                <ol class="list-decimal ml-6 mt-2 space-y-1 text-slate-400">
+                                    <li>Isolated words.</li>
+                                    <li>Half-sentences.</li>
+                                    <li>Crucially: <strong>Silent frames</strong> (teaching the model when the user is <em>not</em> speaking, essential for continuous streaming).</li>
+                                    <li>Full sentences utilizing complex attention masking.</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">ストリーミングを効果的に処理するために、視覚処理パイプラインを完全に再構築します。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>アーキテクチャ:</strong> パイプラインは、唇のフレームをトークンにマッピングする固有のTokenizerと、それを処理する深いViT Encoderで構成されます。</li>
+                            <li><strong>CTC デコーダ:</strong> 初期段階ではCTC（Connectionist Temporal Classification）デコーダを利用します。これにより、フレームと文字の完全な位置合わせを必要とせずに、ネットワークが音素を予測できるようになります。</li>
+                            <li><strong>カリキュラム学習戦略:</strong> 複雑な文章を最初から入力するのではなく、徐々に難易度を上げていきます。以下の順序で学習させます：
+                                <ol class="list-decimal ml-6 mt-2 space-y-1 text-slate-400">
+                                    <li>単語単位</li>
+                                    <li>短い文（半文）</li>
+                                    <li>極めて重要な要素：<strong>沈黙のフレーム</strong>（連続ストリーミングに不可欠な「発話していない状態」をモデルに学習させます）</li>
+                                    <li>複雑なアテンションマスキングを用いた完全な文章</li>
+                                </ol>
+                            </li>
+                        </ul>
+                    </div>
+                `
+            },
+            't1-s2': {
+                titleEn: "Model: LLM Bridge & LoRA",
+                titleJp: "モデル: LLM統合とLoRA",
+                borderClass: "border-blue-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">To transition from predicting phonemes to outputting natural, grammatically correct sentences, we must integrate a language model.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Freezing CTC:</strong> Once the visual encoder is robust enough at identifying basic mouth shapes, we freeze the CTC decoder and remove it from the final pipeline.</li>
+                            <li><strong>QWEN 1.5 0.5B:</strong> We bridge the visual outputs directly to a "Tiny LLM" (QWEN 1.5 with 0.5 Billion parameters). This allows the model to infer context and fix visual misinterpretations.</li>
+                            <li><strong>LoRA (Low-Rank Adaptation):</strong> Full fine-tuning of an LLM is computationally expensive. We apply LoRA to inject trainable rank decomposition matrices into the LLM's transformer layers. This drastically reduces the number of trainable parameters while retaining high accuracy.</li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">単なる音素の予測から、自然で文法的に正しい文章の出力へと移行するために、言語モデルを統合する必要があります。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>CTCの凍結:</strong> 視覚エンコーダが基本的な口の形を十分に識別できるようになった段階で、CTCデコーダを凍結し、最終的なパイプラインから除外します。</li>
+                            <li><strong>QWEN 1.5 0.5B:</strong> 視覚の出力を「Tiny LLM」（0.5BパラメータのQWEN 1.5）へ直接繋ぎます。これにより、モデルは文脈を推論し、視覚的な誤認識を言語的に補正することができます。</li>
+                            <li><strong>LoRA (Low-Rank Adaptation):</strong> LLMの完全なファインチューニングは計算コストが膨大です。そのため、LoRAを適用して学習可能な低ランク行列をLLMの層に注入します。これにより、高い精度を維持したまま学習すべきパラメータ数を劇的に削減できます。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            't1-s3': {
+                titleEn: "Model: Person Specific Adaptation",
+                titleJp: "モデル: 個人特化型アダプテーション",
+                borderClass: "border-blue-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Every individual's mouth movements and speaking habits are physically unique. A generalized model is not enough for assistive tech.</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-blue-400">
+                            <h4 class="font-bold text-white mb-2">The Personalization Pipeline</h4>
+                            <p class="text-sm text-slate-300 mb-2">To highly adapt the model to a specific patient, we perform a dual-tuning process:</p>
+                            <ul class="list-disc ml-5 text-sm text-slate-400 space-y-1">
+                                <li><strong>Unfreezing ViT:</strong> We unfreeze the <em>first few layers</em> of the Visual Transformer encoder. This allows the neural network to adjust to the specific anatomical and physical mouth features of the end-user.</li>
+                                <li><strong>Targeted LoRA:</strong> Simultaneously, we use LoRA on the language model to adapt to the user's specific vocabulary, speech patterns, and commonly used phrases in their daily life.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">一人ひとりの口の動きや話す癖は物理的に異なります。支援技術において、一般的な汎用モデルだけでは不十分です。</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-blue-400">
+                            <h4 class="font-bold text-white mb-2">パーソナライゼーション・パイプライン</h4>
+                            <p class="text-sm text-slate-300 mb-2">特定の患者にモデルを高度に適応させるため、二重のチューニングプロセスを実施します：</p>
+                            <ul class="list-disc ml-5 text-sm text-slate-400 space-y-1">
+                                <li><strong>ViTの凍結解除:</strong> Visual Transformerエンコーダの「最初の数層」の凍結を解除します。これにより、ニューラルネットワークがエンドユーザー固有の解剖学的および物理的な口の特徴に合わせて調整されます。</li>
+                                <li><strong>ターゲット化されたLoRA:</strong> 同時に、言語モデルにLoRAを使用して、ユーザー固有の語彙、発話パターン、および日常生活でよく使うフレーズに適応させます。</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            't2-s1': {
+                titleEn: "App: iOS & Edge Testing",
+                titleJp: "アプリ: iOSとエッジのテスト",
+                borderClass: "border-purple-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">The heavy computational models developed in Python/PyTorch must be ported for portable, real-world usage.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Application Development Phase:</strong> Begin translating models for Single Board Computers (SBCs) and mobile environments.</li>
+                            <li><strong>iOS ViT Demo:</strong> We will wrap the standalone Vision Transformer model into a native iOS application. This serves as our first "Demo" proving that an iPhone can process lipreading inference at the edge.</li>
+                            <li><strong>Initial Jetson Port:</strong> Simultaneously, testing the pure ViT model on NVIDIA Jetson architecture to measure thermal limits and raw inference speed.</li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Python/PyTorchで開発された計算負荷の高いモデルを、実社会で持ち運び可能なデバイスに移植する必要があります。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>アプリケーション開発フェーズ:</strong> モデルをシングルボードコンピュータ（SBC）やモバイル環境向けに変換する作業を開始します。</li>
+                            <li><strong>iOS版 ViT デモ:</strong> 単体のVision TransformerモデルをネイティブiOSアプリに組み込みます。これは、iPhoneがエッジ上で読唇術の推論を処理できることを証明する最初の「デモ」となります。</li>
+                            <li><strong>初期のJetson移植:</strong> 同時に、純粋なViTモデルをNVIDIA Jetsonアーキテクチャでテストし、熱の限界と純粋な推論速度を測定します。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            't2-s2': {
+                titleEn: "App: Jetson Hybrid Demo",
+                titleJp: "アプリ: Jetsonハイブリッドデモ",
+                borderClass: "border-purple-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">The next hardware milestone pushes edge computing to its limits.</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-purple-400">
+                            <h4 class="font-bold text-white mb-2">The Hybrid (ViT + LLM) Challenge</h4>
+                            <p class="text-sm text-slate-300 mb-2">Can a portable device handle both visual processing and Large Language Model generation simultaneously without immense lag?</p>
+                            <p class="text-sm text-slate-400">We will deploy the complete Bridged Architecture onto Jetson hardware. This serves as the ultimate proof-of-concept for the wearable unit, confirming that real-time conversational streaming (Vision to Text to Speech) is possible without a constant cloud connection.</p>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">次のハードウェアのマイルストーンは、エッジコンピューティングを限界まで押し上げることです。</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-purple-400">
+                            <h4 class="font-bold text-white mb-2">ハイブリッド（ViT + LLM）の課題</h4>
+                            <p class="text-sm text-slate-300 mb-2">ポータブルデバイスは、視覚処理と大規模言語モデル（LLM）の生成の両方を、大きな遅延なしに同時に処理できるでしょうか？</p>
+                            <p class="text-sm text-slate-400">私たちは、完全に統合されたアーキテクチャをJetsonハードウェアにデプロイします。これはウェアラブルユニットの究極の概念実証（PoC）となり、常時クラウド接続がなくてもリアルタイムの会話ストリーミング（視覚 → テキスト → 音声）が可能であることを確認します。</p>
+                        </div>
+                    </div>
+                `
+            },
+            't2-s3': {
+                titleEn: "App: Hardware Integration",
+                titleJp: "アプリ: ハードウェア実装",
+                borderClass: "border-purple-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Transitioning from software to a tangible physical device.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Wearable Camera Integration:</strong> Prototyping a camera subtly integrated into a Cap or worn near the face. This ensures a stable, consistent angle of the user's mouth, mitigating errors caused by head movements.</li>
+                            <li><strong>Compute & Output:</strong> The camera feeds directly into the portable compute module (like Jetson), which translates the lip movements. The translated text is then instantly routed to a wearable Speaker for synthesized vocal output.</li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">ソフトウェアから、実際に触れることができる物理的デバイスへの移行。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>ウェアラブルカメラの実装:</strong> 帽子（キャップ）や顔の近くにさりげなくカメラを統合したプロトタイプを作成します。これにより、ユーザーの口元を安定した一定の角度で捉え、頭の動きによる認識エラーを軽減します。</li>
+                            <li><strong>計算と出力:</strong> カメラの映像は携帯型の計算モジュール（Jetsonなど）に直接送られ、唇の動きが翻訳されます。翻訳されたテキストは即座にウェアラブルスピーカーに送られ、合成音声として出力されます。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            't3-s0': {
+                titleEn: "End User: Ethical Board Application",
+                titleJp: "エンドユーザー: 倫理委員会の申請",
+                borderClass: "border-pink-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Before engaging with patients in clinical settings, we must obtain full approval from the ethical review board.</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-pink-400">
+                            <h4 class="font-bold text-white mb-2">Research Protocol & Privacy</h4>
+                            <p class="text-sm text-slate-300">This step involves preparing detailed research protocols, privacy protection plans (especially concerning video recordings of faces), and risk mitigation strategies to ensure the absolute safety and confidentiality of all human participants involved in the upcoming trials.</p>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">臨床現場で患者と関わる前に、倫理審査委員会から正式な承認を得る必要があります。</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-pink-400">
+                            <h4 class="font-bold text-white mb-2">研究プロトコルとプライバシー保護</h4>
+                            <p class="text-sm text-slate-300">このステップでは、今後の試験に参加するすべての人間の絶対的な安全性と機密性を確保するため、詳細な研究プロトコル、プライバシー保護計画（特に顔の録画データに関するもの）、およびリスク軽減戦略の準備と提出が含まれます。</p>
+                        </div>
+                    </div>
+                `
+            },
+            't3-s1': {
+                titleEn: "End User: Medical Appointments",
+                titleJp: "エンドユーザー: 医療機関アポイント",
+                borderClass: "border-pink-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Once ethical approval is secured, we initiate direct dialogues with medical institutions.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Target Facilities:</strong> We will secure appointments and initiate dialogues with specific institutions:
+                                <ul class="list-circle ml-6 mt-1 text-slate-400 space-y-1">
+                                    <li>Chuo Hospital (中央病院)</li>
+                                    <li>Hyogo Cancer Center (兵庫県立ガンセンター)</li>
+                                    <li>Spinal Cord Injury Associations (脊髄損傷連合会)</li>
+                                </ul>
+                            </li>
+                            <li><strong>"Let them remember my face":</strong> The initial phase is purely about relationship building. Establishing trust with patients and medical staff before introducing any experimental technology.</li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">倫理的な承認が得られた後、医療機関との直接的な対話を開始します。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>対象施設:</strong> 以下の特定の機関とアポイントを取り、対話を開始します：
+                                <ul class="list-circle ml-6 mt-1 text-slate-400 space-y-1">
+                                    <li>中央病院</li>
+                                    <li>兵庫県立ガンセンター</li>
+                                    <li>脊髄損傷連合会</li>
+                                </ul>
+                            </li>
+                            <li><strong>「顔を覚えてもらう」:</strong> 初期フェーズは純粋な関係構築です。実験的な技術を導入する前に、患者や医療スタッフとの間に強い信頼関係を築くことを目指します。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            't3-s2': {
+                titleEn: "End User: Clinical Evaluation",
+                titleJp: "エンドユーザー: 臨床評価",
+                borderClass: "border-pink-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">Validating the technology through strict, objective methodologies.</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-pink-400">
+                            <h4 class="font-bold text-white mb-2">Subjective vs. Objective Validation</h4>
+                            <ul class="list-disc ml-5 text-sm text-slate-400 space-y-2">
+                                <li><strong>Evaluation of Thoughts:</strong> Gathering qualitative feedback on the user experience. Does lipreading feel natural? Is the wearable hardware comfortable?</li>
+                                <li><strong>Eye Tracking (Objective Data):</strong> We will use Eye Tracking technology during conversations. By analyzing gaze fixation and pupil dilation, we can scientifically measure the "cognitive load" and interaction engagement of patients using our system compared to traditional assistive tools.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">厳密かつ客観的な方法論を通じて技術を検証します。</p>
+                        <div class="bg-slate-800/60 p-4 rounded border-l-4 border-pink-400">
+                            <h4 class="font-bold text-white mb-2">主観的評価と客観的検証</h4>
+                            <ul class="list-disc ml-5 text-sm text-slate-400 space-y-2">
+                                <li><strong>意見の評価（主観）:</strong> ユーザー体験に関する定性的なフィードバックを収集します。「読唇術によるコミュニケーションは自然に感じるか？」「ウェアラブルハードウェアは快適か？」</li>
+                                <li><strong>視線計測（客観的データ）:</strong> 会話中にアイトラッキング技術を使用します。視線の固定や瞳孔の散大を分析することで、従来の支援ツールと比較して、我々のシステムを使用している患者の「認知負荷」やインタラクションの深さを科学的に測定できます。</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            't3-s3': {
+                titleEn: "End User: Persona Refinement",
+                titleJp: "エンドユーザー: ペルソナの絞り込み",
+                borderClass: "border-pink-500",
+                contentEn: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">The final step is to "Squeeze the Persona" based on the accumulated clinical data.</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>Defining the Exact User:</strong> The evaluation will reveal who benefits most. We might find it serves spinal injury patients better than general post-surgery patients. We will squeeze our target demographic accordingly.</li>
+                            <li><strong>App Adaptation:</strong> Once the final persona is defined, all Track 1 (Personalization Model) and Track 2 (Hardware) findings will be tightly adapted to specifically solve that exact persona's daily struggles, preparing the product for market rollout.</li>
+                        </ul>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <p class="text-slate-300">最後のステップは、蓄積された臨床データに基づいて「ペルソナを絞り込む（Squeeze the Persona）」ことです。</p>
+                        <ul class="list-disc ml-6 space-y-3 text-slate-300">
+                            <li><strong>正確なユーザーの定義:</strong> 評価を通じて、誰が最も恩恵を受けるかが明らかになります。例えば、一般的な術後患者よりも脊髄損傷患者に最適であることが分かるかもしれません。その結果に基づいてターゲット層を絞り込みます。</li>
+                            <li><strong>アプリの適応:</strong> 最終的なペルソナが定義されると、トラック1（パーソナライズモデル）とトラック2（ハードウェア）のすべての成果が、そのペルソナが抱える日常的な課題を特定して解決するために厳密に適応され、市場への展開準備が整います。</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'deploy': {
+                titleEn: "Unified Deployment",
+                titleJp: "統合・本展開",
+                borderClass: "border-yellow-400",
+                contentEn: `
+                    <div class="space-y-5">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border-l-4 border-yellow-400">
+                            <h4 class="font-bold text-white text-xl mb-3"><i class="fa-solid fa-flag-checkered mr-2"></i>Final Integration</h4>
+                            <p class="text-slate-300 leading-relaxed mb-4">This phase marks the culmination of all three development tracks running simultaneously throughout 2026. Here, the distinct achievements of each track converge:</p>
+                            <ul class="list-disc ml-6 space-y-2 text-slate-400 text-sm">
+                                <li><strong>From Track 1:</strong> The highly accurate, persona-calibrated Vision Transformer + LoRA language model.</li>
+                                <li><strong>From Track 2:</strong> The finalized Edge Application operating seamlessly on the wearable Jetson hardware.</li>
+                                <li><strong>From Track 3:</strong> The targeted user personas refined from strict ethical clinical trials and eye-tracking objective data.</li>
+                            </ul>
+                            <p class="text-slate-300 leading-relaxed mt-4">This marks the official rollout of the assistive technology, transitioning from an R&D prototype to a real-world tool providing tangible communication assistance to users.</p>
+                        </div>
+                    </div>
+                `,
+                contentJp: `
+                    <div class="space-y-5">
+                        <div class="bg-slate-800/60 p-5 rounded-lg border-l-4 border-yellow-400">
+                            <h4 class="font-bold text-white text-xl mb-3"><i class="fa-solid fa-flag-checkered mr-2"></i>最終統合フェーズ</h4>
+                            <p class="text-slate-300 leading-relaxed mb-4">このフェーズは、2026年を通じて同時進行された3つの開発トラックすべての集大成となります。各トラックの独自の成果がここで一つに収束します：</p>
+                            <ul class="list-disc ml-6 space-y-2 text-slate-400 text-sm">
+                                <li><strong>トラック1の成果:</strong> 高精度かつペルソナにキャリブレーションされたVision Transformer + LoRA言語モデル。</li>
+                                <li><strong>トラック2の成果:</strong> ウェアラブルJetsonハードウェア上でシームレスに動作する、最終化されたエッジアプリケーション。</li>
+                                <li><strong>トラック3の成果:</strong> 厳格な倫理的臨床試験と視線計測による客観的データから絞り込まれた、ターゲットユーザーのペルソナ。</li>
+                            </ul>
+                            <p class="text-slate-300 leading-relaxed mt-4">これは、研究開発（R&D）のプロトタイプから、ユーザーに具体的なコミュニケーション支援を提供する実社会のツールへと移行する、支援技術の公式なロールアウトを意味します。</p>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function openModal(id, event) {
+            if(event) event.stopPropagation();
+
+            const modal = document.getElementById('detailsModal');
+            const container = document.getElementById('modalContainer');
+            const title = document.getElementById('modalTitle');
+            const contentEn = document.getElementById('modalContentEn');
+            const contentJp = document.getElementById('modalContentJp');
+
+            // Populate data
+            title.innerText = currentLang === 'jp' ? modalData[id].titleJp : modalData[id].titleEn;
+            contentEn.innerHTML = modalData[id].contentEn;
+            contentJp.innerHTML = modalData[id].contentJp;
+
+            // Manage language visibility
+            if (currentLang === 'jp') {
+                contentEn.classList.add('hidden');
+                contentJp.classList.remove('hidden');
+            } else {
+                contentJp.classList.add('hidden');
+                contentEn.classList.remove('hidden');
+            }
+
+            // Set specific border colors based on the data object
+            container.className = `glass-card w-full max-w-3xl max-h-[85vh] overflow-y-auto m-4 p-8 border-t-4 transform scale-95 transition-transform duration-300 shadow-2xl relative ${modalData[id].borderClass}`;
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            void modal.offsetWidth;
+            modal.classList.remove('opacity-0');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            const container = document.getElementById('modalContainer');
+
+            modal.classList.add('opacity-0');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleLanguage() {
+            const isJp = document.getElementById('langSwitch').checked;
+            currentLang = isJp ? 'jp' : 'en';
+
+            const elements = document.querySelectorAll('.lang-text');
+            elements.forEach(el => {
+                el.style.opacity = 0;
+                setTimeout(() => {
+                    el.innerText = el.getAttribute(`data-${currentLang}`);
+                    el.style.opacity = 1;
+                }, 200);
+            });
+
+            const modal = document.getElementById('detailsModal');
+            if (!modal.classList.contains('hidden')) {
+                let activeId = null;
+                for(let key in modalData) {
+                   if (modalData[key].titleEn === document.getElementById('modalTitle').innerText ||
+                       modalData[key].titleJp === document.getElementById('modalTitle').innerText) {
+                       activeId = key;
+                       break;
+                   }
+                }
+
+                if (activeId) {
+                    document.getElementById('modalTitle').innerText = isJp ? modalData[activeId].titleJp : modalData[activeId].titleEn;
+                    if (isJp) {
+                        document.getElementById('modalContentEn').classList.add('hidden');
+                        document.getElementById('modalContentJp').classList.remove('hidden');
+                    } else {
+                        document.getElementById('modalContentJp').classList.add('hidden');
+                        document.getElementById('modalContentEn').classList.remove('hidden');
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.lang-text');
+            elements.forEach(el => {
+                el.style.transition = 'opacity 0.2s ease-in-out';
+            });
+            updateCountdowns();
+        });
+
+        function updateCountdowns() {
+            const now = new Date();
+            const targets = [
+                { id: 'life-countdown', date: '2026-05-31' },
+                { id: 'iss-countdown', date: '2026-07-22' },
+                { id: 'tei-countdown', date: '2026-08-15' }
+            ];
+
+            targets.forEach(t => {
+                const targetDate = new Date(t.date);
+                const diffTime = targetDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const el = document.getElementById(t.id);
+
+                if (el) {
+                    if (diffDays > 0) {
+                        el.innerHTML = `${diffDays} Days Left`;
+                    } else {
+                        el.innerHTML = `Closed`;
+                        el.classList.add('bg-slate-700', 'text-slate-400', 'border-slate-600');
+                        el.classList.remove('bg-red-500/20', 'text-red-400', 'border-red-500/30');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
